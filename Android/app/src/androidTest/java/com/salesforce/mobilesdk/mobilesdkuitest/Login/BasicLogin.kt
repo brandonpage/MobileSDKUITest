@@ -27,12 +27,13 @@ class BasicLogin {
     fun setupTestApp() {
         var packageName = InstrumentationRegistry.getArguments().get("packageName")
         // Uncomment this to run in Android Studio
-        //packageName = "com.mycompany"
+        //packageName = "com.salesforce.native_java"
 
         device.pressHome()
         var context = InstrumentationRegistry.getContext()
         var intent = context.packageManager.getLaunchIntentForPackage(packageName as String?)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(intent)
         device.wait(Until.hasObject(By.pkg(packageName).depth(0)), 5000)
     }
