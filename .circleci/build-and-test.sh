@@ -12,13 +12,12 @@ function android {
 
     if [ "$type" == "hybrid_local" ] || [ "$type" == "hybrid_remote" ]; then
         cd platforms/android/
-        package_name="com.salesforce.$type"
+    fi
+
+    if [ "$type" == "native" ]; then
+        package_name="com.salesforce.native_java"
     else
-        if [ "$type" == "native" ]; then
-            package_name="com.salesforce.native_java"
-        else
-            package_name="com.salesforce.$app_name"
-        fi
+        package_name="com.salesforce.$type"
     fi
 
     echo "                                                                             "
