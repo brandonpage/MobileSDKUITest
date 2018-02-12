@@ -1,0 +1,175 @@
+aliases:
+  - &upgrade-git
+    name: Update Git
+    command:  |
+      git --version
+      sudo apt-get install \
+        build-essential flex bison \
+        libreadline6-dev zlib1g-dev \
+        libssl-dev \
+        libcurl4-gnutls-dev \
+        libexpat1-dev \
+        tcl tk \
+        tcl-dev gettext \
+        asciidoc \
+        docbook2x
+
+      wget https://www.kernel.org/pub/software/scm/git/git-2.13.0.tar.gz
+      tar -xvzf git-2.13.0.tar.gz
+      cd git-2.13.0
+      sudo ./configure
+      sudo make && sudo make install
+      git --version
+
+  - &setup
+    name: Setup
+    command:  |
+      node ./install.js
+      sudo npm install -g cordova@7.0.0
+      cordova telemetry off
+    when: always
+
+  - &install-ant
+    name: Install Ant
+    command: brew install ant
+
+linux: &linux
+  working_directory: ~/SalesforceMobileSDK-UITest
+  docker:
+    - image: circleci/android:api-27-node8-alpha
+  environment:
+    - TERM: "dumb"
+    - ADB_INSTALL_TIMEOUT: 15
+    - _JAVA_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+    - GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-XX:+HeapDumpOnOutOfMemoryError"'
+    - ANDROID_NDK: '/opt/ndk/android-ndk-r10e'
+    - BUILD_THREADS: 2
+
+mac: &mac
+  working_directory: ~/SalesforceMobileSDK-Package
+  macos:
+    xcode: "9.2.0"
+  shell: /bin/bash --login -eo pipefail
+
+version: 2
+jobs:
+  test-forcedroid:
+    <<: *linux
+    steps:
+      - checkout
+      - run: *upgrade-git
+      - run: *setup
+      - run:
+          name: Test Native Java App
+          command: source .circleci/build-and-test.sh && android native
+          when: always
+      - store_artifacts:
+          path: tmp*/nativeandroidApp/app/build/outputs/apk/
+          destination: Java
+      - store_artifacts:
+          path: Android/app/build/reports/androidTests/connected/
+           destination: Java
+      - store_test_results:
+          path: Android/app/build/reports/androidTests/connected/
+
+      - run:
+          name: Test Native Kotlin App
+          command: source .circleci/build-and-test.sh && android native_kotlin
+          when: always
+      - store_artifacts:
+          path: tmp*/native_kotlinandroidApp/app/build/outputs/apk/
+          destination: Kotlin
+      - store_artifacts:
+          path: Android/app/build/reports/androidTests/connected/
+           destination: Kotlin
+      - store_test_results:
+          path: Android/app/build/reports/androidTests/connected/
+
+      - run:
+          name: Test Hybrid Local App
+          command: source .circleci/build-and-test.sh && android hybrid_local
+          when: always
+      - store_artifacts:
+          path: tmp*/hybrid_localandroidApp/platforms/android/app/build/outputs/apk/
+          destination: Hybrid_Local
+      - store_artifacts:
+          path: Android/app/build/reports/androidTests/connected/
+           destination: Hybrid_Local
+      - store_test_results:
+          path: Android/app/build/reports/androidTests/connected/
+
+      - run:
+          name: Test Hybrid Remote App
+          command: source .circleci/build-and-test.sh && android hybrid_remote
+          when: always
+      - store_artifacts:
+          path: tmp*/hybrid_remoteandroidApp/platforms/android/app/build/outputs/apk/
+          destination: Hybrid_Remote
+      - store_artifacts:
+          path: Android/app/build/reports/androidTests/connected/
+           destination: Hybrid_Remote
+      - store_test_results:
+          path: Android/app/build/reports/androidTests/connected/
+
+      - run:
+          name: Test React Native App
+          command: source .circleci/build-and-test.sh && android react_native
+          when: always
+      - store_artifacts:
+          path: tmp*/hybrid_remoteandroidApp/platforms/android/app/build/outputs/apk/
+          destination: Hybrid_Remote
+      - store_artifacts:
+          path: Android/app/build/reports/androidTests/connected/
+           destination: Hybrid_Remote
+      - store_test_results:
+          path: Android/app/build/reports/androidTests/connected/
+
+  test-forceios:
+      <<: *mac
+      steps:
+        - checkout
+        - run: *setup
+        - run: *install-ant
+        - run:
+            name: Build Native Objective-C App
+            command: ./test/test_force.js --os=ios --apptype=native
+            when: always
+        - run:
+            name: Build Native Swift App
+            command: ./test/test_force.js --os=ios --apptype=native_swift
+            when: always
+        - run:
+            name: Build Hybrid Local App
+            command: ./test/test_force.js --os=ios --apptype=hybrid_local
+            when: always
+        - run:
+            name: Build Hybrid Remote App
+            command: ./test/test_force.js --os=ios --apptype=hybrid_remote
+            when: always
+        - run:
+            name: Build React Native App
+            command: ./test/test_force.js --os=ios --apptype=react_native
+            no_output_timeout: 20m
+            when: always
+
+workflows:
+  version: 2
+
+  pr-build-all-apps:
+    jobs:
+      - test-forcedroid
+      - test-forceios
+
+  # Cron are on a timezone 8 hours ahead of PST
+  # Build everything at ~11:30pm Mon/Wed/Fri Nights
+  weekly-build-all-apps:
+    triggers:
+      - schedule:
+          cron: "30 7 * * 2,4,6"
+          filters:
+            branches:
+              only:
+                - dev
+    jobs:
+      - test-forcedroid
+      - test-forceios

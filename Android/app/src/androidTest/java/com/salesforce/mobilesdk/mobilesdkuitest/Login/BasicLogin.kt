@@ -13,6 +13,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import android.util.Log
+import kotlin.concurrent.thread
 
 /**
  * Created by bpage on 2/2/18.
@@ -27,7 +28,7 @@ class BasicLogin {
     fun setupTestApp() {
         var packageName = InstrumentationRegistry.getArguments().get("packageName")
         // Uncomment this to run in Android Studio
-        //packageName = "com.salesforce.native_java"
+        packageName = "com.salesforce.react_native"
 
         device.pressHome()
         var context = InstrumentationRegistry.getContext()
@@ -35,6 +36,22 @@ class BasicLogin {
 
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(intent)
+
+        if (packageName == "com.salesforce.react_native") {
+            device.wait(Until.hasObject(By.res("android:id/alertTitle")), 5000)
+            device.pressBack()
+//            device.wait(Until.hasObject(By.res("com.android.settings:id/entity_header_title")), 5000)
+            device.wait(Until.hasObject(By.pkg("com.android.settings").depth(0)), 5000)
+            //device.wait(Until.hasObject(By.res("android:id/switch_widget")), 50000)
+            //device.wait(Until.hasObject(By.clazz("android.widget.Switch")), 50000)
+
+            var allowSwitch = device.findObject(UiSelector().packageName("com.android.settings").resourceId("android:id/switch_widget"))
+            allowSwitch.click()
+            Log.i("swittttch", "is checkable: " + allowSwitch.isCheckable)
+            device.pressBack()
+            context.startActivity(intent)
+        }
+
         device.wait(Until.hasObject(By.pkg(packageName).depth(0)), 5000)
     }
 

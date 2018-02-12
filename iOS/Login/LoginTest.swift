@@ -28,6 +28,12 @@ class LoginTest: XCTestCase {
         let app = XCUIApplication(bundleIdentifier: bundle_string)
         app.launch()
         
+        if bundle_string == "com.salesforce.react_native.react-nativeiosApp" {
+            sleep(30)
+        }
+
+
+
         // Username
         let userName = app.descendants(matching: .textField).element
         userName.press(forDuration: 0.5)
