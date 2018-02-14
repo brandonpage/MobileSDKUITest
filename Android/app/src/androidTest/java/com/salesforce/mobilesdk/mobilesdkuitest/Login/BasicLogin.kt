@@ -23,12 +23,13 @@ import kotlin.concurrent.thread
 class BasicLogin {
 
     var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+    var packageName = ""
 
     @Before
     fun setupTestApp() {
-        var packageName = InstrumentationRegistry.getArguments().get("packageName")
+        packageName = InstrumentationRegistry.getArguments().get("packageName") as String
         // Uncomment this to run in Android Studio
-        packageName = "com.salesforce.react_native"
+        //packageName = "com.salesforce.react_native"
 
         device.pressHome()
         var context = InstrumentationRegistry.getContext()
@@ -40,10 +41,7 @@ class BasicLogin {
         if (packageName == "com.salesforce.react_native") {
             device.wait(Until.hasObject(By.res("android:id/alertTitle")), 5000)
             device.pressBack()
-//            device.wait(Until.hasObject(By.res("com.android.settings:id/entity_header_title")), 5000)
             device.wait(Until.hasObject(By.pkg("com.android.settings").depth(0)), 5000)
-            //device.wait(Until.hasObject(By.res("android:id/switch_widget")), 50000)
-            //device.wait(Until.hasObject(By.clazz("android.widget.Switch")), 50000)
 
             var allowSwitch = device.findObject(UiSelector().packageName("com.android.settings").resourceId("android:id/switch_widget"))
             allowSwitch.click()
@@ -57,13 +55,30 @@ class BasicLogin {
 
     @Test
     fun login() {
+        var overflowMenu = device.findObject(UiSelector().className("android.widget.ImageButton").description("More options"))
+        overflowMenu.click()
+        var changeServer = device.findObject(UiSelector().resourceId("android:id/title").text("Change Server"))
+        changeServer.click()
+        var addConnection = device.findObject(UiSelector().className("android.widget.Button").text("Add Connection"))
+        addConnection.click()
+        var connectionName = device.findObject(UiSelector().resourceId(packageName + ":id/sf__picker_custom_label"))
+        connectionName.click()
+        connectionName.setText("Mobile2")
+        var connectionUrl = device.findObject(UiSelector().resourceId(packageName + ":id/sf__picker_custom_url"))
+        connectionUrl.click()
+        connectionUrl.setText("https://mobile2.t.salesforce.com")
+        var addConnectionApply = device.findObject(UiSelector().resourceId(packageName + ":id/sf__apply_button"))
+        addConnectionApply.click()
+        var connectionApply = device.findObject(UiSelector().resourceId(packageName + ":id/sf__apply_button"))
+        connectionApply.click()
+
         var username = device.findObject(UiSelector().resourceId("username"))
         username.click()
-        username.setText("bpage3@salesforce.com")
+        username.setText("bpage@salesforce.com")
 
         var password = device.findObject(UiSelector().resourceId("password"))
         password.click()
-        password.setText("test123456")
+        password.setText("test1234")
 
         var login = device.findObject(UiSelector().resourceId("Login"))
         login.click()

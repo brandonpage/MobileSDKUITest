@@ -6,7 +6,7 @@ function android {
     rm -rf tmp*
     ./SalesforceMobileSDK-Package/test/test_force.js --os=android --apptype="$type"
 
-    app_name="${type}androidApp"
+    app_name="${type}_androidApp"
     cd tmp*
     cd "$app_name"
 
@@ -33,7 +33,6 @@ function android {
     echo "                                                                             "
     echo "                                                                             "
 
-    ./gradlew assemble
     # adb install app
     adb install app/build/outputs/apk/debug/app-debug.apk
 
@@ -65,7 +64,7 @@ function ios {
     rm -rf tmp*
     ./SalesforceMobileSDK-Package/test/test_force.js --os=ios --apptype="${type}"
 
-    app_name="${type}iosApp"
+    app_name="${type}_iosApp"
     cd tmp*
     cd "${app_name}"
 
@@ -81,9 +80,9 @@ function ios {
 
     # FIX THIS
     if [ "$type" == "native" ]; then
-        bundle_name="com.salesforce.native_java.nativeiosApp"
+        bundle_name="com.salesforce.native-iosApp"
     elif [ "$type" == "native_swift" ]; then
-        bundle_name="com.salesforce.native_swift.native-swiftiosApp"
+        bundle_name="com.salesforce.native-swift-iosApp"
     fi
 
 
@@ -132,5 +131,3 @@ function ios {
     xcodebuild -scheme MobileSDKUITest -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.2' TEST_APP_BUNDLE=${bundle_name} test
     cd ../
 }
-
-# xcodebuild -scheme MobileSDKUITest -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.2' TEST_APP_BUNDLE=com.mycompany.hybrid_localtestApp test
