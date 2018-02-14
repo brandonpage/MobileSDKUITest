@@ -23,10 +23,7 @@ aliases:
 
   - &setup
     name: Setup
-    command:  |
-      node ./install.js
-      sudo npm install -g cordova@7.0.0
-      cordova telemetry off
+    command: ./install.sh
     when: always
 
   - &install-ant
@@ -158,7 +155,6 @@ workflows:
   pr-build-all-apps:
     jobs:
       - test-forcedroid
-      - test-forceios
 
   # Cron are on a timezone 8 hours ahead of PST
   # Build everything at ~11:30pm Mon/Wed/Fri Nights
@@ -172,4 +168,3 @@ workflows:
                 - dev
     jobs:
       - test-forcedroid
-      - test-forceios
