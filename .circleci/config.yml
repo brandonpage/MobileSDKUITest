@@ -68,7 +68,7 @@ jobs:
           destination: Java
       - store_artifacts:
           path: Android/app/build/reports/androidTests/connected/
-           destination: Java
+          destination: Java
       - store_test_results:
           path: Android/app/build/reports/androidTests/connected/
 
@@ -81,7 +81,7 @@ jobs:
           destination: Kotlin
       - store_artifacts:
           path: Android/app/build/reports/androidTests/connected/
-           destination: Kotlin
+          destination: Kotlin
       - store_test_results:
           path: Android/app/build/reports/androidTests/connected/
 
@@ -94,7 +94,7 @@ jobs:
           destination: Hybrid_Local
       - store_artifacts:
           path: Android/app/build/reports/androidTests/connected/
-           destination: Hybrid_Local
+          destination: Hybrid_Local
       - store_test_results:
           path: Android/app/build/reports/androidTests/connected/
 
@@ -107,7 +107,7 @@ jobs:
           destination: Hybrid_Remote
       - store_artifacts:
           path: Android/app/build/reports/androidTests/connected/
-           destination: Hybrid_Remote
+          destination: Hybrid_Remote
       - store_test_results:
           path: Android/app/build/reports/androidTests/connected/
 
@@ -120,7 +120,7 @@ jobs:
           destination: Hybrid_Remote
       - store_artifacts:
           path: Android/app/build/reports/androidTests/connected/
-           destination: Hybrid_Remote
+          destination: Hybrid_Remote
       - store_test_results:
           path: Android/app/build/reports/androidTests/connected/
 
