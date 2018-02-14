@@ -54,13 +54,30 @@ jobs:
     <<: *linux
     steps:
       - checkout
-      - run: |
-          export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib
-          echo "y" | sdkmanager "system-images;android-22;default;armeabi-v7a"
-          echo "no" | avdmanager create avd -n test22 -k "system-images;android-22;default;armeabi-v7a"
-          emulator64-arm -avd test22 -noaudio -no-window -accel on
+      - run:
+          name: Start Emulator
+          command: |
+            export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib
+            echo "y" | sdkmanager "system-images;android-22;default;armeabi-v7a"
+            echo "no" | avdmanager create avd -n test22 -k "system-images;android-22;default;armeabi-v7a"
+            emulator64-arm -avd test22 -noaudio -no-window -accel on
+          background: true
       - run: *upgrade-git
       - run: *setup
+      - run:
+          name: Wait for Emulator
+          command: |
+            local bootanim=""
+            export PATH=$(dirname $(dirname $(which android)))/platform-tools:$PATH
+            until [[ "$bootanim" =~ "stopped" ]]; do
+                sleep 5
+                bootanim=$(adb -e shell getprop init.svc.bootanim 2>&1)
+                echo "emulator status=$bootanim"
+            done
+            sleep 30
+            # unlock the emulator screen
+            adb shell input keyevent 82
+            echo "Device Booted"
       - run:
           name: Test Native Java App
           command: source .circleci/build-and-test.sh && android native
