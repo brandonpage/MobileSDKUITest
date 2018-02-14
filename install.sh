@@ -4,8 +4,8 @@ git submodule init
 git submodule sync
 git submodule update --init --recursive
 
-npm install -g ios-sim
-npm install -g cordova@7.0.0
+sudo npm install -g ios-sim
+sudo npm install -g cordova@7.0.0
 
 cd SalesforceMobileSDK-Package
 git checkout packagename
