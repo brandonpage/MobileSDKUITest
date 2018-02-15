@@ -128,6 +128,6 @@ function ios {
 
 
     # Run Tests
-    xcodebuild -scheme MobileSDKUITest -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.0' TEST_APP_BUNDLE=${bundle_name} test
+    xcodebuild -scheme MobileSDKUITest -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8 11.0' TEST_APP_BUNDLE=${bundle_name} test
     cd ../
 }

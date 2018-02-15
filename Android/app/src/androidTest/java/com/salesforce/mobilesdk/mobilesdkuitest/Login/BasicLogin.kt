@@ -72,13 +72,15 @@ class BasicLogin {
         var connectionApply = device.findObject(UiSelector().resourceId(packageName + ":id/sf__apply_button"))
         connectionApply.click() */
 
-        var username = device.findObject(UiSelector().resourceId("username"))
+        //var username = device.findObject(UiSelector().resourceId("username"))
+        var username = device.findObject(UiSelector().className("android.widget.EditText").index(2))
         username.waitForExists(240000)
         username.click()
         //username.setText("bpage@salesforce.com")
         username.setText("bpage3@salesforce.com")
 
-        var password = device.findObject(UiSelector().resourceId("password"))
+        //var password = device.findObject(UiSelector().resourceId("password"))
+        var password = device.findObject(UiSelector().className("android.widget.EditText").index(4))
         password.click()
         //password.setText("test1234")
         password.setText("test123456")
