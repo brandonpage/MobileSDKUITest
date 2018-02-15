@@ -72,6 +72,7 @@ class BasicLogin {
         var connectionApply = device.findObject(UiSelector().resourceId(packageName + ":id/sf__apply_button"))
         connectionApply.click()
 
+        device.wait(Until.hasObject(By.res("username")), 5000)
         var username = device.findObject(UiSelector().resourceId("username"))
         username.click()
         username.setText("bpage@salesforce.com")
