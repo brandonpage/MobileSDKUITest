@@ -7,8 +7,6 @@ git submodule update --init --recursive
 npm install -g ios-sim
 npm install -g cordova@7.0.0
 
-sudo gem install cocoapods
-
 cd SalesforceMobileSDK-Package
 git checkout packagename
 node ./install.js

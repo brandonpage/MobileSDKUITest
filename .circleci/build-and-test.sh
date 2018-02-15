@@ -104,7 +104,7 @@ function ios {
         react-native run-ios
     else
         xcodebuild build -scheme "${app_name}" -workspace "${app_name}".xcworkspace -derivedDataPath ./DerivedData CODE_SIGN_IDENTITY="" -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.2' CODE_SIGNING_REQUIRED=NO
-        ios-sim install ./DerivedData/Build/Products/Debug-iphonesimulator/"${app_name}".app --devicetypeid "iPhone-8, 11.2" --exit
+        ios-sim install ./DerivedData/Build/Products/Debug-iphonesimulator/"${app_name}".app --devicetypeid "iPhone-8, 11.0" --exit
     fi
     sleep 2m
 
@@ -128,6 +128,6 @@ function ios {
 
 
     # Run Tests
-    xcodebuild -scheme MobileSDKUITest -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.2' TEST_APP_BUNDLE=${bundle_name} test
+    xcodebuild -scheme MobileSDKUITest -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.0' TEST_APP_BUNDLE=${bundle_name} test
     cd ../
 }

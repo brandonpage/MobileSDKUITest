@@ -55,7 +55,7 @@ class BasicLogin {
 
     @Test
     fun login() {
-        var overflowMenu = device.findObject(UiSelector().className("android.widget.ImageButton").description("More options"))
+        /*var overflowMenu = device.findObject(UiSelector().className("android.widget.ImageButton").description("More options"))
         overflowMenu.click()
         var changeServer = device.findObject(UiSelector().resourceId("android:id/title").text("Change Server"))
         changeServer.click()
@@ -63,28 +63,30 @@ class BasicLogin {
         addConnection.click()
         var connectionName = device.findObject(UiSelector().resourceId(packageName + ":id/sf__picker_custom_label"))
         connectionName.click()
-        connectionName.setText("Mobile2")
+        connectionName.setText("Mobile222")
         var connectionUrl = device.findObject(UiSelector().resourceId(packageName + ":id/sf__picker_custom_url"))
         connectionUrl.click()
         connectionUrl.setText("https://mobile2.t.salesforce.com")
         var addConnectionApply = device.findObject(UiSelector().resourceId(packageName + ":id/sf__apply_button"))
         addConnectionApply.click()
         var connectionApply = device.findObject(UiSelector().resourceId(packageName + ":id/sf__apply_button"))
-        connectionApply.click()
+        connectionApply.click() */
 
-        device.wait(Until.hasObject(By.res("username")), 10000)
         var username = device.findObject(UiSelector().resourceId("username"))
+        username.waitForExists(240000)
         username.click()
-        username.setText("bpage@salesforce.com")
+        //username.setText("bpage@salesforce.com")
+        username.setText("bpage3@salesforce.com")
 
         var password = device.findObject(UiSelector().resourceId("password"))
         password.click()
-        password.setText("test1234")
+        //password.setText("test1234")
+        password.setText("test123456")
 
         var login = device.findObject(UiSelector().resourceId("Login"))
         login.click()
 
-        device.wait(Until.hasObject(By.res("oaapprove")), 10000)
+        device.wait(Until.hasObject(By.res("oaapprove")), 240000)
         var allowButton = device.findObject(UiSelector().resourceId("oaapprove"))
         allowButton.click()
     }
