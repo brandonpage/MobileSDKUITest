@@ -75,7 +75,7 @@ class BasicLogin {
         connectionApply.click() */
 
         //com.salesforce.samples.smartsyncexplorer:id/sf__oauth_webview
-        var webview = device.findObject(UiSelector().resourceId("com.salesforce.samples.smartsyncexplorer:id/sf__oauth_webview"))
+        var webview = device.findObject(UiSelector().resourceId(packageName + ":id/sf__oauth_webview"))
         webview.waitForExists(12000)
         Assert.assertEquals(0, webview.childCount)
 
