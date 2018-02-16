@@ -47,7 +47,7 @@ lane :iOS do |options|
 
     Dir.chdir('iOS/') do
       UI.important 'Run Tests'
-      system("xcodebuild -scheme MobileSDKUITest -sdk iphonesimulator -destination 'platform=iOS Simulator,name=#{iphone},OS=#{os}' TEST_APP_BUNDLE=#{bundle_name} test")
+      system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,name=#{iphone},OS=#{os}' TEST_APP_BUNDLE=#{bundle_name} test")
 
       #scan(
       #    project: 'iOS/MobileSDKUITest.xcodeproj',

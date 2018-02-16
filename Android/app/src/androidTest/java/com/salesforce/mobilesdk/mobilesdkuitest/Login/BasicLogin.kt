@@ -31,7 +31,7 @@ class BasicLogin {
         packageName = InstrumentationRegistry.getArguments().get("packageName") as String
         // Uncomment this to run in Android Studio
         //packageName = "com.salesforce.react_native"
-        packageName = "com.salesforce.samples.smartsyncexplorer"
+        //packageName = "com.salesforce.samples.smartsyncexplorer"
 
         device.pressHome()
         var context = InstrumentationRegistry.getContext()
@@ -79,7 +79,7 @@ class BasicLogin {
         webview.waitForExists(12000)
         Assert.assertEquals(0, webview.childCount)
 
-        Log.d("yooooo", "wtf")
+        Log.d("yooooo", "num children: " + webview.childCount)
 
 
         //var username = device.findObject(UiSelector().resourceId("username"))
