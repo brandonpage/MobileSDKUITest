@@ -1,0 +1,66 @@
+#before_all do
+#  setup_circle_ci
+#end
+
+lane :iOS do |options|
+  run_type = options[:type]
+  iphone = 'iPhone 8'
+  os = '11.2'
+
+  if ENV.has_key?('JENKINS_URL')
+    os = '11.0'
+  end
+
+  Dir.chdir('../../') do
+    generateApp('ios', run_type)
+    app_name = "#{run_type}_iosApp"
+    path = Dir.glob("tmp*").first.concat("/#{app_name}/")
+
+    case run_type
+      when 'native'
+        bundle_name = 'com.salesforce.native-iosApp'
+      when 'native_swift'
+        bundle_name = 'com.salesforce.native-swift-iosApp'
+      when 'react_native'
+        system('npm start')
+        bundle_name = 'com.salesforce.react_native.react-nativeiosApp'
+      else
+        path.concat('platforms/ios/')
+        bundle_name = 'com.salesforce.'.concat(app_name)
+    end
+
+    Dir.chdir(path) do
+      UI.important 'Building'
+      if run_type == 'react_native'
+        system('react-native bundle --platform ios --dev false --entry-file index.js --bundle-output ios/main.jsbundle && react-native run-ios')
+      else
+        system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -derivedDataPath ./DerivedData CODE_SIGN_IDENTITY="" -destination 'platform=iOS Simulator,name=#{iphone},OS=#{os}' CODE_SIGNING_REQUIRED=NO")
+        #xcodebuild(
+        #    workspace: app_name + '.xcworkspace',
+        #    scheme: app_name,
+        #    sdk: 'iphonesimulator',
+        #    derivedDataPath: './DerivedData'
+        #)
+        system("ios-sim install ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app --devicetypeid \"#{iphone.gsub(/[' ']/, '-')}, #{os}\"  --exit")
+      end
+    end
+
+    Dir.chdir('iOS/') do
+      system("xcodebuild -scheme MobileSDKUITest -sdk iphonesimulator -destination 'platform=iOS Simulator,name=#{iphone},OS=#{os}' TEST_APP_BUNDLE=#{bundle_name} test")
+
+      #scan(
+      #    project: 'iOS/MobileSDKUITest.xcodeproj',
+      #    scheme: 'MobileSDKUITest',
+      #    device: $device + $ios,
+      #    test_without_building: true,
+      #    output_directory: 'test_output',
+      #    xcargs: "TEST_APP_BUNDLE=#{bundle_name}"
+      #)
+    end
+  end
+end
+
+def generateApp(os, type)
+  system('rm -rf tmp*')
+  system("./SalesforceMobileSDK-Package/test/test_force.js --os=#{os} --apptype=#{type}")
+end

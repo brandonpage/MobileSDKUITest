@@ -13,6 +13,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import android.util.Log
+import org.junit.Assert
 import kotlin.concurrent.thread
 
 /**
@@ -30,6 +31,7 @@ class BasicLogin {
         packageName = InstrumentationRegistry.getArguments().get("packageName") as String
         // Uncomment this to run in Android Studio
         //packageName = "com.salesforce.react_native"
+        packageName = "com.salesforce.samples.smartsyncexplorer"
 
         device.pressHome()
         var context = InstrumentationRegistry.getContext()
@@ -72,18 +74,28 @@ class BasicLogin {
         var connectionApply = device.findObject(UiSelector().resourceId(packageName + ":id/sf__apply_button"))
         connectionApply.click() */
 
+        //com.salesforce.samples.smartsyncexplorer:id/sf__oauth_webview
+        var webview = device.findObject(UiSelector().resourceId("com.salesforce.samples.smartsyncexplorer:id/sf__oauth_webview"))
+        webview.waitForExists(12000)
+        Assert.assertEquals(0, webview.childCount)
+
+        Log.d("yooooo", "wtf")
+
+
         //var username = device.findObject(UiSelector().resourceId("username"))
         var username = device.findObject(UiSelector().className("android.widget.EditText").index(2))
         username.waitForExists(240000)
         username.click()
         //username.setText("bpage@salesforce.com")
-        username.setText("bpage3@salesforce.com")
+        //username.setText("bpage3@salesforce.com")
+        username.legacySetText("bpage3@salesforce.com")
 
         //var password = device.findObject(UiSelector().resourceId("password"))
         var password = device.findObject(UiSelector().className("android.widget.EditText").index(4))
         password.click()
         //password.setText("test1234")
-        password.setText("test123456")
+        //password.setText("test123456")
+        password.legacySetText("test123456")
 
         var login = device.findObject(UiSelector().resourceId("Login"))
         login.click()
