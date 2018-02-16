@@ -56,13 +56,13 @@ jobs:
       - checkout
       - run:
           name: Start Emulator
-          command: source .circleci/and_helper.sh && startAVD
+          command: source .circleci/avd_helper.sh && startAVD
           background: true
       - run: *upgrade-git
       - run: *setup
       - run:
           name: Wait for Emulator
-          command: source .circleci/and_helper.sh && waitForAVD
+          command: source .circleci/avd_helper.sh && waitForAVD
       - run:
           name: Test Native Java App
           command: source .circleci/build-and-test.sh && android native

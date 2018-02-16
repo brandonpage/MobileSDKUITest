@@ -30,7 +30,6 @@ lane :iOS do |options|
     end
 
     Dir.chdir(path) do
-      UI.important 'Building'
       if run_type == 'react_native'
         system('react-native bundle --platform ios --dev false --entry-file index.js --bundle-output ios/main.jsbundle && react-native run-ios')
       else
@@ -41,11 +40,13 @@ lane :iOS do |options|
         #    sdk: 'iphonesimulator',
         #    derivedDataPath: './DerivedData'
         #)
+        UI.important 'ios-sim install'
         system("ios-sim install ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app --devicetypeid \"#{iphone.gsub(/[' ']/, '-')}, #{os}\"  --exit")
       end
     end
 
     Dir.chdir('iOS/') do
+      UI.important 'Run Tests'
       system("xcodebuild -scheme MobileSDKUITest -sdk iphonesimulator -destination 'platform=iOS Simulator,name=#{iphone},OS=#{os}' TEST_APP_BUNDLE=#{bundle_name} test")
 
       #scan(
