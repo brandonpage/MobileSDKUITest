@@ -79,16 +79,20 @@ class BasicLogin {
         webview.waitForExists(12000)
         Assert.assertEquals(0, webview.childCount)
 
-        Log.d("yooooo", "num children: " + webview.childCount)
+        //Log.d("yooooo", "num children: " + webview.childCount)
+        println("num children: " + webview.childCount)
 
 
         //var username = device.findObject(UiSelector().resourceId("username"))
         var username = device.findObject(UiSelector().className("android.widget.EditText").index(2))
         username.waitForExists(240000)
         username.click()
+
         //username.setText("bpage@salesforce.com")
-        //username.setText("bpage3@salesforce.com")
+        username.setText("bpage3@salesforce.com")
+        Assert.assertEquals("bpage3@salesforce.com", username.text)
         username.legacySetText("bpage3@salesforce.com")
+        Assert.assertEquals("bpage3@salesforce.com", username.text)
 
         //var password = device.findObject(UiSelector().resourceId("password"))
         var password = device.findObject(UiSelector().className("android.widget.EditText").index(4))
