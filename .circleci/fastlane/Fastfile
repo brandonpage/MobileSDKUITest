@@ -37,7 +37,8 @@ lane :iOS do |options|
       if run_type == 'react_native'
         system('react-native bundle --platform ios --dev false --entry-file index.js --bundle-output ios/main.jsbundle && react-native run-ios')
       else
-        system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -derivedDataPath ./DerivedData CODE_SIGN_IDENTITY="" -destination 'platform=iOS Simulator,name=#{sim_name},OS=#{os}' CODE_SIGNING_REQUIRED=NO")
+        UI.important 'Build Again'
+        system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -derivedDataPath ./DerivedData CODE_SIGN_IDENTITY="" -destination 'platform=iOS Simulator,name=#{sim_name},OS=11.0' CODE_SIGNING_REQUIRED=NO")
         #xcodebuild(
         #    workspace: app_name + '.xcworkspace',
         #    scheme: app_name,
@@ -55,7 +56,8 @@ lane :iOS do |options|
 
     Dir.chdir('iOS/') do
       UI.important 'Run Tests'
-      system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,name=#{sim_name},OS=#{os.gsub(/['-']/, '.')}' TEST_APP_BUNDLE=#{bundle_name} test")
+      //#{os.gsub(/['-']/, '.')}
+      system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,name=#{sim_name},OS=11.0' TEST_APP_BUNDLE=#{bundle_name} test")
 
       #system("xcodebuild -scheme MobileSDKUITest TEST_APP_BUNDLE=#{bundle_name} test")
 
