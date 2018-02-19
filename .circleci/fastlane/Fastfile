@@ -50,7 +50,7 @@ lane :iOS do |options|
         system("xcrun simctl boot #{sim_id}")
         xcode_path = `xcode-select -p`
         UI.important "Xcode path: #{xcode_path}"
-        system("open #{xcode_path}/Applications/Simulator.app/")
+        system("open /Applications/Xcode9.app/Contents/Developer/Applications/Simulator.app/")
         system("xcrun simctl install booted ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app")
         system("xcrun simctl install booted #{bundle_name}")
       end
