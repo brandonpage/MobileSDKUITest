@@ -50,9 +50,13 @@ lane :iOS do |options|
         system("xcrun simctl boot #{sim_id}")
         xcode_path = `xcode-select -p`
         UI.important "Xcode path: #{xcode_path}"
-        puts "ls path: " + `ls #{xcode_path}`
-        puts "ls path2: " + `ls #{xcode_path}/Platforms/iPhoneSimulator.platform/Developer/SDKs`
-        puts "ls path3: " + `ls #{xcode_path}/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/`
+        system('brew install tree')
+        Dir.chdir(xcode_path) do
+          system('tree')
+        end
+        #puts "ls path: " + `ls #{xcode_path}`
+        #puts "ls path2: " + `ls #{xcode_path}/Platforms/iPhoneSimulator.platform/Developer/SDKs`
+        #puts "ls path3: " + `ls #{xcode_path}/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/`
         system("open /Applications/Xcode9.app/Contents/Developer/Applications/Simulator.app/")
         system("xcrun simctl install booted ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app")
         system("xcrun simctl install booted #{bundle_name}")
