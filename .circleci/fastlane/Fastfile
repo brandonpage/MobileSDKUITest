@@ -39,8 +39,8 @@ lane :iOS do |options|
     #    system('react-native bundle --platform ios --dev false --entry-file index.js --bundle-output ios/main.jsbundle && react-native run-ios')
     #  else
     #    UI.important 'Build Again'
-    #    puts "What's in ~? " + `ls ~`
-    #    puts "Derived Data??? " + `ls ~/Library/Developer/Xcode/DerivedData/`
+        puts "What's in ~? " + `ls ~`
+        puts "Derived Data??? " + `ls ~/Library/Developer/Xcode/DerivedData/`
 
      #   system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -derivedDataPath ./DerivedData CODE_SIGN_IDENTITY="" -destination 'platform=iOS Simulator,id=#{sim_id},os=10.3,name=#{sim_name}' CODE_SIGNING_REQUIRED=NO") or exit
         #xcodebuild(
@@ -61,7 +61,9 @@ lane :iOS do |options|
         #puts "ls 8.3 path: " + `ls /Applications/Xcode8.3.1.app/Contents/Developer/`
         #puts "ls 8.3 path2: " + `ls /Applications/Xcode8.3.1.app/Contents/Developer/Applications/`
 
-        app_path = Dir.glob("~/Library/Developer/Xcode/DerivedData/#{app_name}-*").first.concat("/Build/Products/Debug-iphonesimulator/#{app_name}.app")
+        app_path = Dir.glob("~/Library/Developer/Xcode/DerivedData/#{app_name}-*").first
+        puts "path: #{app_path}"
+        app_path.concat("/Build/Products/Debug-iphonesimulator/#{app_name}.app")
         puts "App Path!!!!! #{app_path}"
         #system("open /Applications/Xcode8.3.1.app/Contents/Developer/Applications/Simulator.app/")
         system("xcrun simctl install booted #{app_path}")
