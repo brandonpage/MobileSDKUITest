@@ -6,7 +6,7 @@ lane :iOS do |options|
   run_type = options[:type]
   iphone = 'iPhone-8'
   os = '11-2'
-  sim_name = 'test'
+  sim_name = 'test2222s'
 
   if ENV.has_key?('JENKINS_URL')
     os = '10-3'
@@ -15,6 +15,7 @@ lane :iOS do |options|
   system("xcrun simctl delete \"test\" || echo \"remove device if exists\"")
   sim_id = `xcrun simctl create #{sim_name} com.apple.CoreSimulator.SimDeviceType.#{iphone} com.apple.CoreSimulator.SimRuntime.iOS-#{os}`
 
+  puts "SIM ID: #{sim_id}"
   Dir.chdir('../../') do
     generateApp('ios', run_type)
     app_name = "#{run_type}_iosApp"
