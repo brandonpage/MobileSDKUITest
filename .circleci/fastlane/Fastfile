@@ -61,7 +61,8 @@ lane :iOS do |options|
         #puts "ls 8.3 path: " + `ls /Applications/Xcode8.3.1.app/Contents/Developer/`
         #puts "ls 8.3 path2: " + `ls /Applications/Xcode8.3.1.app/Contents/Developer/Applications/`
 
-        home_path = `echo ~`
+        #home_path = `echo ~`
+        home_path = "/Users/iosadmin"
         puts "Home Path: #{home_path}"
         app_path = Dir.glob("#{home_path}/Library/Developer/Xcode/DerivedData/#{app_name}-*").first
         puts "path: #{app_path}"
