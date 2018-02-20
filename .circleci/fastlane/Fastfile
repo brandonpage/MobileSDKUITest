@@ -65,7 +65,7 @@ lane :iOS do |options|
     Dir.chdir('iOS/') do
       UI.important 'Run Tests'
       //#{os.gsub(/['-']/, '.')}
-      system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,name=#{sim_name},OS=11.0' TEST_APP_BUNDLE=#{bundle_name} test") or exit
+      system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,name=#{sim_name},OS=11-0' TEST_APP_BUNDLE=#{bundle_name} test") or exit
 
       #system("xcodebuild -scheme MobileSDKUITest TEST_APP_BUNDLE=#{bundle_name} test")
 
