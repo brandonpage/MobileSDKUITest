@@ -9,7 +9,7 @@ lane :iOS do |options|
   sim_name = 'test'
 
   if ENV.has_key?('JENKINS_URL')
-    os = '11-0'
+    os = '10-3'
   end
 
   system("xcrun simctl delete \"test\" || echo \"remove device if exists\"")
@@ -38,7 +38,7 @@ lane :iOS do |options|
         system('react-native bundle --platform ios --dev false --entry-file index.js --bundle-output ios/main.jsbundle && react-native run-ios')
       else
         UI.important 'Build Again'
-        system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -derivedDataPath ./DerivedData CODE_SIGN_IDENTITY="" -destination 'platform=iOS Simulator,name=#{sim_name},OS=11.0' CODE_SIGNING_REQUIRED=NO") or exit
+        system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -derivedDataPath ./DerivedData CODE_SIGN_IDENTITY="" -destination 'platform=iOS Simulator,name=#{sim_name},OS=10.3' CODE_SIGNING_REQUIRED=NO") or exit
         #xcodebuild(
         #    workspace: app_name + '.xcworkspace',
         #    scheme: app_name,
@@ -51,7 +51,7 @@ lane :iOS do |options|
         xcode_path = `xcode-select -p`
         #UI.important "Xcode path: #{xcode_path}"
 
-        system("sudo xcode-select -s /Applications/Xcode8.3.1.app/Contents/Developer")
+        #system("sudo xcode-select -s /Applications/Xcode8.3.1.app/Contents/Developer")
 
         #puts "ls path: " + `ls #{xcode_path}`
         puts "ls 8.3 path: " + `ls /Applications/Xcode8.3.1.app/Contents/Developer/`
@@ -65,7 +65,7 @@ lane :iOS do |options|
     Dir.chdir('iOS/') do
       UI.important 'Run Tests'
       //#{os.gsub(/['-']/, '.')}
-      system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,name=#{sim_name},OS=11-0' TEST_APP_BUNDLE=#{bundle_name} test") or exit
+      system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,name=#{sim_name},OS=10-3' TEST_APP_BUNDLE=#{bundle_name} test") or exit
 
       #system("xcodebuild -scheme MobileSDKUITest TEST_APP_BUNDLE=#{bundle_name} test")
 
