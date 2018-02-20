@@ -51,6 +51,8 @@ lane :iOS do |options|
         xcode_path = `xcode-select -p`
         #UI.important "Xcode path: #{xcode_path}"
 
+        system("sudo xcode-select -s /Applications/Xcode8.3.1.app/Contents/Developer")
+
         #puts "ls path: " + `ls #{xcode_path}`
         puts "ls 8.3 path: " + `ls /Applications/Xcode8.3.1.app/Contents/Developer/`
         puts "ls 8.3 path2: " + `ls /Applications/Xcode8.3.1.app/Contents/Developer/Applications/`
