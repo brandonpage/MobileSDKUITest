@@ -46,12 +46,12 @@ lane :iOS do |options|
         #    derivedDataPath: './DerivedData'
         #)
         UI.important 'Simulator install'
-        system("ios-sim install ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app --devicetypeid \"#{iphone.gsub(/[' ']/, '-')}, 11.0\"  --exit")
+        #system("ios-sim install ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app --devicetypeid \"#{iphone.gsub(/[' ']/, '-')}, 11.0\"  --exit")
         system("xcrun simctl boot #{sim_id}")
         xcode_path = `xcode-select -p`
-        UI.important "Xcode path: #{xcode_path}"
+        #UI.important "Xcode path: #{xcode_path}"
 
-        puts "ls path: " + `ls #{xcode_path}`
+        #puts "ls path: " + `ls #{xcode_path}`
         puts "ls 8.3 path: " + `ls /Applications/Xcode8.3.1.app/Contents/Developer/`
         puts "ls 8.3 path2: " + `ls /Applications/Xcode8.3.1.app/Contents/Developer/Applications/`
         system("open /Applications/Xcode8.3.1.app/Contents/Developer/Applications/Simulator.app/")
