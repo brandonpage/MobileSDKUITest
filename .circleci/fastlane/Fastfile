@@ -49,13 +49,13 @@ lane :iOS do |options|
 
     Dir.chdir('iOS/') do
       UI.important 'Run Tests'
-      system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,name=#{sim_name},OS=11.0' TEST_APP_BUNDLE=#{bundle_name} test") or exit
-      system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,id=#{sim_id}' TEST_APP_BUNDLE=#{bundle_name} test") or exit
+      #system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,name=#{sim_name},OS=11.0' TEST_APP_BUNDLE=#{bundle_name} test") or exit
+      #system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,id=#{sim_id}' TEST_APP_BUNDLE=#{bundle_name} test") or exit
 
       scan(
           project: 'iOS/MobileSDKUITest.xcodeproj',
           scheme: 'MobileSDKUITest',
-          device: sim_name,
+          #device: sim_name,
           #test_without_building: true,
           output_directory: 'test_output',
           xcargs: "TEST_APP_BUNDLE=#{bundle_name}"
