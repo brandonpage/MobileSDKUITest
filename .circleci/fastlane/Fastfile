@@ -34,15 +34,15 @@ lane :iOS do |options|
         bundle_name = 'com.salesforce.'.concat(app_name)
     end
 
-    Dir.chdir(path) do
-      if run_type == 'react_native'
-        system('react-native bundle --platform ios --dev false --entry-file index.js --bundle-output ios/main.jsbundle && react-native run-ios')
-      else
-        UI.important 'Build Again'
-        puts "What's in ~? " + `ls ~`
-        puts "Derived Data??? " + `ls ~/Library/Developer/Xcode/DerivedData/`
+    #Dir.chdir(path) do
+    #  if run_type == 'react_native'
+    #    system('react-native bundle --platform ios --dev false --entry-file index.js --bundle-output ios/main.jsbundle && react-native run-ios')
+    #  else
+    #    UI.important 'Build Again'
+    #    puts "What's in ~? " + `ls ~`
+    #    puts "Derived Data??? " + `ls ~/Library/Developer/Xcode/DerivedData/`
 
-        system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -derivedDataPath ./DerivedData CODE_SIGN_IDENTITY="" -destination 'platform=iOS Simulator,id=#{sim_id},os=10.3,name=#{sim_name}' CODE_SIGNING_REQUIRED=NO") or exit
+     #   system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -derivedDataPath ./DerivedData CODE_SIGN_IDENTITY="" -destination 'platform=iOS Simulator,id=#{sim_id},os=10.3,name=#{sim_name}' CODE_SIGNING_REQUIRED=NO") or exit
         #xcodebuild(
         #    workspace: app_name + '.xcworkspace',
         #    scheme: app_name,
@@ -52,19 +52,22 @@ lane :iOS do |options|
         UI.important 'Simulator install'
         #system("ios-sim install ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app --devicetypeid \"#{iphone.gsub(/[' ']/, '-')}, 11.0\"  --exit")
         system("xcrun simctl boot #{sim_id}")
-        xcode_path = `xcode-select -p`
+        #xcode_path = `xcode-select -p`
         #UI.important "Xcode path: #{xcode_path}"
 
         #system("sudo xcode-select -s /Applications/Xcode8.3.1.app/Contents/Developer")
 
         #puts "ls path: " + `ls #{xcode_path}`
-        puts "ls 8.3 path: " + `ls /Applications/Xcode8.3.1.app/Contents/Developer/`
-        puts "ls 8.3 path2: " + `ls /Applications/Xcode8.3.1.app/Contents/Developer/Applications/`
+        #puts "ls 8.3 path: " + `ls /Applications/Xcode8.3.1.app/Contents/Developer/`
+        #puts "ls 8.3 path2: " + `ls /Applications/Xcode8.3.1.app/Contents/Developer/Applications/`
+
+        app_path = Dir.glop("~/Library/Developer/Xcode/DerivedData/#{app_name}-*/Build/Products/Debug-iphonesimulator/#{app_name}.app")
+        puts "App Path!!!!! #{app_path}"
         system("open /Applications/Xcode8.3.1.app/Contents/Developer/Applications/Simulator.app/")
-        system("xcrun simctl install booted ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app")
+        system("xcrun simctl install booted #{app_path}")
         system("xcrun simctl install booted #{bundle_name}")
-      end
-    end
+      #end
+    #end
 
     Dir.chdir('iOS/') do
       UI.important 'Run Tests'
