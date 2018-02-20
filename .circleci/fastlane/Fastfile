@@ -39,7 +39,10 @@ lane :iOS do |options|
         system('react-native bundle --platform ios --dev false --entry-file index.js --bundle-output ios/main.jsbundle && react-native run-ios')
       else
         UI.important 'Build Again'
-        system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -derivedDataPath ./DerivedData CODE_SIGN_IDENTITY="" -destination 'platform=iOS Simulator,id=#{sim_id}' CODE_SIGNING_REQUIRED=NO") or exit
+        puts "What's in ~? " + `ls ~`
+        puts "Derived Data??? " + `ls ~/Library/Developer/Xcode/DerivedData/`
+
+        system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -derivedDataPath ./DerivedData CODE_SIGN_IDENTITY="" -destination 'platform=iOS Simulator,id=#{sim_id},os=10.3,name=#{sim_name}' CODE_SIGNING_REQUIRED=NO") or exit
         #xcodebuild(
         #    workspace: app_name + '.xcworkspace',
         #    scheme: app_name,
