@@ -44,7 +44,7 @@ lane :iOS do |options|
       #system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -destination 'platform=iOS Simulator,name=#{sim_name}'") or exit
     end
 
-    system("find / -name Simulator.app")
+    system("find / Simulator.app")
 
     UI.important 'Simulator install'
     #system("ios-sim install ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app --devicetypeid \"#{iphone.gsub(/[' ']/, '-')}, 11.0\"  --exit")
