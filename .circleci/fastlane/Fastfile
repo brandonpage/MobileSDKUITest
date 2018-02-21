@@ -6,13 +6,13 @@ lane :iOS do |options|
   run_type = options[:type]
   iphone = 'iPhone-7'
   os = '11-2'
-  sim_name = 'test2222s'
+  sim_name = 'test22'
 
   if ENV.has_key?('JENKINS_URL')
     os = '11-0'
   end
 
-  system("xcrun simctl delete \"test\" || echo \"remove device if exists\"")
+  system("xcrun simctl delete #{sim_name}")
   sim_id = `xcrun simctl create #{sim_name} com.apple.CoreSimulator.SimDeviceType.#{iphone} com.apple.CoreSimulator.SimRuntime.iOS-#{os}`
 
   puts "SIM ID: #{sim_id}"
@@ -34,10 +34,21 @@ lane :iOS do |options|
         bundle_name = 'com.salesforce.'.concat(app_name)
     end
 
+    UI.important 'Build for Simulator'
+    Dir.chdir(path) do
+      #xcodebuild(
+      #  workspace: "#{app_name}.xcworkspace",
+      #  scheme: app_name,
+      #  sdk: 'iphonesimulator'
+      #)
+      system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -destination 'platform=iOS Simulator,name=#{sim_name}'") or exit
+    end
+
     UI.important 'Simulator install'
     #system("ios-sim install ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app --devicetypeid \"#{iphone.gsub(/[' ']/, '-')}, 11.0\"  --exit")
     system("xcrun simctl boot #{sim_id}")
-    home_path = "/Users/iosadmin"
+    #home_path = "/Users/iosadmin"
+    home_path = "/Users/bpage"
     puts "Home Path: #{home_path}"
     app_path = Dir.glob("#{home_path}/Library/Developer/Xcode/DerivedData/#{app_name}-*").first
     puts "path: #{app_path}"
@@ -45,7 +56,9 @@ lane :iOS do |options|
     puts "App Path!!!!! #{app_path}"
     #system("open /Applications/Xcode8.3.1.app/Contents/Developer/Applications/Simulator.app/")
     system("xcrun simctl install booted #{app_path}")
+    puts "Install booted app path"
     system("xcrun simctl install booted #{bundle_name}")
+    puts "Install booted bundle name"
 
     Dir.chdir('iOS/') do
       UI.important 'Run Tests'
@@ -55,7 +68,7 @@ lane :iOS do |options|
       scan(
           project: 'iOS/MobileSDKUITest.xcodeproj',
           scheme: 'MobileSDKUITest',
-          #device: sim_name,
+          device: sim_name,
           #test_without_building: true,
           output_directory: 'test_output',
           xcargs: "TEST_APP_BUNDLE=#{bundle_name}"
