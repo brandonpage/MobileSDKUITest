@@ -52,7 +52,18 @@ class BasicLogin {
             context.startActivity(intent)
         }
 
-        device.wait(Until.hasObject(By.pkg(packageName).depth(0)), 5000)
+        //device.wait(Until.hasObject(By.pkg(packageName).depth(0)), 5000)
+
+
+        Thread.sleep(50000)
+        // Refresh needed to load element tree on API 22
+        var overflowMenu = device.findObject(UiSelector().className("android.widget.ImageButton").description("More options"))
+        overflowMenu.waitForExists(5000)
+        overflowMenu.click()
+        var reloadButton = device.findObject(UiSelector().resourceId("android:id/title").text("Reload"))
+        reloadButton.waitForExists(5000)
+        reloadButton.click()
+        Thread.sleep(60000)
     }
 
     @Test
@@ -75,12 +86,12 @@ class BasicLogin {
         connectionApply.click() */
 
         //com.salesforce.samples.smartsyncexplorer:id/sf__oauth_webview
-        var webview = device.findObject(UiSelector().resourceId(packageName + ":id/sf__oauth_webview"))
-        webview.waitForExists(12000)
-        Assert.assertEquals(0, webview.childCount)
+        //var webview = device.findObject(UiSelector().resourceId(packageName + ":id/sf__oauth_webview"))
+        //webview.waitForExists(12000)
+        //Assert.assertEquals(0, webview.childCount)
 
         //Log.d("yooooo", "num children: " + webview.childCount)
-        println("num children: " + webview.childCount)
+        //println("num children: " + webview.childCount)
 
 
         //var username = device.findObject(UiSelector().resourceId("username"))
@@ -90,18 +101,19 @@ class BasicLogin {
 
         //username.setText("bpage@salesforce.com")
         username.setText("bpage3@salesforce.com")
-        Assert.assertEquals("bpage3@salesforce.com", username.text)
-        username.legacySetText("bpage3@salesforce.com")
-        Assert.assertEquals("bpage3@salesforce.com", username.text)
+        //Assert.assertEquals("bpage3@salesforce.com", username.text)
+        //username.legacySetText("bpage3@salesforce.com")
+        //Assert.assertEquals("bpage3@salesforce.com", username.text)
 
         //var password = device.findObject(UiSelector().resourceId("password"))
         var password = device.findObject(UiSelector().className("android.widget.EditText").index(4))
         password.click()
         //password.setText("test1234")
-        //password.setText("test123456")
-        password.legacySetText("test123456")
+        password.setText("test123456")
+        //password.legacySetText("test123456")
 
-        var login = device.findObject(UiSelector().resourceId("Login"))
+        //var login = device.findObject(UiSelector().resourceId("Login"))
+        var login = device.findObject(UiSelector().className("android.widget.Button").index(0))
         login.click()
 
         device.wait(Until.hasObject(By.res("oaapprove")), 240000)

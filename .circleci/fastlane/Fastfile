@@ -13,7 +13,7 @@ lane :iOS do |options|
   if ENV.has_key?('JENKINS_URL')
     os = '11-0'
     xcode_path = '/Applications/Xcode9.app/Contents/Developer/Applications/Simulator.app'
-    #sleep_time = 120
+    sleep_time = 120
   end
 
   system("xcrun simctl delete #{sim_name}") or puts "No old device to delete"
@@ -52,20 +52,17 @@ lane :iOS do |options|
     app_path = Dir.glob("#{home_path}/Library/Developer/Xcode/DerivedData/#{app_name}-*").first.concat("/Build/Products/Debug-iphonesimulator/#{app_name}.app")
     puts "App Path!!!!! #{app_path}"
     system("xcrun simctl install booted #{app_path}")
-    #sleep 15
-    #system("xcrun simctl shutdown #{sim_id}")
-    #sleep 15
 
     Dir.chdir('iOS/') do
       UI.important 'Run Tests'
-      #scan(
-      #    project: 'iOS/MobileSDKUITest.xcodeproj',
-      #    scheme: 'MobileSDKUITest',
-      #    device: "#{sim_name} (#{os.gsub('-', '.')})",
-      #    output_directory: 'test_output',
-      #    xcargs: "TEST_APP_BUNDLE=#{bundle_name}"
-      #)
-      system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,name=#{sim_name}' TEST_APP_BUNDLE=#{bundle_name} test")
+      scan(
+          project: 'iOS/MobileSDKUITest.xcodeproj',
+          scheme: 'MobileSDKUITest',
+          device: "#{sim_name} (#{os.gsub('-', '.')})",
+          output_directory: 'test_output',
+          xcargs: "TEST_APP_BUNDLE=#{bundle_name}"
+      )
+      #system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,name=#{sim_name}' TEST_APP_BUNDLE=#{bundle_name} test")
     end
   end
 end

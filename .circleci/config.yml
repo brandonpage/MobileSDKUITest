@@ -76,57 +76,56 @@ jobs:
       - store_test_results:
           path: Android/app/build/reports/androidTests/connected/
 
-      - run:
-          name: Test Native Kotlin App
-          command: source .circleci/build-and-test.sh && android native_kotlin
-          when: always
-      - store_artifacts:
-          path: tmp*/native_kotlinandroidApp/app/build/outputs/apk/
-          destination: Kotlin
-      - store_artifacts:
-          path: Android/app/build/reports/androidTests/connected/
-          destination: Kotlin
-      - store_test_results:
-          path: Android/app/build/reports/androidTests/connected/
+#      - run:
+#          name: Test Native Kotlin App
+#          command: source .circleci/build-and-test.sh && android native_kotlin
+#          when: always
+#      - store_artifacts:
+#          path: tmp*/native_kotlinandroidApp/app/build/outputs/apk/
+#          destination: Kotlin
+#      - store_artifacts:
+#          path: Android/app/build/reports/androidTests/connected/
+#          destination: Kotlin
+#      - store_test_results:
+#          path: Android/app/build/reports/androidTests/connected/
 
-      - run:
-          name: Test Hybrid Local App
-          command: source .circleci/build-and-test.sh && android hybrid_local
-          when: always
-      - store_artifacts:
-          path: tmp*/hybrid_localandroidApp/platforms/android/app/build/outputs/apk/
-          destination: Hybrid_Local
-      - store_artifacts:
-          path: Android/app/build/reports/androidTests/connected/
-          destination: Hybrid_Local
-      - store_test_results:
-          path: Android/app/build/reports/androidTests/connected/
+#      - run:
+#          name: Test Hybrid Local App
+#          command: source .circleci/build-and-test.sh && android hybrid_local
+#          when: always
+#      - store_artifacts:
+#          path: tmp*/hybrid_localandroidApp/platforms/android/app/build/outputs/apk/
+#          destination: Hybrid_Local
+#      - store_artifacts:
+#          path: Android/app/build/reports/androidTests/connected/
+#          destination: Hybrid_Local
+#      - store_test_results:
+#          path: Android/app/build/reports/androidTests/connected/
 
-      - run:
-          name: Test Hybrid Remote App
-          command: source .circleci/build-and-test.sh && android hybrid_remote
-          when: always
-      - store_artifacts:
-          path: tmp*/hybrid_remoteandroidApp/platforms/android/app/build/outputs/apk/
-          destination: Hybrid_Remote
-      - store_artifacts:
-          path: Android/app/build/reports/androidTests/connected/
-          destination: Hybrid_Remote
-      - store_test_results:
-          path: Android/app/build/reports/androidTests/connected/
+#      - run:
+#          name: Test Hybrid Remote App
+#          command: source .circleci/build-and-test.sh && android hybrid_remote
+#          when: always
+#      - store_artifacts:
+#          path: tmp*/hybrid_remoteandroidApp/platforms/android/app/build/outputs/apk/
+#          destination: Hybrid_Remote
+#      - store_artifacts:
+#          path: Android/app/build/reports/androidTests/connected/
+#      - store_test_results:
+#          path: Android/app/build/reports/androidTests/connected/
 
-      - run:
-          name: Test React Native App
-          command: source .circleci/build-and-test.sh && android react_native
-          when: always
-      - store_artifacts:
-          path: tmp*/hybrid_remoteandroidApp/platforms/android/app/build/outputs/apk/
-          destination: Hybrid_Remote
-      - store_artifacts:
-          path: Android/app/build/reports/androidTests/connected/
-          destination: Hybrid_Remote
-      - store_test_results:
-          path: Android/app/build/reports/androidTests/connected/
+#      - run:
+#          name: Test React Native App
+#          command: source .circleci/build-and-test.sh && android react_native
+#          when: always
+#      - store_artifacts:
+#          path: tmp*/hybrid_remoteandroidApp/platforms/android/app/build/outputs/apk/
+#          destination: Hybrid_Remote
+#      - store_artifacts:
+#          path: Android/app/build/reports/androidTests/connected/
+#          destination: Hybrid_Remote
+#      - store_test_results:
+#          path: Android/app/build/reports/androidTests/connected/
 
   test-forceios:
       <<: *mac
@@ -165,13 +164,13 @@ workflows:
 
   # Cron are on a timezone 8 hours ahead of PST
   # Build everything at ~11:30pm Mon/Wed/Fri Nights
-  weekly-build-all-apps:
-    triggers:
-      - schedule:
-          cron: "30 7 * * 2,4,6"
-          filters:
-            branches:
-              only:
-                - dev
-    jobs:
-      - test-forcedroid
+#  weekly-build-all-apps:
+#    triggers:
+#      - schedule:
+#          cron: "30 7 * * 2,4,6"
+#          filters:
+#            branches:
+#              only:
+#                - dev
+#    jobs:
+#      - test-forcedroid
