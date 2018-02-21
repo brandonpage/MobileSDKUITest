@@ -41,13 +41,13 @@ lane :iOS do |options|
       #  scheme: app_name,
       #  sdk: 'iphonesimulator'
       #)
-      #system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -destination 'platform=iOS Simulator,name=#{sim_name}'") or exit
+      system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -destination 'platform=iOS Simulator,name=#{sim_name}'") or exit
     end
-    
+
     UI.important 'Simulator install'
-    system("ios-sim install ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app --devicetypeid \"#{iphone.gsub(/[' ']/, '-')}, 11.0\"  --exit")
+    #system("ios-sim install ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app --devicetypeid \"#{iphone.gsub(/[' ']/, '-')}, 11.0\"  --exit")
     system("xcrun simctl boot #{sim_id}")
-    system("open /Applications/Xcode9.app/Contents/Developer/Applications/Simulator.app/")
+    system("open /Applications/Xcode9.app/Contents/Developer/Applications/Simulator.app --args -CurrentDeviceUDID #{sim_id}")
     sleep 60
 
     home_path = "/Users/iosadmin"
