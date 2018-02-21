@@ -6,7 +6,7 @@ lane :iOS do |options|
   run_type = options[:type]
   iphone = 'iPhone-7'
   os = '11-2'
-  sim_name = 'test7'
+  sim_name = 'testsim'
   xcode_path = '/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app'
   sleep_time = 60
 
@@ -49,24 +49,23 @@ lane :iOS do |options|
     sleep sleep_time
 
     home_path = `echo ~`.delete("\n")
-    puts "Home Path: #{home_path}"
     app_path = Dir.glob("#{home_path}/Library/Developer/Xcode/DerivedData/#{app_name}-*").first.concat("/Build/Products/Debug-iphonesimulator/#{app_name}.app")
     puts "App Path!!!!! #{app_path}"
     system("xcrun simctl install booted #{app_path}")
-    sleep 15
-    system("xcrun simctl shutdown #{sim_id}")
-    sleep 15
+    #sleep 15
+    #system("xcrun simctl shutdown #{sim_id}")
+    #sleep 15
 
     Dir.chdir('iOS/') do
       UI.important 'Run Tests'
-      scan(
-          project: 'iOS/MobileSDKUITest.xcodeproj',
-          scheme: 'MobileSDKUITest',
-          device: "#{sim_name} (#{os.gsub('-', '.')})",
-          output_directory: 'test_output',
-          xcargs: "TEST_APP_BUNDLE=#{bundle_name}"
-      )
-      #system("xcodebuild -scheme MobileSDKUITest -sdk iphonesimulator -destination 'platform=iOS Simulator,name=#{sim_name} (#{os.gsub('-', '.')})' TEST_APP_BUNDLE=#{bundle_name} test")
+      #scan(
+      #    project: 'iOS/MobileSDKUITest.xcodeproj',
+      #    scheme: 'MobileSDKUITest',
+      #    device: "#{sim_name} (#{os.gsub('-', '.')})",
+      #    output_directory: 'test_output',
+      #    xcargs: "TEST_APP_BUNDLE=#{bundle_name}"
+      #)
+      system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,name=#{sim_name}' TEST_APP_BUNDLE=#{bundle_name} test")
     end
   end
 end
