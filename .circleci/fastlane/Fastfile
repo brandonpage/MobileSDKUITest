@@ -60,10 +60,11 @@ lane :iOS do |options|
       scan(
           project: 'iOS/MobileSDKUITest.xcodeproj',
           scheme: 'MobileSDKUITest',
-          device: "#{sim_name} (#{os.gsub('-', '.')})",
+          device: "#{sim_name} #{os.gsub('-', '.')}",
           output_directory: 'test_output',
           xcargs: "TEST_APP_BUNDLE=#{bundle_name}"
       )
+      #system("xcodebuild -scheme MobileSDKUITest -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8 11.0' TEST_APP_BUNDLE=${bundle_name} test")
     end
   end
 end
