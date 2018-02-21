@@ -49,7 +49,7 @@ lane :iOS do |options|
     UI.important 'Simulator install'
     #system("ios-sim install ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app --devicetypeid \"#{iphone.gsub(/[' ']/, '-')}, 11.0\"  --exit")
     system("xcrun simctl boot #{sim_id}")
-    system("open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/")
+    system("open /Applications/Xcode9.app/Contents/Developer/Applications/Simulator.app/")
     sleep 60
 
     home_path = "/Users/iosadmin"
