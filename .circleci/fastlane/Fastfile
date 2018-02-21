@@ -17,7 +17,7 @@ lane :iOS do |options|
 
   puts "SIM ID: #{sim_id}"
   Dir.chdir('../../') do
-    generateApp('ios', run_type)
+    #generateApp('ios', run_type)
     app_name = "#{run_type}_iosApp"
     path = Dir.glob("tmp*").first.concat("/#{app_name}/")
 
@@ -41,20 +41,24 @@ lane :iOS do |options|
       #  scheme: app_name,
       #  sdk: 'iphonesimulator'
       #)
-      system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -destination 'platform=iOS Simulator,name=#{sim_name}'") or exit
+      #system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -destination 'platform=iOS Simulator,name=#{sim_name}'") or exit
     end
+
+    system("find / -name Simulator.app")
 
     UI.important 'Simulator install'
     #system("ios-sim install ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app --devicetypeid \"#{iphone.gsub(/[' ']/, '-')}, 11.0\"  --exit")
     system("xcrun simctl boot #{sim_id}")
-    #home_path = "/Users/iosadmin"
-    home_path = "/Users/bpage"
+    system("open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/")
+    sleep 60
+
+    home_path = "/Users/iosadmin"
+    #home_path = "/Users/bpage"
     puts "Home Path: #{home_path}"
     app_path = Dir.glob("#{home_path}/Library/Developer/Xcode/DerivedData/#{app_name}-*").first
     puts "path: #{app_path}"
     app_path.concat("/Build/Products/Debug-iphonesimulator/#{app_name}.app")
     puts "App Path!!!!! #{app_path}"
-    #system("open /Applications/Xcode8.3.1.app/Contents/Developer/Applications/Simulator.app/")
     system("xcrun simctl install booted #{app_path}")
     puts "Install booted app path"
     system("xcrun simctl install booted #{bundle_name}")
