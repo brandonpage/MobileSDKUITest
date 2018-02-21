@@ -53,14 +53,14 @@ lane :iOS do |options|
     app_path = Dir.glob("#{home_path}/Library/Developer/Xcode/DerivedData/#{app_name}-*").first.concat("/Build/Products/Debug-iphonesimulator/#{app_name}.app")
     puts "App Path!!!!! #{app_path}"
     system("xcrun simctl install booted #{app_path}")
-    puts "Install booted app path"
+    puts "Simualtors: " + `instruments -s`
 
     Dir.chdir('iOS/') do
       UI.important 'Run Tests'
       scan(
           project: 'iOS/MobileSDKUITest.xcodeproj',
           scheme: 'MobileSDKUITest',
-          device: sim_name,
+          device: "#{sim_name} (#{os.gsub('-', '.')})",
           output_directory: 'test_output',
           xcargs: "TEST_APP_BUNDLE=#{bundle_name}"
       )
