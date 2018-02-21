@@ -7,13 +7,17 @@ lane :iOS do |options|
   iphone = 'iPhone-7'
   os = '11-2'
   sim_name = 'test7'
+  xcode_path = '/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app'
+  sleep_time = 60
 
   if ENV.has_key?('JENKINS_URL')
     os = '11-0'
+    xcode_path = '/Applications/Xcode9.app/Contents/Developer/Applications/Simulator.app'
+    sleep_time = 120
   end
 
-  system("xcrun simctl delete #{sim_name}")
-  sim_id = `xcrun simctl create #{sim_name} com.apple.CoreSimulator.SimDeviceType.#{iphone} com.apple.CoreSimulator.SimRuntime.iOS-#{os}`
+  system("xcrun simctl delete #{sim_name}") or puts "No old device to delete"
+  sim_id = `xcrun simctl create #{sim_name} com.apple.CoreSimulator.SimDeviceType.#{iphone} com.apple.CoreSimulator.SimRuntime.iOS-#{os}`.delete("\n")
 
   puts "SIM ID: #{sim_id}"
   Dir.chdir('../../') do
@@ -41,16 +45,12 @@ lane :iOS do |options|
 
     UI.important 'Simulator install'
     system("xcrun simctl boot #{sim_id}")
-    system("open /Applications/Xcode9.app/Contents/Developer/Applications/Simulator.app --args -CurrentDeviceUDID #{sim_id}")
-    #system("open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app --args -CurrentDeviceUDID #{sim_id}")
-    sleep 30
+    system("open #{xcode_path} --args -CurrentDeviceUDID #{sim_id}")
+    sleep sleep_time
 
-    home_path = "/Users/iosadmin"
-    #home_path = "/Users/bpage"
+    home_path = `echo ~`.delete("\n")
     puts "Home Path: #{home_path}"
-    app_path = Dir.glob("#{home_path}/Library/Developer/Xcode/DerivedData/#{app_name}-*").first
-    puts "path: #{app_path}"
-    app_path.concat("/Build/Products/Debug-iphonesimulator/#{app_name}.app")
+    app_path = Dir.glob("#{home_path}/Library/Developer/Xcode/DerivedData/#{app_name}-*").first.concat("/Build/Products/Debug-iphonesimulator/#{app_name}.app")
     puts "App Path!!!!! #{app_path}"
     system("xcrun simctl install booted #{app_path}")
     puts "Install booted app path"
