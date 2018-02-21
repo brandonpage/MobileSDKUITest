@@ -55,7 +55,7 @@ class BasicLogin {
         //device.wait(Until.hasObject(By.pkg(packageName).depth(0)), 5000)
 
 
-        Thread.sleep(50000)
+        Thread.sleep(30000)
         // Refresh needed to load element tree on API 22
         var overflowMenu = device.findObject(UiSelector().className("android.widget.ImageButton").description("More options"))
         overflowMenu.waitForExists(5000)
@@ -63,7 +63,7 @@ class BasicLogin {
         var reloadButton = device.findObject(UiSelector().resourceId("android:id/title").text("Reload"))
         reloadButton.waitForExists(5000)
         reloadButton.click()
-        Thread.sleep(60000)
+        Thread.sleep(30000)
     }
 
     @Test
@@ -116,8 +116,26 @@ class BasicLogin {
         var login = device.findObject(UiSelector().className("android.widget.Button").index(0))
         login.click()
 
-        device.wait(Until.hasObject(By.res("oaapprove")), 240000)
-        var allowButton = device.findObject(UiSelector().resourceId("oaapprove"))
+
+        Thread.sleep(30000)
+        // Refresh needed to load element tree on API 22
+        var overflowMenu = device.findObject(UiSelector().className("android.widget.ImageButton").description("More options"))
+        overflowMenu.waitForExists(5000)
+        overflowMenu.click()
+        var reloadButton = device.findObject(UiSelector().resourceId("android:id/title").text("Reload"))
+        reloadButton.waitForExists(5000)
+        reloadButton.click()
+        Thread.sleep(30000)
+
+        //device.wait(Until.hasObject(By.res("oaapprove")), 240000)
+        //var allowButton = device.findObject(UiSelector().resourceId("oaapprove"))
+        var allowButton = device.findObject(UiSelector().className("android.widget.Button").index(0))
+        allowButton.waitForExists(5000)
         allowButton.click()
+
+
+        var titleBar = device.findObject(UiSelector().resourceId("android:id/action_bar_title"))
+        titleBar.waitForExists(60000)
+        Assert.assertTrue(titleBar.exists())
     }
 }
