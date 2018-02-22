@@ -137,5 +137,8 @@ class BasicLogin {
         var titleBar = device.findObject(UiSelector().resourceId("android:id/action_bar_title"))
         titleBar.waitForExists(60000)
         Assert.assertTrue(titleBar.exists())
+
+        //This should fail
+        Assert.assertTrue(false)
     }
 }
