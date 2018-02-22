@@ -67,6 +67,7 @@ jobs:
           name: Test Native Java App
           command: source .circleci/build-and-test.sh && android native
           when: always
+          no_output_timeout: 900
       - store_artifacts:
           path: tmp*/nativeandroidApp/app/build/outputs/apk/
           destination: Java
@@ -80,6 +81,7 @@ jobs:
           name: Test Native Kotlin App
           command: source .circleci/build-and-test.sh && android native_kotlin
           when: always
+          no_output_timeout: 900
       - store_artifacts:
           path: tmp*/native_kotlinandroidApp/app/build/outputs/apk/
           destination: Kotlin
@@ -93,6 +95,7 @@ jobs:
           name: Test Hybrid Local App
           command: source .circleci/build-and-test.sh && android hybrid_local
           when: always
+          no_output_timeout: 900
       - store_artifacts:
           path: tmp*/hybrid_localandroidApp/platforms/android/app/build/outputs/apk/
           destination: Hybrid_Local
@@ -106,6 +109,7 @@ jobs:
           name: Test Hybrid Remote App
           command: source .circleci/build-and-test.sh && android hybrid_remote
           when: always
+          no_output_timeout: 900
       - store_artifacts:
           path: tmp*/hybrid_remoteandroidApp/platforms/android/app/build/outputs/apk/
           destination: Hybrid_Remote
@@ -119,6 +123,7 @@ jobs:
           name: Test React Native App
           command: source .circleci/build-and-test.sh && android react_native
           when: always
+          no_output_timeout: 900
       - store_artifacts:
           path: tmp*/hybrid_remoteandroidApp/platforms/android/app/build/outputs/apk/
           destination: Hybrid_Remote
