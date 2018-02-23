@@ -1,5 +1,7 @@
 package com.salesforce.mobilesdk.mobilesdkuitest.Login
 
+import PageObjects.LoginPageObject
+import PageObjects.TestApplication
 import android.app.Instrumentation
 import android.app.UiAutomation
 import android.content.Context
@@ -24,108 +26,21 @@ import kotlin.concurrent.thread
 class BasicLogin {
 
     var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-    var packageName = ""
+    var app = TestApplication()
+    var loginPage = LoginPageObject()
 
     @Before
     fun setupTestApp() {
-        packageName = InstrumentationRegistry.getArguments().get("packageName") as String
-        // Uncomment this to run in Android Studio
-        //packageName = "com.salesforce.react_native"
-        //packageName = "com.salesforce.samples.smartsyncexplorer"
-
-        device.pressHome()
-        var context = InstrumentationRegistry.getContext()
-        var intent = context.packageManager.getLaunchIntentForPackage(packageName as String?)
-
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        context.startActivity(intent)
-
-        if (packageName == "com.salesforce.react_native") {
-            device.wait(Until.hasObject(By.res("android:id/alertTitle")), 5000)
-            device.pressBack()
-            device.wait(Until.hasObject(By.pkg("com.android.settings").depth(0)), 5000)
-
-            var allowSwitch = device.findObject(UiSelector().packageName("com.android.settings").resourceId("android:id/switch_widget"))
-            allowSwitch.click()
-            Log.i("swittttch", "is checkable: " + allowSwitch.isCheckable)
-            device.pressBack()
-            context.startActivity(intent)
-        }
-
-        //device.wait(Until.hasObject(By.pkg(packageName).depth(0)), 5000)
-
-
-        Thread.sleep(30000)
-        // Refresh needed to load element tree on API 22
-        var overflowMenu = device.findObject(UiSelector().className("android.widget.ImageButton").description("More options"))
-        overflowMenu.waitForExists(5000)
-        overflowMenu.click()
-        var reloadButton = device.findObject(UiSelector().resourceId("android:id/title").text("Reload"))
-        reloadButton.waitForExists(5000)
-        reloadButton.click()
-        Thread.sleep(30000)
+        // Test Apps have no logout button so clear data
+        //Runtime.getRuntime().exec("adb shell pm clear packageName")
+        app.launch()
     }
 
     @Test
     fun login() {
-        /*var overflowMenu = device.findObject(UiSelector().className("android.widget.ImageButton").description("More options"))
-        overflowMenu.click()
-        var changeServer = device.findObject(UiSelector().resourceId("android:id/title").text("Change Server"))
-        changeServer.click()
-        var addConnection = device.findObject(UiSelector().className("android.widget.Button").text("Add Connection"))
-        addConnection.click()
-        var connectionName = device.findObject(UiSelector().resourceId(packageName + ":id/sf__picker_custom_label"))
-        connectionName.click()
-        connectionName.setText("Mobile222")
-        var connectionUrl = device.findObject(UiSelector().resourceId(packageName + ":id/sf__picker_custom_url"))
-        connectionUrl.click()
-        connectionUrl.setText("https://mobile2.t.salesforce.com")
-        var addConnectionApply = device.findObject(UiSelector().resourceId(packageName + ":id/sf__apply_button"))
-        addConnectionApply.click()
-        var connectionApply = device.findObject(UiSelector().resourceId(packageName + ":id/sf__apply_button"))
-        connectionApply.click() */
-
-        //com.salesforce.samples.smartsyncexplorer:id/sf__oauth_webview
-        //var webview = device.findObject(UiSelector().resourceId(packageName + ":id/sf__oauth_webview"))
-        //webview.waitForExists(12000)
-        //Assert.assertEquals(0, webview.childCount)
-
-        //Log.d("yooooo", "num children: " + webview.childCount)
-        //println("num children: " + webview.childCount)
-
-
-        //var username = device.findObject(UiSelector().resourceId("username"))
-        var username = device.findObject(UiSelector().className("android.widget.EditText").index(2))
-        username.waitForExists(240000)
-        username.click()
-
-        //username.setText("bpage@salesforce.com")
-        username.setText("bpage3@salesforce.com")
-        //Assert.assertEquals("bpage3@salesforce.com", username.text)
-        //username.legacySetText("bpage3@salesforce.com")
-        //Assert.assertEquals("bpage3@salesforce.com", username.text)
-
-        //var password = device.findObject(UiSelector().resourceId("password"))
-        var password = device.findObject(UiSelector().className("android.widget.EditText").index(4))
-        password.click()
-        //password.setText("test1234")
-        password.setText("test123456")
-        //password.legacySetText("test123456")
-
-        //var login = device.findObject(UiSelector().resourceId("Login"))
-        var login = device.findObject(UiSelector().className("android.widget.Button").index(0))
-        login.click()
-
-
-        Thread.sleep(30000)
-        // Refresh needed to load element tree on API 22
-        var overflowMenu = device.findObject(UiSelector().className("android.widget.ImageButton").description("More options"))
-        overflowMenu.waitForExists(5000)
-        overflowMenu.click()
-        var reloadButton = device.findObject(UiSelector().resourceId("android:id/title").text("Reload"))
-        reloadButton.waitForExists(5000)
-        reloadButton.click()
-        Thread.sleep(30000)
+        loginPage.setUsername("bpage@mobilesdk.com")
+        loginPage.setPassword("test1234")
+        loginPage.tapLogin()
 
         //device.wait(Until.hasObject(By.res("oaapprove")), 240000)
         //var allowButton = device.findObject(UiSelector().resourceId("oaapprove"))
@@ -133,9 +48,21 @@ class BasicLogin {
         allowButton.waitForExists(5000)
         allowButton.click()
 
+        when (app.packageName) {
+            "com.salesforce.native_java", "com.salesforce.native_kotlin" -> {
+                var titleBar = device.findObject(UiSelector().resourceId("android:id/action_bar_title"))
+                titleBar.waitForExists(60000)
+                Assert.assertEquals("App did not load.", "Contact List", titleBar.text)
 
-        var titleBar = device.findObject(UiSelector().resourceId("android:id/action_bar_title"))
-        titleBar.waitForExists(60000)
-        Assert.assertTrue(titleBar.exists())
+                //var contact = device.findObject(UiSelector().resourceId(packageName + ":id/obj_name").index(0))
+                //Assert.assertEquals("Contacts did not load.", "EXPECTED CONTACT NAME", contact.text)
+            }
+            "com.salesforce.hybrid_local", "com.salesforce.hybrid_local" -> {
+                //TODO: implement
+            }
+            "com.salesforce.react_native" -> {
+                //TODO: implement
+            }
+        }
     }
 }

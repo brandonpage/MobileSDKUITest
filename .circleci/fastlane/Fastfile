@@ -8,18 +8,15 @@ lane :iOS do |options|
   os = '11-2'
   sim_name = 'testsim'
   xcode_path = '/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app'
-  sleep_time = 60
 
   if ENV.has_key?('JENKINS_URL')
     os = '11-0'
     xcode_path = '/Applications/Xcode9.app/Contents/Developer/Applications/Simulator.app'
-    sleep_time = 120
   end
 
   system("xcrun simctl delete #{sim_name}") or puts "No old device to delete"
   sim_id = `xcrun simctl create #{sim_name} com.apple.CoreSimulator.SimDeviceType.#{iphone} com.apple.CoreSimulator.SimRuntime.iOS-#{os}`.delete("\n")
 
-  puts "SIM ID: #{sim_id}"
   Dir.chdir('../../') do
     generateApp('ios', run_type)
     app_name = "#{run_type}_iosApp"
@@ -31,43 +28,52 @@ lane :iOS do |options|
       when 'native_swift'
         bundle_name = 'com.salesforce.native-swift-iosApp'
       when 'react_native'
-        system('npm start')
-        bundle_name = 'com.salesforce.react_native.react-nativeiosApp'
+        path.concat('ios/')
+        bundle_name = 'com.salesforce.react-native-iosApp'
       else
         path.concat('platforms/ios/')
         bundle_name = 'com.salesforce.'.concat(run_type)
     end
 
-    UI.important 'Build for Simulator'
-    Dir.chdir(path) do
-      system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -destination 'platform=iOS Simulator,name=#{sim_name}'") or exit
-    end
-
-    UI.important 'Simulator install'
+    # Start Simulator
     system("xcrun simctl boot #{sim_id}")
     system("open #{xcode_path} --args -CurrentDeviceUDID #{sim_id}")
-    sleep sleep_time
 
-    home_path = `echo ~`.delete("\n")
-    app_path = Dir.glob("#{home_path}/Library/Developer/Xcode/DerivedData/#{app_name}-*").first.concat("/Build/Products/Debug-iphonesimulator/#{app_name}.app")
-    puts "App Path!!!!! #{app_path}"
-    system("xcrun simctl install booted #{app_path}")
+    UI.important 'Build for Simulator'
+    Dir.chdir(path) do
+      if run_type == 'react_native'
+        system('killall -9 node')
+        system('npm start&')
+      end
+      system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -sdk iphonesimulator -derivedDataPath ./DerivedData | xcpretty --color --simple") or exit
+
+      UI.important 'Install App on Simulator'
+      system("xcrun simctl install booted ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app")
+    end
 
     Dir.chdir('iOS/') do
       UI.important 'Run Tests'
-      scan(
-          project: 'iOS/MobileSDKUITest.xcodeproj',
-          scheme: 'MobileSDKUITest',
-          device: "#{sim_name} (#{os.gsub('-', '.')})",
-          output_directory: 'test_output',
-          xcargs: "TEST_APP_BUNDLE=#{bundle_name}"
-      )
-      #system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,name=#{sim_name}' TEST_APP_BUNDLE=#{bundle_name} test")
+      begin
+        scan(
+            project: 'iOS/MobileSDKUITest.xcodeproj',
+            scheme: 'MobileSDKUITest',
+            device: "#{sim_name} (#{os.gsub('-', '.')})",
+            output_directory: 'test_output',
+            xcargs: "TEST_APP_BUNDLE=#{bundle_name}"
+        )
+        #system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,name=#{sim_name}' TEST_APP_BUNDLE=#{bundle_name} test")
+      ensure
+        system("xcrun simctl shutdown #{sim_name}")
+        sleep 5
+        system("xcrun simctl delete #{sim_name}")
+      end
     end
   end
 end
 
 def generateApp(os, type)
+  home_path = `echo ~`.delete("\n")
+  system("rm -rf #{home_path}/Library/Developer/Xcode/DerivedData/")
   system('rm -rf tmp*')
   system("./SalesforceMobileSDK-Package/test/test_force.js --os=#{os} --apptype=#{type}")
 end

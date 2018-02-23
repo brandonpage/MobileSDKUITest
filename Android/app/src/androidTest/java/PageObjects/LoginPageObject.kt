@@ -1,0 +1,223 @@
+package PageObjects
+
+import android.os.Build
+import android.support.test.InstrumentationRegistry
+import android.support.test.uiautomator.UiDevice
+import android.support.test.uiautomator.UiObject
+import android.support.test.uiautomator.UiSelector
+
+/**
+ * Created by bpage on 2/21/18.
+ */
+class LoginPageObject {
+    var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+    var isOldDevice: Boolean = (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1)
+    var timeout:Long = if (isOldDevice) 30000 else 5000
+    var app = TestApplication()
+
+    init {
+        if (isOldDevice) {
+            reloadWebview()
+        }
+    }
+
+    fun setUsername(name: String) {
+        var username = if (isOldDevice) {
+            device.findObject(UiSelector().className("android.widget.EditText").index(2))
+        }
+        else {
+            device.findObject(UiSelector().resourceId("username"))
+        }
+
+        username.waitForExists(timeout * 10)
+        username.click()
+        username.setText(name)
+    }
+
+    fun setPassword(password: String) {
+        var passwordField = if (isOldDevice) {
+            device.findObject(UiSelector().className("android.widget.EditText").index(4))
+        }
+        else {
+            device.findObject(UiSelector().resourceId("password"))
+        }
+
+        passwordField.click()
+        passwordField.setText(password)
+    }
+
+    fun tapLogin() {
+        var loginButton = if (isOldDevice) {
+            device.findObject(UiSelector().className("android.widget.Button").index(0))
+        }
+        else {
+            device.findObject(UiSelector().resourceId("Login"))
+        }
+        loginButton.click()
+    }
+
+    fun setCustomDomain(domain: String) {
+        var domainLink = if (isOldDevice) {
+            device.findObject(UiSelector().className("android.view.View").index(8))
+            // content description?
+        }
+        else {
+            //TODO: check this
+            device.findObject(UiSelector().resourceId("Use Custom Domain"))
+        }
+        domainLink.waitForExists(timeout)
+        domainLink.click()
+
+        var domainField = if (isOldDevice) {
+            device.findObject(UiSelector().className("android.widget.EditText").index(1))
+        }
+        else {
+            //TODO: get resource id
+            device.findObject(UiSelector().resourceId(""))
+        }
+        domainField.waitForExists(timeout)
+        domainField.click()
+        domainField.setText(domain)
+
+        var continueButton = if (isOldDevice) {
+            device.findObject(UiSelector().className("android.widget.Button").index(5))
+        }
+        else {
+            //TODO: check this
+            device.findObject(UiSelector().resourceId("continue"))
+        }
+        continueButton.click()
+    }
+
+    fun changeServer(serverName: String, serverURL: String) {
+        openServerPage()
+        var addConnection = if (isOldDevice) {
+            device.findObject(UiSelector().resourceId(app.packageName + ":id/sf__show_custom_url_edit"))
+        }
+        else {
+            device.findObject(UiSelector().className("android.widget.Button").text("Add Connection"))
+        }
+        addConnection.waitForExists(timeout)
+        addConnection.click()
+
+        var connectionName = if (isOldDevice) {
+            device.findObject(UiSelector().resourceId(app.packageName + ":id/sf__picker_custom_label"))
+        }
+        else {
+            //TODO: check this
+            device.findObject(UiSelector().resourceId("name"))
+        }
+        connectionName.waitForExists(timeout)
+        connectionName.click()
+        connectionName.setText(serverName)
+
+        var connectionUrl = if (isOldDevice) {
+            device.findObject(UiSelector().resourceId(app.packageName + ":id/sf__picker_custom_url"))
+        }
+        else {
+            //TODO: check this
+            device.findObject(UiSelector().resourceId("url"))
+        }
+        connectionUrl.click()
+        connectionUrl.setText(serverURL)
+
+
+        var addConnectionApply = if (isOldDevice) {
+            device.findObject(UiSelector().resourceId(app.packageName + ":id/sf__apply_button"))
+        }
+        else {
+            //TODO: check this
+            device.findObject(UiSelector().resourceId("apply"))
+        }
+        addConnectionApply.click()
+        applyConnection()
+    }
+
+    fun resetServers() {
+        clickOverflowMenu()
+        var resetButton = if (isOldDevice) {
+            device.findObject(UiSelector().className("android.widget.LinearLayout").index(0))
+        }
+        else {
+            //TODO: check this
+            device.findObject(UiSelector().resourceId("reset"))
+        }
+        resetButton.waitForExists(timeout)
+        resetButton.click()
+    }
+
+    fun choseServer(serverName: String) {
+        openServerPage()
+        var serverButton = if (isOldDevice) {
+            device.findObject(UiSelector().className("android.widget.RadioButton").text(serverName))
+        }
+        else {
+            //TODO: check this
+            device.findObject(UiSelector().resourceId(serverName))
+        }
+        serverButton.waitForExists(timeout)
+        serverButton.click()
+        applyConnection()
+    }
+
+    private fun applyConnection () {
+        var connectionApply = if (isOldDevice) {
+            device.findObject(UiSelector().resourceId(app.packageName + ":id/sf__apply_button"))
+        }
+        else {
+            //TODO: check this
+            device.findObject(UiSelector().resourceId("add connection"))
+        }
+        connectionApply.waitForExists(timeout)
+        connectionApply.click()
+    }
+
+    fun openServerPage () {
+        clickOverflowMenu()
+        var changeServer = if (isOldDevice) {
+            device.findObject(UiSelector().resourceId("android:id/title").text("Change Server"))
+        }
+        else {
+            //TODO: check this
+            device.findObject(UiSelector().resourceId("change server"))
+        }
+        changeServer.waitForExists(timeout)
+        changeServer.click()
+    }
+
+    fun clearCookies () {
+        clickOverflowMenu()
+        var clearCookiesButton = if (isOldDevice) {
+            device.findObject(UiSelector().resourceId("android:id/title").text("Clear Cookies"))
+        }
+        else {
+            device.findObject(UiSelector().resourceId("Clear Cookies"))
+        }
+        clearCookiesButton.waitForExists(timeout)
+        clearCookiesButton.click()
+    }
+
+    private fun clickOverflowMenu() {
+        var overflowMenu = if (isOldDevice) {
+            device.findObject(UiSelector().className("android.widget.ImageButton").description("More options"))
+        }
+        else {
+            //TODO: check this
+            device.findObject(UiSelector().resourceId("More options"))
+        }
+        overflowMenu.waitForExists(timeout)
+        overflowMenu.click()
+    }
+
+    private fun reloadWebview() {
+        Thread.sleep(timeout)
+        // Refresh needed to load element tree on API 22
+        var overflowMenu = device.findObject(UiSelector().className("android.widget.ImageButton").description("More options"))
+        overflowMenu.waitForExists(timeout)
+        overflowMenu.click()
+        var reloadButton = device.findObject(UiSelector().resourceId("android:id/title").text("Reload"))
+        reloadButton.waitForExists(timeout)
+        reloadButton.click()
+        Thread.sleep(timeout)
+    }
+}
