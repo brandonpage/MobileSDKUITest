@@ -1,5 +1,6 @@
 package com.salesforce.mobilesdk.mobilesdkuitest.Login
 
+import PageObjects.AuthorizationPageObject
 import PageObjects.LoginPageObject
 import PageObjects.TestApplication
 import android.app.Instrumentation
@@ -27,7 +28,6 @@ class BasicLogin {
 
     var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
     var app = TestApplication()
-    var loginPage = LoginPageObject()
 
     @Before
     fun setupTestApp() {
@@ -38,15 +38,13 @@ class BasicLogin {
 
     @Test
     fun login() {
+        var loginPage = LoginPageObject()
         loginPage.setUsername("bpage@mobilesdk.com")
         loginPage.setPassword("test1234")
         loginPage.tapLogin()
 
-        //device.wait(Until.hasObject(By.res("oaapprove")), 240000)
-        //var allowButton = device.findObject(UiSelector().resourceId("oaapprove"))
-        var allowButton = device.findObject(UiSelector().className("android.widget.Button").index(0))
-        allowButton.waitForExists(5000)
-        allowButton.click()
+        var authPage = AuthorizationPageObject()
+        authPage.tapAllow()
 
         when (app.packageName) {
             "com.salesforce.native_java", "com.salesforce.native_kotlin" -> {

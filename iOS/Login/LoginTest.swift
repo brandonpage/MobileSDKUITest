@@ -22,37 +22,31 @@ class LoginTest: XCTestCase {
     }
     
     func testExample() {
-        // This setup should be moved to a XCUIApplication class
-        // Restting the app also needs to be implemented
-        let bundle_string = ProcessInfo.processInfo.environment["TEST_APP_BUNDLE"]!
-        let app = XCUIApplication(bundleIdentifier: bundle_string)
+        let app = TestApplication()
+        let loginPage = LoginPageObject(testApp: app)
+        let authPage = AuthorizationPageObject(testApp: app)
+        
         app.launch()
+        loginPage.setUsername(name: "bpage@mobilesdk.com")
+        loginPage.setPassword(password: "test1234")
+        loginPage.tapLogin()
+        authPage.tapAllow()
         
-        if bundle_string == "com.salesforce.react_native.react-nativeiosApp" {
-            sleep(30)
+        // Assert App loads
+        switch app.bundle_string {
+        case "com.salesforce.native-iosApp", "com.salesforce.native-swift-iosApp":
+            XCTAssert(app.navigationBars["Mobile SDK Sample App"].waitForExistence(timeout: 30), "App did not load.")
+            //XCTAssert(app.tables.staticTexts["CONTACT NAME HERE"].waitForExistence(timeout: 10), "Contact did not load.")
+        case "com.salesforce.hybrid_local", "com.salesforce.hybrid_remote":
+            //TODO: implment
+            XCTAssert(true, "App did not load.")
+        case "com.salesforce.react-native-iosApp":
+            //TODO: implment
+            XCTAssert(true, "App did not load.")
+        default:
+            XCTAssert(false, "App type no recognized.")
         }
-
-
-
-        // Username
-        let userName = app.descendants(matching: .textField).element
-        userName.press(forDuration: 0.5)
-        userName.typeText("bpage3@salesforce.com")
         
-        // Password
-        let passwordField = app.descendants(matching: .secureTextField).element
-        passwordField.press(forDuration: 0.5)
-        sleep(1)
-        passwordField.typeText("test123456")
         
-        // Tap Login
-        let webViewPredicate = NSPredicate(format: "label BEGINSWITH[cd] 'Login'")
-        let webElements = app.otherElements.webViews.otherElements.matching(webViewPredicate).element
-        webElements.otherElements.children(matching: .button).element(boundBy: 0).press(forDuration: 0.5)
-        
-        // Tap Allow
-        sleep(7)
-        app.buttons.element(matching: NSPredicate(format: "label CONTAINS 'Allow'")).press(forDuration: 0.5)
     }
-    
 }

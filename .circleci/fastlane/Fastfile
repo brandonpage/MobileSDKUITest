@@ -61,7 +61,6 @@ lane :iOS do |options|
             output_directory: 'test_output',
             xcargs: "TEST_APP_BUNDLE=#{bundle_name}"
         )
-        #system("xcodebuild -scheme MobileSDKUITest -destination 'platform=iOS Simulator,name=#{sim_name}' TEST_APP_BUNDLE=#{bundle_name} test")
       ensure
         system("xcrun simctl shutdown #{sim_name}")
         sleep 5
@@ -72,8 +71,6 @@ lane :iOS do |options|
 end
 
 def generateApp(os, type)
-  home_path = `echo ~`.delete("\n")
-  system("rm -rf #{home_path}/Library/Developer/Xcode/DerivedData/")
   system('rm -rf tmp*')
   system("./SalesforceMobileSDK-Package/test/test_force.js --os=#{os} --apptype=#{type}")
 end
