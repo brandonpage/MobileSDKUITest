@@ -34,7 +34,6 @@ function android {
     echo "                                                                             "
 
     # adb install app
-    mv app/build/outputs/apk/debug/app-debug.apk "app/build/outputs/apk/debug/${app_name}.apk"
     adb install app/build/outputs/apk/debug/app-debug.apk
 
     if [ "$type" == "hybrid_local" ] || [ "$type" == "hybrid_remote" ]; then
