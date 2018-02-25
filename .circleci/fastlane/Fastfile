@@ -92,14 +92,16 @@ lane :android do |options|
         system('npm start&')
       end
 
-      printSection 'Install App on Emulator'
-      system('adb install app/build/outputs/apk/debug/app-debug.apk')
+      #printSection 'Install App on Emulator'
+      result = system('adb install app/build/outputs/apk/debug/app-debug.apk')
+      UI.crash!("APK did not install sucessfully") unless(result)
     end
 
     Dir.chdir('Android/') do
-      printSection 'Run Tests'
-      system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest")
-      #`./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest`
+      #printSection 'Run Tests'
+      UI.header("Run Tests")
+      #system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest")
+      `./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest`
     end
   end
 end
@@ -108,7 +110,8 @@ end
 
 def generateApp(os, type)
   system('rm -rf tmp*')
-  system("./SalesforceMobileSDK-Package/test/test_force.js --os=#{os} --apptype=#{type}")
+  result = system("./SalesforceMobileSDK-Package/test/test_force.js --os=#{os} --apptype=#{type}")
+  UI.crash!("Test app was not successfully created.") unless(result)
 end
 
 def printSection(message)
