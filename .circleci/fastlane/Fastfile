@@ -96,7 +96,7 @@ lane :android do |options|
       system('adb install app/build/outputs/apk/debug/app-debug.apk')
     end
 
-    Dir.chdir('android/') do
+    Dir.chdir('Android/') do
       printSection 'Run Tests'
       system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest")
       #`./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest`
