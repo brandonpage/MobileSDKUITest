@@ -9,7 +9,7 @@ sudo apt-get install libqt5widgets5
 sudo npm install -g shelljs@0.7.0
 sudo npm install -g cordova@7.0.0
 cordova telemetry off
-sudo gem install --no-document fastlane
+gem install --no-document fastlane
 
 cd SalesforceMobileSDK-Package
 git checkout packagename
