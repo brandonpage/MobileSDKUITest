@@ -53,6 +53,6 @@ class TestApplication {
         var reloadButton = device.findObject(UiSelector().resourceId("android:id/title").text("Reload"))
         reloadButton.waitForExists(timeout)
         reloadButton.click()
-        Thread.sleep(timeout)
+        Thread.sleep(timeout * 2)
     }
 }

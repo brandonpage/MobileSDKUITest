@@ -17,7 +17,7 @@ class AuthorizationPageObject {
 
     init {
         if (isOldDevice) {
-            app.reloadWebview()
+            //app.reloadWebview()
         }
     }
 
@@ -29,6 +29,7 @@ class AuthorizationPageObject {
             device.findObject(UiSelector().resourceId("oaapprove"))
         }
         allowButton.waitForExists(timeout)
+        Thread.sleep(60000)
         allowButton.click()
     }
 

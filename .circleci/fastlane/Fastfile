@@ -70,7 +70,55 @@ lane :iOS do |options|
   end
 end
 
+lane :android do |options|
+  run_type = options[:type]
+  app_name = (run_type == 'native') ? 'native_java' : run_type
+  package_name = "com.salesforce.#{app_name}"
+
+  Dir.chdir('../../') do
+    #generateApp('android', run_type)
+    path = Dir.glob("tmp*").first.concat("/#{run_type}_androidApp/")
+
+    case run_type
+      when 'react_native'
+        path.concat('android/')
+      when 'hybrid_local', 'hybrid_remote'
+        path.concat('platforms/android/')
+    end
+
+    Dir.chdir(path) do
+      if run_type == 'react_native'
+        system('killall -9 node')
+        system('npm start&')
+      end
+
+      printSection 'Install App on Emulator'
+      system('adb install app/build/outputs/apk/debug/app-debug.apk')
+    end
+
+    Dir.chdir('android/') do
+      printSection 'Run Tests'
+      system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest")
+      #`./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest`
+    end
+  end
+end
+
+# Helper Functions
+
 def generateApp(os, type)
   system('rm -rf tmp*')
   system("./SalesforceMobileSDK-Package/test/test_force.js --os=#{os} --apptype=#{type}")
+end
+
+def printSection(message)
+  UI.success ''
+  UI.success  ''
+  UI.success  '*****************************************************************************'
+  UI.success  '*'
+  UI.success  "*                            #{message}"
+  UI.success  '*'
+  UI.success  '*****************************************************************************'
+  UI.success  ''
+  UI.success  ''
 end

@@ -2,9 +2,14 @@ package PageObjects
 
 import android.os.Build
 import android.support.test.InstrumentationRegistry
+import android.support.test.uiautomator.SearchCondition
 import android.support.test.uiautomator.UiDevice
 import android.support.test.uiautomator.UiObject
 import android.support.test.uiautomator.UiSelector
+import android.util.Log
+import android.view.accessibility.AccessibilityWindowInfo
+
+
 
 /**
  * Created by bpage on 2/21/18.
@@ -17,7 +22,11 @@ class LoginPageObject {
 
     init {
         if (isOldDevice) {
-            reloadWebview()
+            device.findObject(UiSelector().className("android.widget.EditText").index(2)).waitForExists(120000)
+            //Thread.sleep(120000)
+            //app.reloadWebview()
+            //Log.i("uia", "done with reload")
+            //Thread.sleep(120000)
         }
     }
 
@@ -29,9 +38,14 @@ class LoginPageObject {
             device.findObject(UiSelector().resourceId("username"))
         }
 
-        username.waitForExists(timeout * 10)
-        username.click()
-        username.setText(name)
+        username.waitForExists(timeout)
+        if (isOldDevice) {
+            username.legacySetText(name)
+            Thread.sleep(60000)
+        }
+        else {
+            username.setText(name)
+        }
     }
 
     fun setPassword(password: String) {
@@ -42,8 +56,14 @@ class LoginPageObject {
             device.findObject(UiSelector().resourceId("password"))
         }
 
-        passwordField.click()
-        passwordField.setText(password)
+        passwordField.waitForExists(timeout)
+        if (isOldDevice) {
+            passwordField.legacySetText(password)
+            Thread.sleep(60000)
+        }
+        else {
+            passwordField.setText(password)
+        }
     }
 
     fun tapLogin() {
@@ -53,6 +73,14 @@ class LoginPageObject {
         else {
             device.findObject(UiSelector().resourceId("Login"))
         }
+
+        if (isOldDevice) {
+            Log.i("uia", "keyboard present. tapping back button.")
+            device.pressBack()
+            Thread.sleep(5000)
+        }
+
+        Log.i("uia", "tapping login...")
         loginButton.click()
     }
 
@@ -207,17 +235,5 @@ class LoginPageObject {
         }
         overflowMenu.waitForExists(timeout)
         overflowMenu.click()
-    }
-
-    private fun reloadWebview() {
-        Thread.sleep(timeout)
-        // Refresh needed to load element tree on API 22
-        var overflowMenu = device.findObject(UiSelector().className("android.widget.ImageButton").description("More options"))
-        overflowMenu.waitForExists(timeout)
-        overflowMenu.click()
-        var reloadButton = device.findObject(UiSelector().resourceId("android:id/title").text("Reload"))
-        reloadButton.waitForExists(timeout)
-        reloadButton.click()
-        Thread.sleep(timeout)
     }
 }
