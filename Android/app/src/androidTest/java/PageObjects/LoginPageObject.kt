@@ -14,11 +14,7 @@ import android.view.accessibility.AccessibilityWindowInfo
 /**
  * Created by bpage on 2/21/18.
  */
-class LoginPageObject {
-    var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-    var isOldDevice: Boolean = (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1)
-    var timeout:Long = if (isOldDevice) 30000 else 5000
-    var app = TestApplication()
+class LoginPageObject : BasePageObject() {
 
     init {
         if (isOldDevice) {

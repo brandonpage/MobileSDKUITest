@@ -9,11 +9,7 @@ import android.support.test.uiautomator.UiSelector
  * Created by bpage on 2/23/18.
  */
 
-class AuthorizationPageObject {
-    var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-    var isOldDevice: Boolean = (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1)
-    var timeout:Long = if (isOldDevice) 30000 else 5000
-    var app = TestApplication()
+class AuthorizationPageObject : BasePageObject() {
 
     init {
         if (isOldDevice) {

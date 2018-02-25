@@ -14,17 +14,17 @@ import android.util.Log
  */
 
 class TestApplication {
-    var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+    //var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
     var packageName = InstrumentationRegistry.getArguments().get("packageName") as String
-    var isOldDevice: Boolean = (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1)
-    var timeout:Long = if (isOldDevice) 30000 else 5000
+    //var isOldDevice: Boolean = (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1)
+    //var timeout:Long = if (isOldDevice) 30000 else 5000
 
     fun launch() {
         // Uncomment this to run in Android Studio
         //var packageName = "com.salesforce.react_native"
         //packageName = "com.salesforce.samples.smartsyncexplorer"
 
-        device.pressHome()
+        //device.pressHome()
         var context = InstrumentationRegistry.getContext()
         var intent = context.packageManager.getLaunchIntentForPackage(packageName as String?)
 
@@ -45,7 +45,7 @@ class TestApplication {
         }*/
     }
 
-    internal fun reloadWebview() {
+    /*internal fun reloadWebview() {
         // Refresh needed to load element tree on API 22
         var overflowMenu = device.findObject(UiSelector().className("android.widget.ImageButton").description("More options"))
         overflowMenu.waitForExists(timeout)
@@ -54,5 +54,5 @@ class TestApplication {
         reloadButton.waitForExists(timeout)
         reloadButton.click()
         Thread.sleep(timeout * 2)
-    }
+    }*/
 }
