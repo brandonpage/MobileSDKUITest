@@ -97,6 +97,7 @@ lane :android do |options|
       #system("mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/#{app_name}.apk")
       #result = system("adb install app/build/outputs/apk/debug/#{app_name}.apk")
       result = system('adb install app/build/outputs/apk/debug/app-debug.apk')
+      puts "result: #{result}"
       UI.crash!('APK did not install successfully.') unless(result)
     end
 
