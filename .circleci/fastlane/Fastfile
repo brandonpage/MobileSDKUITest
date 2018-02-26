@@ -93,15 +93,18 @@ lane :android do |options|
       end
 
       UI.important 'Installing App on Emulator'
-      system("adb kill-server && adb start-server")
-      system("mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/#{app_name}.apk")
-      result = system("adb install app/build/outputs/apk/debug/#{app_name}.apk")
-      UI.crash!("APK did not install successfully.") unless(result)
+      #system("adb kill-server && adb start-server")
+      #system("mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/#{app_name}.apk")
+      #result = system("adb install app/build/outputs/apk/debug/#{app_name}.apk")
+      result = system('adb install app/build/outputs/apk/debug/app-debug.apk')
+      UI.crash!('APK did not install successfully.') unless(result)
     end
 
     Dir.chdir('Android/') do
       UI.header 'Run Tests'
-      `./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest`
+      result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest")
+      puts "result: #{result}"
+      UI.crash!('Tests failed.') unless(result)
     end
   end
 end
@@ -111,5 +114,5 @@ end
 def generateApp(os, type)
   system('rm -rf tmp*')
   result = system("./SalesforceMobileSDK-Package/test/test_force.js --os=#{os} --apptype=#{type}")
-  UI.crash!("Test app was not successfully created.") unless(result)
+  UI.crash!('Test app was not successfully created.') unless(result)
 end
