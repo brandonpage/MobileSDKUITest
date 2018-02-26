@@ -33,7 +33,7 @@ class TestApplication {
         //packageName = "com.salesforce.samples.smartsyncexplorer"
 
         var context = InstrumentationRegistry.getContext()
-        var intent = context.packageManager.getLaunchIntentForPackage(packageName as String?)
+        var intent = context.packageManager.getLaunchIntentForPackage(packageName)
 
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(intent)

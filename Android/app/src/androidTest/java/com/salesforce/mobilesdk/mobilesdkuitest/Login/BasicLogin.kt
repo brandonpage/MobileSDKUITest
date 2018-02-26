@@ -9,6 +9,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.File
 
 /**
  * Created by bpage on 2/2/18.
@@ -23,8 +24,8 @@ class BasicLogin {
 
     @Before
     fun setupTestApp() {
-        // Test Apps have no logout button so clear data
-        //Runtime.getRuntime().exec("adb shell pm clear packageName")
+        // Some Test Apps have no logout button so clear data
+        // Runtime.getRuntime().exec("adb shell pm clear packageName")
         app.launch()
     }
 
@@ -36,6 +37,7 @@ class BasicLogin {
         loginPage.tapLogin()
         AuthorizationPageObject().tapAllow()
 
+        device.takeScreenshot(File("/sdcard/login.png"))
         when (app.type) {
             AppType.NATIVE_JAVA, AppType.NATIVE_KOTLIN ->
                 NativeSyncScreenPageObject().assertAppTitle()
