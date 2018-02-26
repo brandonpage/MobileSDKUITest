@@ -32,7 +32,7 @@ class BasicLogin {
     @Test
     fun login() {
         var loginPage = LoginPageObject()
-        loginPage.setUsername("bpage@mobilesdk.com")
+        loginPage.setUsername("circleci@mobilesdk.com")
         loginPage.setPassword("test1234")
         loginPage.tapLogin()
         AuthorizationPageObject().tapAllow()
