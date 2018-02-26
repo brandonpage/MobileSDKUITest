@@ -1,6 +1,6 @@
-before_all do
-  setup_circle_ci
-end
+#before_all do
+#  setup_circle_ci
+#end
 
 lane :iOS do |options|
   run_type = options[:type]
