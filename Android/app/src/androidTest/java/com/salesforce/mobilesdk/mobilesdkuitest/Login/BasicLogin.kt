@@ -1,15 +1,13 @@
 package com.salesforce.mobilesdk.mobilesdkuitest.Login
 
-import PageObjects.AuthorizationPageObject
-import PageObjects.LoginPageObject
-import PageObjects.SyncScreenPageObject
-import PageObjects.TestApplication
+import PageObjects.*
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
-import android.support.test.uiautomator.*
+import android.support.test.uiautomator.UiDevice
+import android.support.test.uiautomator.UiSelector
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import org.junit.Assert
 import org.junit.runner.RunWith
 
 /**
@@ -19,8 +17,9 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class BasicLogin {
 
-    var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
     var app = TestApplication()
+    var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+    var timeout:Long = 1000 * 5
 
     @Before
     fun setupTestApp() {
@@ -35,8 +34,26 @@ class BasicLogin {
         loginPage.setUsername("bpage@mobilesdk.com")
         loginPage.setPassword("test1234")
         loginPage.tapLogin()
-
         AuthorizationPageObject().tapAllow()
-        SyncScreenPageObject().assertAppTitle()
+
+        when (app.type) {
+            AppType.NATIVE_JAVA, AppType.NATIVE_KOTLIN ->
+                NativeSyncScreenPageObject().assertAppTitle()
+            AppType.HYBRID_LOCAL -> {
+                var title = device.findObject(UiSelector().className("android.view.View").index(0))
+                title.waitForExists(timeout)
+                Assert.assertEquals("App did not load.", title.contentDescription, "Users")
+            }
+            AppType.HYBRID_REMOTE -> {
+                var title = device.findObject(UiSelector().className("android.view.View").index(1))
+                title.waitForExists(timeout)
+                Assert.assertEquals("App did not load.", title.contentDescription, "Salesforce Mobile SDK Test")
+            }
+            AppType.REACT_NATIVE -> {
+                var title = device.findObject(UiSelector().className("android.widget.TextView").index(0))
+                title.waitForExists(timeout)
+                Assert.assertEquals("App did not load.", title.contentDescription, "Mobile SDK Sample App")
+            }
+        }
     }
 }

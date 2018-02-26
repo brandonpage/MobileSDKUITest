@@ -75,7 +75,7 @@ jobs:
           path: Android/app/build/reports/androidTests/connected/
           destination: Java
       - store_test_results:
-          path: Android/app/build/reports/androidTests/connected/
+          path: Android/app/build/outputs/androidTest-results/
 
       - run:
           name: Test Native Kotlin App
@@ -89,7 +89,7 @@ jobs:
           path: Android/app/build/reports/androidTests/connected/
           destination: Kotlin
       - store_test_results:
-          path: Android/app/build/reports/androidTests/connected/
+          path: Android/app/build/outputs/androidTest-results/
 
       - run:
           name: Test Hybrid Local App
@@ -103,7 +103,7 @@ jobs:
           path: Android/app/build/reports/androidTests/connected/
           destination: Hybrid_Local
       - store_test_results:
-          path: Android/app/build/reports/androidTests/connected/
+          path: Android/app/build/outputs/androidTest-results/
 
       - run:
           name: Test Hybrid Remote App
@@ -117,7 +117,7 @@ jobs:
           path: Android/app/build/reports/androidTests/connected/
           destination: Hybrid_Remote
       - store_test_results:
-          path: Android/app/build/reports/androidTests/connected/
+          path: Android/app/build/outputs/androidTest-results/
 
       - run:
           name: Test React Native App
@@ -131,7 +131,7 @@ jobs:
           path: Android/app/build/reports/androidTests/connected/
           destination: Hybrid_Remote
       - store_test_results:
-          path: Android/app/build/reports/androidTests/connected/
+          path: Android/app/build/outputs/androidTest-results/
 
   test-forceios:
       <<: *mac

@@ -1,15 +1,7 @@
 package PageObjects
 
-import android.os.Build
-import android.support.test.InstrumentationRegistry
-import android.support.test.uiautomator.SearchCondition
-import android.support.test.uiautomator.UiDevice
-import android.support.test.uiautomator.UiObject
 import android.support.test.uiautomator.UiSelector
 import android.util.Log
-import android.view.accessibility.AccessibilityWindowInfo
-
-
 
 /**
  * Created by bpage on 2/21/18.
@@ -19,10 +11,6 @@ class LoginPageObject : BasePageObject() {
     init {
         if (isOldDevice) {
             device.findObject(UiSelector().className("android.widget.EditText").index(2)).waitForExists(120000)
-            //Thread.sleep(120000)
-            //app.reloadWebview()
-            //Log.i("uia", "done with reload")
-            //Thread.sleep(120000)
         }
     }
 

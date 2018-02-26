@@ -92,15 +92,13 @@ lane :android do |options|
         system('npm start&')
       end
 
-      #printSection 'Install App on Emulator'
-      result = system('adb install app/build/outputs/apk/debug/app-debug.apk')
-      UI.crash!("APK did not install sucessfully") unless(result)
+      system("mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/#{app_name}.apk")
+      result = system("adb install app/build/outputs/apk/debug/#{app_name}.apk")
+      UI.crash!("APK did not install successfully.") unless(result)
     end
 
     Dir.chdir('Android/') do
-      #printSection 'Run Tests'
       UI.header("Run Tests")
-      #system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest")
       `./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest`
     end
   end

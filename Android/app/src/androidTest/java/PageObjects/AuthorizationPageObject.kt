@@ -1,8 +1,5 @@
 package PageObjects
 
-import android.os.Build
-import android.support.test.InstrumentationRegistry
-import android.support.test.uiautomator.UiDevice
 import android.support.test.uiautomator.UiSelector
 
 /**

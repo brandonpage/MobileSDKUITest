@@ -14,17 +14,24 @@ import android.util.Log
  */
 
 class TestApplication {
-    //var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
     var packageName = InstrumentationRegistry.getArguments().get("packageName") as String
-    //var isOldDevice: Boolean = (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1)
-    //var timeout:Long = if (isOldDevice) 30000 else 5000
+    var name = packageName.split(".").last() + "_androidApp"
+    var type = when (packageName.split(".").last()) {
+            "native_java" -> AppType.NATIVE_JAVA
+            "native_kotlin" -> AppType.NATIVE_KOTLIN
+            "hybrid_local" -> AppType.HYBRID_LOCAL
+            "hybrid_remote" -> AppType.HYBRID_REMOTE
+            "react_native" -> AppType.REACT_NATIVE
+            else -> {
+                throw IllegalArgumentException("Unknown App Type")
+            }
+    }
 
     fun launch() {
         // Uncomment this to run in Android Studio
         //var packageName = "com.salesforce.react_native"
         //packageName = "com.salesforce.samples.smartsyncexplorer"
 
-        //device.pressHome()
         var context = InstrumentationRegistry.getContext()
         var intent = context.packageManager.getLaunchIntentForPackage(packageName as String?)
 
@@ -44,15 +51,4 @@ class TestApplication {
             context.startActivity(intent)
         }*/
     }
-
-    /*internal fun reloadWebview() {
-        // Refresh needed to load element tree on API 22
-        var overflowMenu = device.findObject(UiSelector().className("android.widget.ImageButton").description("More options"))
-        overflowMenu.waitForExists(timeout)
-        overflowMenu.click()
-        var reloadButton = device.findObject(UiSelector().resourceId("android:id/title").text("Reload"))
-        reloadButton.waitForExists(timeout)
-        reloadButton.click()
-        Thread.sleep(timeout * 2)
-    }*/
 }
