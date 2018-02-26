@@ -25,7 +25,7 @@ class LoginPageObject : BasePageObject() {
         username.waitForExists(timeout)
         if (isOldDevice) {
             username.legacySetText(name)
-            Thread.sleep(60000)
+            Thread.sleep(120000)
         }
         else {
             username.setText(name)
@@ -43,7 +43,7 @@ class LoginPageObject : BasePageObject() {
         passwordField.waitForExists(timeout)
         if (isOldDevice) {
             passwordField.legacySetText(password)
-            Thread.sleep(60000)
+            Thread.sleep(120000)
         }
         else {
             passwordField.setText(password)
@@ -61,7 +61,7 @@ class LoginPageObject : BasePageObject() {
         if (isOldDevice) {
             Log.i("uia", "keyboard present. tapping back button.")
             device.pressBack()
-            Thread.sleep(5000)
+            Thread.sleep(30000)
         }
 
         Log.i("uia", "tapping login...")
