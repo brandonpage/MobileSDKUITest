@@ -1,6 +1,6 @@
-#before_all do
-#  setup_circle_ci
-#end
+before_all do
+  setup_circle_ci
+end
 
 lane :iOS do |options|
   run_type = options[:type]
@@ -39,7 +39,7 @@ lane :iOS do |options|
     system("xcrun simctl boot #{sim_id}")
     system("open #{xcode_path} --args -CurrentDeviceUDID #{sim_id}")
 
-    UI.important 'Build for Simulator'
+    UI.header 'Build for Simulator'
     Dir.chdir(path) do
       if run_type == 'react_native'
         system('killall -9 node')
@@ -47,12 +47,12 @@ lane :iOS do |options|
       end
       system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -sdk iphonesimulator -derivedDataPath ./DerivedData | xcpretty --color --simple") or exit
 
-      UI.important 'Install App on Simulator'
+      UI.important 'Installing App on Simulator'
       system("xcrun simctl install booted ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app")
     end
 
     Dir.chdir('iOS/') do
-      UI.important 'Run Tests'
+      UI.header 'Run Tests'
       begin
         scan(
             project: 'iOS/MobileSDKUITest.xcodeproj',
@@ -92,13 +92,15 @@ lane :android do |options|
         system('npm start&')
       end
 
+      UI.important 'Installing App on Emulator'
+      system("adb kill-server && adb start-server")
       system("mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/#{app_name}.apk")
       result = system("adb install app/build/outputs/apk/debug/#{app_name}.apk")
       UI.crash!("APK did not install successfully.") unless(result)
     end
 
     Dir.chdir('Android/') do
-      UI.header("Run Tests")
+      UI.header 'Run Tests'
       `./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest`
     end
   end
@@ -110,16 +112,4 @@ def generateApp(os, type)
   system('rm -rf tmp*')
   result = system("./SalesforceMobileSDK-Package/test/test_force.js --os=#{os} --apptype=#{type}")
   UI.crash!("Test app was not successfully created.") unless(result)
-end
-
-def printSection(message)
-  UI.success ''
-  UI.success  ''
-  UI.success  '*****************************************************************************'
-  UI.success  '*'
-  UI.success  "*                            #{message}"
-  UI.success  '*'
-  UI.success  '*****************************************************************************'
-  UI.success  ''
-  UI.success  ''
 end
