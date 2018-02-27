@@ -93,19 +93,22 @@ lane :android do |options|
       end
 
       UI.important 'Installing App on Emulator'
-      system("adb uninstall #{package_name}")
-      result = system('adb install app/build/outputs/apk/debug/app-debug.apk')
+      #system("adb uninstall #{package_name}")
+      result = system('adb install -r app/build/outputs/apk/debug/app-debug.apk')
       puts "result: #{result}"
       UI.crash!('APK did not install successfully.') unless(result)
     end
 
     Dir.chdir('Android/') do
       UI.header 'Run Tests'
-      result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest")
-      working_dir = `pwd`
-      system("adb pull /sdcard/login.png #{working_dir}/app/build/reports/androidTests/connected/")
-      puts "result: #{result}"
-      UI.crash!('Tests failed.') unless(result)
+      begin
+        result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest")
+        working_dir = `pwd`
+        system("adb pull /sdcard/login.png #{working_dir}/app/build/reports/androidTests/connected/")
+      ensure
+        puts "result: #{result}"
+        UI.crash!('Tests failed.') unless(result)
+      end
     end
   end
 end
