@@ -22,13 +22,14 @@ class LoginPageObject : BasePageObject() {
             device.findObject(UiSelector().resourceId("username"))
         }
 
+        Log.i("uia", "Waiting for username filed to be present.")
         username.waitForExists(timeout)
         if (isOldDevice) {
             username.legacySetText(name)
-            Thread.sleep(120000)
+            Thread.sleep(30000)
         }
         else {
-            username.setText(name)
+            username.text = name
         }
     }
 
@@ -43,7 +44,7 @@ class LoginPageObject : BasePageObject() {
         passwordField.waitForExists(timeout)
         if (isOldDevice) {
             passwordField.legacySetText(password)
-            Thread.sleep(120000)
+            Thread.sleep(30000)
         }
         else {
             passwordField.setText(password)

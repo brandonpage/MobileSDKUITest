@@ -40,9 +40,9 @@ class NativeSyncScreenPageObject : BasePageObject() {
             device.findObject(UiSelector().resourceId("android:id/action_bar_title"))
         }
         titleBar.waitForExists(timeout)
-        Thread.sleep(timeout * 2)
+        Thread.sleep(timeout * 10)
 
-        Assert.assertEquals("App did not load.", app.packageName.split(".").last(), titleBar.text)
+        Assert.assertEquals("App did not successfully login.", app.name, titleBar.text)
         //var contact = device.findObject(UiSelector().resourceId(packageName + ":id/obj_name").index(0))
         //Assert.assertEquals("Contacts did not load.", "EXPECTED CONTACT NAME", contact.text)??
     }

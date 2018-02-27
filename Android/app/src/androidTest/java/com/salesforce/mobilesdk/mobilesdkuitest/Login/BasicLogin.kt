@@ -21,12 +21,14 @@ class BasicLogin {
     var app = TestApplication()
     var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
     var timeout:Long = 1000 * 5
+    var failedLoginMessage = "App did not successfully login."
 
     @Before
     fun setupTestApp() {
         // Some Test Apps have no logout button so clear data
         // Runtime.getRuntime().exec("adb shell pm clear packageName")
         app.launch()
+        Thread.sleep(120000)
     }
 
     @Test
@@ -44,17 +46,17 @@ class BasicLogin {
             AppType.HYBRID_LOCAL -> {
                 var title = device.findObject(UiSelector().className("android.view.View").index(0))
                 title.waitForExists(timeout)
-                Assert.assertEquals("App did not load.", title.contentDescription, "Users")
+                Assert.assertEquals(failedLoginMessage, "Users", title.contentDescription)
             }
             AppType.HYBRID_REMOTE -> {
                 var title = device.findObject(UiSelector().className("android.view.View").index(1))
                 title.waitForExists(timeout)
-                Assert.assertEquals("App did not load.", title.contentDescription, "Salesforce Mobile SDK Test")
+                Assert.assertEquals(failedLoginMessage, "Salesforce Mobile SDK Test", title.contentDescription)
             }
             AppType.REACT_NATIVE -> {
                 var title = device.findObject(UiSelector().className("android.widget.TextView").index(0))
                 title.waitForExists(timeout)
-                Assert.assertEquals("App did not load.", title.contentDescription, "Mobile SDK Sample App")
+                Assert.assertEquals(failedLoginMessage, "Mobile SDK Sample App", title.contentDescription)
             }
         }
     }

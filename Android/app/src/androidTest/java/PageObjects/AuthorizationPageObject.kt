@@ -22,7 +22,7 @@ class AuthorizationPageObject : BasePageObject() {
             device.findObject(UiSelector().resourceId("oaapprove"))
         }
         allowButton.waitForExists(timeout)
-        Thread.sleep(60000)
+        Thread.sleep(30000)
         allowButton.click()
     }
 

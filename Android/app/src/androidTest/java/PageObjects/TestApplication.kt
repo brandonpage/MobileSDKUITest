@@ -29,8 +29,7 @@ class TestApplication {
 
     fun launch() {
         // Uncomment this to run in Android Studio
-        //var packageName = "com.salesforce.react_native"
-        //packageName = "com.salesforce.samples.smartsyncexplorer"
+        packageName = "com.salesforce.react_native"
 
         var context = InstrumentationRegistry.getContext()
         var intent = context.packageManager.getLaunchIntentForPackage(packageName)
