@@ -1,10 +1,12 @@
 package PageObjects
 
+import android.graphics.Rect
 import android.support.test.uiautomator.UiSelector
 import android.util.Log
 import android.view.accessibility.AccessibilityWindowInfo
 import android.support.test.InstrumentationRegistry
-
+import android.opengl.ETC1.getHeight
+import android.view.inputmethod.InputMethodManager
 
 
 /**
@@ -55,6 +57,8 @@ class LoginPageObject : BasePageObject() {
         }
     }
 
+
+    // webview com.salesforce.samples.smartsyncexplorer:id/sf__oauth_webview
     fun tapLogin() {
         var loginButton = if (isOldDevice) {
             device.findObject(UiSelector().className("android.widget.Button").index(0))
@@ -64,15 +68,25 @@ class LoginPageObject : BasePageObject() {
         }
 
         if (isOldDevice) {
-            for (window in InstrumentationRegistry.getInstrumentation().uiAutomation.windows) {
+            /*for (window in InstrumentationRegistry.getInstrumentation().uiAutomation.windows) {
+                Log.i("uia", "window: " + window.type)
                 if (window.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD) {
                     Log.i("uia", "keyboard present. tapping back button.")
                     device.pressBack()
                     Thread.sleep(15000)
-                }
-                else {
+                } else {
                     Log.i("uia", "keyboard not present.")
                 }
+            }*/
+
+            var webview = device.findObject(UiSelector().resourceId(app.packageName + ":id/sf__oauth_webview"))
+            var rect = webview.bounds
+            if (rect.bottom > 1500) {
+                Log.i("uia", "keyboard present. tapping back button.")
+                device.pressBack()
+                Thread.sleep(15000)
+            } else {
+                Log.i("uia", "keyboard not present.")
             }
         }
 
