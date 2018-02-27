@@ -1,6 +1,7 @@
 package PageObjects
 
 import android.support.test.uiautomator.UiSelector
+import android.util.Log
 
 /**
  * Created by bpage on 2/23/18.
@@ -21,7 +22,8 @@ class AuthorizationPageObject : BasePageObject() {
         else {
             device.findObject(UiSelector().resourceId("oaapprove"))
         }
-        allowButton.waitForExists(timeout)
+        Log.i("uia", "Waiting for username filed to be present.")
+        assert(allowButton.waitForExists(timeout * 3))
         Thread.sleep(30000)
         allowButton.click()
     }

@@ -2,6 +2,10 @@ package PageObjects
 
 import android.support.test.uiautomator.UiSelector
 import android.util.Log
+import android.view.accessibility.AccessibilityWindowInfo
+import android.support.test.InstrumentationRegistry
+
+
 
 /**
  * Created by bpage on 2/21/18.
@@ -23,7 +27,7 @@ class LoginPageObject : BasePageObject() {
         }
 
         Log.i("uia", "Waiting for username filed to be present.")
-        username.waitForExists(timeout)
+        assert(username.waitForExists(timeout * 2))
         if (isOldDevice) {
             username.legacySetText(name)
             Thread.sleep(30000)
@@ -40,14 +44,14 @@ class LoginPageObject : BasePageObject() {
         else {
             device.findObject(UiSelector().resourceId("password"))
         }
-
-        passwordField.waitForExists(timeout)
+        Log.i("uia", "Waiting for password filed to be present.")
+        assert(passwordField.waitForExists(timeout))
         if (isOldDevice) {
             passwordField.legacySetText(password)
             Thread.sleep(30000)
         }
         else {
-            passwordField.setText(password)
+            passwordField.text = password
         }
     }
 
@@ -60,12 +64,20 @@ class LoginPageObject : BasePageObject() {
         }
 
         if (isOldDevice) {
-            Log.i("uia", "keyboard present. tapping back button.")
-            device.pressBack()
-            Thread.sleep(30000)
+            for (window in InstrumentationRegistry.getInstrumentation().uiAutomation.windows) {
+                if (window.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD) {
+                    Log.i("uia", "keyboard present. tapping back button.")
+                    device.pressBack()
+                    Thread.sleep(15000)
+                }
+                else {
+                    Log.i("uia", "keyboard not present.")
+                }
+            }
         }
 
-        Log.i("uia", "tapping login...")
+        Log.i("uia", "waiting for login button.")
+        assert(loginButton.waitForExists(timeout * 2))
         loginButton.click()
     }
 
