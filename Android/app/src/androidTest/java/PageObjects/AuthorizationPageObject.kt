@@ -51,7 +51,7 @@ class AuthorizationPageObject : BasePageObject() {
         //Log.i("uia", "try drag")
         // WINNER !!!!!!!
         webview2.drag(Point(100, 100))
-        Thread.sleep(10000)
+        Thread.sleep(5000)
         /*Thread.sleep(30000)
         Log.i("uia", "try fling up")
         webview2.fling(Direction.UP)
@@ -69,7 +69,8 @@ class AuthorizationPageObject : BasePageObject() {
         Log.i("uia", "try scroll up")
         webview2.scroll(Direction.UP, 0.5f)*/
 
-        allowButton.click()
+        //allowButton.click()
+        allowButton.clickAndWaitForNewWindow()
     }
 
     fun tapDeny() {

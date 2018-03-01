@@ -15,6 +15,7 @@ import android.util.Log
 
 class TestApplication {
     var packageName = InstrumentationRegistry.getArguments().get("packageName") as String
+    //var packageName = "com.salesforce.hybrid_local"
     var name = packageName.split(".").last().replace("java", "") + "_androidApp"
     var type:AppType = when (packageName.split(".").last()) {
             "native_java" -> AppType.NATIVE_JAVA
@@ -36,6 +37,10 @@ class TestApplication {
 
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(intent)
+
+        if (type == AppType.HYBRID_LOCAL) {
+            Thread.sleep(60000)
+        }
 
         // WIP
         /*if (packageName == "com.salesforce.react_native") {
