@@ -1,6 +1,7 @@
 package PageObjects
 
 import android.support.test.uiautomator.UiSelector
+import android.util.Log
 import org.junit.Assert
 
 /**
@@ -41,8 +42,14 @@ class NativeSyncScreenPageObject : BasePageObject() {
             device.findObject(UiSelector().resourceId("android:id/action_bar_title"))
         }
         titleBar.waitForExists(timeout)
-        Assert.assertEquals("App did not successfully login.", app.name, titleBar.text)
-        //var contact = device.findObject(UiSelector().resourceId(packageName + ":id/obj_name").index(0))
-        //Assert.assertEquals("Contacts did not load.", "EXPECTED CONTACT NAME", contact.text)??
+        Log.i("uia", "app name: " + app.name)
+        Log.i("uia", "app title: " + titleBar.text)
+
+        Assert.assertEquals("App did not successfully basicLogin.", app.name, titleBar.text)
     }
+
+    /*
+    var contact = device.findObject(UiSelector().resourceId(app.packageName + ":id/obj_name").index(0))
+    Assert.assertEquals("Contacts did not load.", "Brandon Page", contact.text)
+    */
 }

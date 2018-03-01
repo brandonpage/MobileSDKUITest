@@ -29,7 +29,7 @@ class AuthorizationPageObject : BasePageObject() {
 
         /*var username = device.findObject(UiSelector().className("android.widget.EditText").index(2))
         if (username.exists()) {
-            Log.i("uia", "still on login page?")
+            Log.i("uia", "still on basicLogin page?")
         }*/
 
         //var webView = device.findObject(UiSelector().resourceId(app.packageName + ":id/sf__oauth_webview"))

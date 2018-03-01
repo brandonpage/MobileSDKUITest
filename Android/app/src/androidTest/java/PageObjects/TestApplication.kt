@@ -15,7 +15,7 @@ import android.util.Log
 
 class TestApplication {
     var packageName = InstrumentationRegistry.getArguments().get("packageName") as String
-    var name = packageName.split(".").last() + "_androidApp"
+    var name = packageName.split(".").last().replace("java", "") + "_androidApp"
     var type:AppType = when (packageName.split(".").last()) {
             "native_java" -> AppType.NATIVE_JAVA
             "native_kotlin" -> AppType.NATIVE_KOTLIN

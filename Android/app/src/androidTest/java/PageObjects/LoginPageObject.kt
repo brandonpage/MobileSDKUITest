@@ -110,17 +110,17 @@ class LoginPageObject : BasePageObject() {
             device.findObject(UiSelector().className("android.widget.Button").index(0))
         }
         else {
-            device.findObject(UiSelector().resourceId("Login"))
+            device.findObject(UiSelector().resourceId("LoginTests"))
         }
 
-        Log.i("uia", "login button: try hitting back")
+        Log.i("uia", "basicLogin button: try hitting back")
         device.pressBack()
         Thread.sleep(35000)
 
 
         /*var webView = device.findObject(UiSelector().resourceId(app.packageName + ":id/sf__oauth_webview"))
         device.swipe(device.displayWidth/2, device.displayHeight/2, device.displayWidth - 20, device.displayHeight - 20, 1)
-        Log.i("uia", "waiting for login button.")*/
+        Log.i("uia", "waiting for basicLogin button.")*/
         assert(loginButton.waitForExists(timeout * 2))
         loginButton.click()
     }
