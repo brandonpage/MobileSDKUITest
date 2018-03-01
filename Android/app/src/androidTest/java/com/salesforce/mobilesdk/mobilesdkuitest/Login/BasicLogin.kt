@@ -28,7 +28,6 @@ class BasicLogin {
         // Some Test Apps have no logout button so clear data
         // Runtime.getRuntime().exec("adb shell pm clear packageName")
         app.launch()
-        Thread.sleep(120000)
     }
 
     @Test

@@ -21,7 +21,7 @@ class LoginPageObject : BasePageObject() {
     }
 
     fun setUsername(name: String) {
-        var username = if (isOldDevice) {
+        var usernameField = if (isOldDevice) {
             device.findObject(UiSelector().className("android.widget.EditText").index(2))
         }
         else {
@@ -29,13 +29,17 @@ class LoginPageObject : BasePageObject() {
         }
 
         Log.i("uia", "Waiting for username filed to be present.")
-        assert(username.waitForExists(timeout * 2))
+        assert(usernameField.waitForExists(timeout * 2))
         if (isOldDevice) {
-            username.legacySetText(name)
-            Thread.sleep(30000)
+            usernameField.legacySetText(name)
+
+            while (usernameField.contentDescription != name) {
+                Log.i("uia", "username not set.  sleeping...")
+                Thread.sleep(5000)
+            }
         }
         else {
-            username.text = name
+            usernameField.text = name
         }
     }
 
@@ -49,8 +53,47 @@ class LoginPageObject : BasePageObject() {
         Log.i("uia", "Waiting for password filed to be present.")
         assert(passwordField.waitForExists(timeout))
         if (isOldDevice) {
+            Log.i("uia", "Old device.  Looking for keyboard.")
+            for (window in InstrumentationRegistry.getInstrumentation().uiAutomation.windows) {
+                Log.i("uia", "window: " + window.type)
+                if (window.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD) {
+                    Log.i("uia", "window**** keyboard present. tapping back button.")
+                    //device.pressBack()
+                    //Thread.sleep(15000)
+                } else {
+                    Log.i("uia", "window**** keyboard not present.")
+                }
+            }
+
+            var webview = device.findObject(UiSelector().resourceId(app.packageName + ":id/sf__oauth_webview"))
+            if (webview.exists()) {
+                var rect = webview.bounds
+                Log.i("uia", "Rect: "+ rect.toString())
+                if (rect.bottom > 1500) {
+                    Log.i("uia", "webview****  keyboard present. tapping back button.")
+                    //device.pressBack()
+                    //Thread.sleep(15000)
+                } else {
+                    Log.i("uia", "webview****  keyboard not present.")
+                }
+            }
+
+            // Get keyboard out of the way
+            device.pressBack()
+            Log.i("uia", "password field, hitting back button")
+            Thread.sleep(25000)
+            //passwordField.click()
+            Thread.sleep(15000)
             passwordField.legacySetText(password)
-            Thread.sleep(30000)
+
+            /*while (passwordField.contentDescription != password) {
+                Log.i("uia", "password field: " + passwordField.contentDescription)
+                Thread.sleep(7000)
+            }*/
+
+            //Thread.sleep(35000)
+            //Log.i("uia", "password field, hitting back button AGAIN")
+            //device.pressBack()
         }
         else {
             passwordField.text = password
@@ -58,39 +101,26 @@ class LoginPageObject : BasePageObject() {
     }
 
 
+    // android:id/button1
+
     // webview com.salesforce.samples.smartsyncexplorer:id/sf__oauth_webview
     fun tapLogin() {
         var loginButton = if (isOldDevice) {
+            //use content description?
             device.findObject(UiSelector().className("android.widget.Button").index(0))
         }
         else {
             device.findObject(UiSelector().resourceId("Login"))
         }
 
-        if (isOldDevice) {
-            /*for (window in InstrumentationRegistry.getInstrumentation().uiAutomation.windows) {
-                Log.i("uia", "window: " + window.type)
-                if (window.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD) {
-                    Log.i("uia", "keyboard present. tapping back button.")
-                    device.pressBack()
-                    Thread.sleep(15000)
-                } else {
-                    Log.i("uia", "keyboard not present.")
-                }
-            }*/
+        Log.i("uia", "login button: try hitting back")
+        device.pressBack()
+        Thread.sleep(35000)
 
-            var webview = device.findObject(UiSelector().resourceId(app.packageName + ":id/sf__oauth_webview"))
-            var rect = webview.bounds
-            if (rect.bottom > 1500) {
-                Log.i("uia", "keyboard present. tapping back button.")
-                device.pressBack()
-                Thread.sleep(15000)
-            } else {
-                Log.i("uia", "keyboard not present.")
-            }
-        }
 
-        Log.i("uia", "waiting for login button.")
+        /*var webView = device.findObject(UiSelector().resourceId(app.packageName + ":id/sf__oauth_webview"))
+        device.swipe(device.displayWidth/2, device.displayHeight/2, device.displayWidth - 20, device.displayHeight - 20, 1)
+        Log.i("uia", "waiting for login button.")*/
         assert(loginButton.waitForExists(timeout * 2))
         loginButton.click()
     }
