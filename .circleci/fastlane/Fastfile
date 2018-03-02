@@ -87,16 +87,15 @@ lane :android do |options|
     end
 
     Dir.chdir(path) do
+      UI.important 'Installing App on Emulator'
+      result = system('adb install -r app/build/outputs/apk/debug/app-debug.apk')
+      puts "result: #{result}"
+      UI.crash!('APK did not install successfully.') unless(result)
+
       if run_type == 'react_native'
         system('killall -9 node')
         system('npm start&')
       end
-
-      UI.important 'Installing App on Emulator'
-      system("adb uninstall #{package_name}")
-      result = system('adb install -r app/build/outputs/apk/debug/app-debug.apk')
-      puts "result: #{result}"
-      UI.crash!('APK did not install successfully.') unless(result)
     end
 
     Dir.chdir('Android/') do
