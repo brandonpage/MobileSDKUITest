@@ -32,11 +32,12 @@ class LoginTest: XCTestCase {
         loginPage.tapLogin()
         authPage.tapAllow()
         
+        app.screenshot()
         // Assert App loads
         switch app.bundle_string {
         case "com.salesforce.native-iosApp", "com.salesforce.native-swift-iosApp":
             XCTAssert(app.navigationBars["Mobile SDK Sample App"].waitForExistence(timeout: 30), "App did not load.")
-            //XCTAssert(app.tables.staticTexts["CONTACT NAME HERE"].waitForExistence(timeout: 10), "Contact did not load.")
+            XCTAssert(app.tables.staticTexts["Brandon Page"].waitForExistence(timeout: 10), "Contact did not load.")
         case "com.salesforce.hybrid_local", "com.salesforce.hybrid_remote":
             //TODO: implment
             XCTAssert(true, "App did not load.")
@@ -46,7 +47,5 @@ class LoginTest: XCTestCase {
         default:
             XCTAssert(false, "App type no recognized.")
         }
-        
-        
     }
 }

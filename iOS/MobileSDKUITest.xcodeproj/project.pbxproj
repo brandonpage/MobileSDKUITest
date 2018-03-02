@@ -7,10 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A3045A28203E241B0028F46F /* TestApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3045A27203E241B0028F46F /* TestApplication.swift */; };
+		A3045A2A203E26AD0028F46F /* LoginPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3045A29203E26AD0028F46F /* LoginPageObject.swift */; };
+		A3045A2C203E2F420028F46F /* AuthorizationPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3045A2B203E2F420028F46F /* AuthorizationPageObject.swift */; };
 		A39442FB2024D440006022F8 /* LoginTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39442FA2024D440006022F8 /* LoginTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A3045A27203E241B0028F46F /* TestApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestApplication.swift; sourceTree = "<group>"; };
+		A3045A29203E26AD0028F46F /* LoginPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageObject.swift; sourceTree = "<group>"; };
+		A3045A2B203E2F420028F46F /* AuthorizationPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationPageObject.swift; sourceTree = "<group>"; };
 		A34A749F20239B4E00846B32 /* MobileSDKUITest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MobileSDKUITest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A39442FA2024D440006022F8 /* LoginTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTest.swift; sourceTree = "<group>"; };
 		A39F9D4B2024CD5100251414 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -27,9 +33,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A3045A26203E23580028F46F /* PageObjects */ = {
+			isa = PBXGroup;
+			children = (
+				A3045A27203E241B0028F46F /* TestApplication.swift */,
+				A3045A29203E26AD0028F46F /* LoginPageObject.swift */,
+				A3045A2B203E2F420028F46F /* AuthorizationPageObject.swift */,
+			);
+			path = PageObjects;
+			sourceTree = "<group>";
+		};
 		A34A746A202281AC00846B32 = {
 			isa = PBXGroup;
 			children = (
+				A3045A26203E23580028F46F /* PageObjects */,
 				A39442F92024D3FD006022F8 /* Login */,
 				A39F9D4B2024CD5100251414 /* README.md */,
 				A34A74A020239B4E00846B32 /* Products */,
@@ -119,7 +136,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3045A28203E241B0028F46F /* TestApplication.swift in Sources */,
+				A3045A2C203E2F420028F46F /* AuthorizationPageObject.swift in Sources */,
 				A39442FB2024D440006022F8 /* LoginTest.swift in Sources */,
+				A3045A2A203E26AD0028F46F /* LoginPageObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
