@@ -229,7 +229,7 @@ class LoginPageObject : BasePageObject() {
         applyConnection()
     }
 
-    private fun applyConnection () {
+    private fun applyConnection() {
         var connectionApply = if (isOldDevice) {
             device.findObject(UiSelector().resourceId(app.packageName + ":id/sf__apply_button"))
         }
@@ -241,7 +241,7 @@ class LoginPageObject : BasePageObject() {
         connectionApply.click()
     }
 
-    fun openServerPage () {
+    fun openServerPage() {
         clickOverflowMenu()
         var changeServer = if (isOldDevice) {
             device.findObject(UiSelector().resourceId("android:id/title").text("Change Server"))
@@ -254,7 +254,7 @@ class LoginPageObject : BasePageObject() {
         changeServer.click()
     }
 
-    fun clearCookies () {
+    fun clearCookies() {
         clickOverflowMenu()
         var clearCookiesButton = if (isOldDevice) {
             device.findObject(UiSelector().resourceId("android:id/title").text("Clear Cookies"))
@@ -264,6 +264,13 @@ class LoginPageObject : BasePageObject() {
         }
         clearCookiesButton.waitForExists(timeout)
         clearCookiesButton.click()
+    }
+
+    fun reloadPage() {
+        clickOverflowMenu()
+        var reloadButton = device.findObject(UiSelector().resourceId("android:id/title").text("Reload"))
+        reloadButton.waitForExists(timeout)
+        reloadButton.clickAndWaitForNewWindow()
     }
 
     private fun clickOverflowMenu() {

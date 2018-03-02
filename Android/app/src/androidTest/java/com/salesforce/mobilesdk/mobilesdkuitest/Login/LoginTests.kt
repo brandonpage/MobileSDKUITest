@@ -44,13 +44,8 @@ class LoginTests {
             AppType.NATIVE_JAVA, AppType.NATIVE_KOTLIN ->
                 NativeSyncScreenPageObject().assertAppTitle()
             AppType.HYBRID_LOCAL -> {
-                var title = device.findObject(UiSelector().className("android.view.View").index(0))
+                var title = device.findObject(UiSelector().className("android.view.View").descriptionContains("Users"))
                 title.waitForExists(timeout)
-                Log.i("uia", "title: " + title.contentDescription)
-
-                var title2 = device.findObject(UiSelector().className("android.view.View").descriptionContains("Users"))
-                Log.i("uia", "title by cont desc:: " + title2.contentDescription)
-
                 Assert.assertEquals(failedLoginMessage, "Users", title.contentDescription)
             }
             AppType.HYBRID_REMOTE -> {

@@ -16,7 +16,7 @@ import android.util.Log
 class TestApplication {
     var packageName = InstrumentationRegistry.getArguments().get("packageName") as String
     //var packageName = "com.salesforce.hybrid_local"
-    var name = packageName.split(".").last().replace("java", "") + "_androidApp"
+    var name = packageName.split(".").last().replace("_java", "") + "_androidApp"
     var type:AppType = when (packageName.split(".").last()) {
             "native_java" -> AppType.NATIVE_JAVA
             "native_kotlin" -> AppType.NATIVE_KOTLIN
@@ -39,7 +39,9 @@ class TestApplication {
         context.startActivity(intent)
 
         if (type == AppType.HYBRID_LOCAL) {
-            Thread.sleep(60000)
+            Log.i("uia", "Reloading Page")
+            LoginPageObject().reloadPage()
+            Thread.sleep(30000)
         }
 
         // WIP
