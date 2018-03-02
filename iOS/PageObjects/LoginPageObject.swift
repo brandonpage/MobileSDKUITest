@@ -36,9 +36,6 @@ class LoginPageObject: XCUIScreen {
         webElements.otherElements.children(matching: .button).element(boundBy: 0).press(forDuration: 0.5)
     }
     
-    
     // back button
     // XCUIApplication().navigationBars["Log In"].children(matching: .button).element(boundBy: 0).tap()
-    
-    
 }
