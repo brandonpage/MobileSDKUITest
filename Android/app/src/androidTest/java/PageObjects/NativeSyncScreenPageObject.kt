@@ -34,7 +34,6 @@ class NativeSyncScreenPageObject : BasePageObject() {
     }
 
     fun assertAppTitle() {
-        Thread.sleep(timeout * 10)
         var titleBar = if (isOldDevice) {
             device.findObject(UiSelector().className("android.widget.TextView").index(0))
         }
