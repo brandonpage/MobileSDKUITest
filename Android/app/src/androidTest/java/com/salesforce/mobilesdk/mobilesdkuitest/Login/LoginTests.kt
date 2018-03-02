@@ -49,14 +49,24 @@ class LoginTests {
                 Assert.assertEquals(failedLoginMessage, "Users", title.contentDescription)
             }
             AppType.HYBRID_REMOTE -> {
-                var title = device.findObject(UiSelector().className("android.view.View").index(1))
+                Thread.sleep(30000)
+                var wview = device.findObject(UiSelector().className("android.webkit.WebView").index(0))
+
+                if (wview.exists()) {
+                    Log.i("uia", "just webview: " + wview.contentDescription)
+                }
+                else {
+                    Log.i("uia", "not just webview?")
+                }
+                var title = device.findObject(UiSelector().className("android.view.View").descriptionContains("Salesforce Mobile SDK Test"))
                 title.waitForExists(timeout)
+                Log.i("uia", "title: " + title.contentDescription)
                 Assert.assertEquals(failedLoginMessage, "Salesforce Mobile SDK Test", title.contentDescription)
             }
             AppType.REACT_NATIVE -> {
                 var title = device.findObject(UiSelector().className("android.widget.TextView").index(0))
                 title.waitForExists(timeout)
-                Assert.assertEquals(failedLoginMessage, "Mobile SDK Sample App", title.contentDescription)
+                Assert.assertEquals(failedLoginMessage, "Mobile SDK Sample App", title.text)
             }
         }
     }
