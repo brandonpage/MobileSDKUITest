@@ -19,8 +19,5 @@ class TestApplication: XCUIApplication {
     
     override func launch() {
         super.launch()
-        //if bundle_string == "com.salesforce.react-native-iosApp" {
-        //    sleep(30)
-        //}
     }
 }

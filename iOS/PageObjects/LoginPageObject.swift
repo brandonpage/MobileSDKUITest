@@ -26,8 +26,9 @@ class LoginPageObject: XCUIScreen {
         let passwordField = app.descendants(matching: .secureTextField).element
         _ = passwordField.waitForExistence(timeout: 5)
         passwordField.press(forDuration: 0.5)
-        sleep(1)
+        sleep(3)
         passwordField.typeText(password)
+        sleep(3)
     }
     
     func tapLogin() -> Void {
