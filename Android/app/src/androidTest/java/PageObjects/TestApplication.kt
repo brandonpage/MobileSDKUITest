@@ -1,12 +1,7 @@
 package PageObjects
 
 import android.support.test.InstrumentationRegistry
-import android.support.test.uiautomator.UiDevice
 import android.content.Intent
-import android.os.Build
-import android.support.test.uiautomator.By
-import android.support.test.uiautomator.UiSelector
-import android.support.test.uiautomator.Until
 import android.util.Log
 
 /**
@@ -15,7 +10,6 @@ import android.util.Log
 
 class TestApplication {
     var packageName = InstrumentationRegistry.getArguments().get("packageName") as String
-    //var packageName = "com.salesforce.hybrid_local"
     var name = packageName.split(".").last().replace("_java", "") + "_androidApp"
     var type:AppType = when (packageName.split(".").last()) {
             "native_java" -> AppType.NATIVE_JAVA
@@ -29,9 +23,6 @@ class TestApplication {
     }
 
     fun launch() {
-        // Uncomment this to run in Android Studio
-        //packageName = "com.salesforce.react_native"
-
         var context = InstrumentationRegistry.getContext()
         var intent = context.packageManager.getLaunchIntentForPackage(packageName)
 
@@ -43,18 +34,5 @@ class TestApplication {
             LoginPageObject().reloadPage()
             Thread.sleep(30000)
         }
-
-        // WIP
-        /*if (packageName == "com.salesforce.react_native") {
-            device.wait(Until.hasObject(By.res("android:id/alertTitle")), 5000)
-            device.pressBack()
-            device.wait(Until.hasObject(By.pkg("com.android.settings").depth(0)), 5000)
-
-            var allowSwitch = device.findObject(UiSelector().packageName("com.android.settings").resourceId("android:id/switch_widget"))
-            allowSwitch.click()
-            Log.i("swittttch", "is checkable: " + allowSwitch.isCheckable)
-            device.pressBack()
-            context.startActivity(intent)
-        }*/
     }
 }
