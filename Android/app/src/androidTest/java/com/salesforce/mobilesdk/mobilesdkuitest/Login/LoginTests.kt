@@ -47,7 +47,7 @@ class LoginTests {
                 Assert.assertEquals(failedLoginMessage, "Users", title.contentDescription)
             }
             AppType.HYBRID_REMOTE -> {
-                Thread.sleep(30000)
+                Thread.sleep(60000)
                 var wview = device.findObject(UiSelector().className("android.webkit.WebView").index(0))
 
                 if (wview.exists()) {

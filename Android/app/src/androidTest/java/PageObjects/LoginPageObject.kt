@@ -68,7 +68,6 @@ class LoginPageObject : BasePageObject() {
 
     fun tapLogin() {
         var loginButton = if (isOldDevice) {
-            //use content description?
             device.findObject(UiSelector().className("android.widget.Button").index(0))
         }
         else {
