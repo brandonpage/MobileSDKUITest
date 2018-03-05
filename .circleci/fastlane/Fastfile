@@ -1,7 +1,3 @@
-before_all do
-  setup_circle_ci
-end
-
 lane :ios do |options|
   run_type = options[:type]
   iphone = 'iPhone-7'
