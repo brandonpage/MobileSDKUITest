@@ -9,14 +9,14 @@ import Foundation
 import XCTest
 
 class TestApplication: XCUIApplication {
-    var bundle_string = ""
+    var bundleString = ""
     var appType: AppType.AppType = .nativeObjC
     
     override init() {
         // Get the Test App Bundle from command line arg
-        bundle_string = ProcessInfo.processInfo.environment["TEST_APP_BUNDLE"]!
+        bundleString = ProcessInfo.processInfo.environment["TEST_APP_BUNDLE"]!
         
-        switch bundle_string {
+        switch bundleString {
         case "com.salesforce.native-iosApp":
             appType = .nativeObjC
         case "com.salesforce.native-swift-iosApp":
@@ -31,7 +31,7 @@ class TestApplication: XCUIApplication {
             assert(false, "Unknown AppType.")
         }
         
-        super.init(bundleIdentifier: bundle_string)
+        super.init(bundleIdentifier: bundleString)
     }
     
     override func launch() {
