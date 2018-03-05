@@ -1,0 +1,13 @@
+.idea/*
+.circleci/fastlane/README.md
+.circleci/fastlane/report.xml
+Android/.gradle/
+Android/build/android-profile/
+forcehybrid-*.tgz
+forceios-*.tgz
+forcereact-*.tgz
+iOS/MobileSDKUITest.xcodeproj/project.xcworkspace/xcuserdata/
+iOS/MobileSDKUITest.xcodeproj/xcuserdata/bpage.xcuserdatad/xcdebugger/
+test_output/
+tmp*/
+

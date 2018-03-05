@@ -5,4 +5,4 @@ This repo contains designed to validate the functionality of apps created using 
 1.  `install.sh`
 2.  From the .circleci folder: `fastlane <os> type:<AppType>`
        
-       ex: `fastlane android type:native` or `fastlane iOS type:react_native`
+       ex: `fastlane android type:native` or `fastlane ios type:react_native`

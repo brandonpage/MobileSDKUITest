@@ -12,7 +12,7 @@ echo "*                                           *"
 echo "*********************************************"
 echo ""
 echo ""
-fastlane iOS type:native
+fastlane ios type:native
 
 echo ""
 echo ""
@@ -23,7 +23,7 @@ echo "*                                           *"
 echo "*********************************************"
 echo ""
 echo ""
-fastlane iOS type:native_swift
+fastlane ios type:native_swift
 
 echo ""
 echo ""
@@ -34,7 +34,7 @@ echo "*                                           *"
 echo "*********************************************"
 echo ""
 echo ""
-fastlane iOS type:hybrid_local
+fastlane ios type:hybrid_local
 
 echo ""
 echo ""
@@ -45,7 +45,7 @@ echo "*                                           *"
 echo "*********************************************"
 echo ""
 echo ""
-fastlane iOS type:hybrid_remote
+fastlane ios type:hybrid_remote
 
 echo ""
 echo ""
@@ -56,4 +56,4 @@ echo "*                                           *"
 echo "*********************************************"
 echo ""
 echo ""
-fastlane iOS type:react_native
+fastlane ios type:react_native

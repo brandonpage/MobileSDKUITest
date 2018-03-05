@@ -48,7 +48,6 @@ lane :ios do |options|
     end
 
     Dir.chdir('iOS/') do
-      UI.header 'Run Tests'
       begin
         scan(
             project: 'iOS/MobileSDKUITest.xcodeproj',
@@ -59,7 +58,7 @@ lane :ios do |options|
         )
       ensure
         system("xcrun simctl shutdown #{sim_name}")
-        sleep 5
+        sleep 3
         system("xcrun simctl delete #{sim_name}")
       end
     end
@@ -85,7 +84,6 @@ lane :android do |options|
     Dir.chdir(path) do
       UI.important 'Installing App on Emulator'
       result = system('adb install -r app/build/outputs/apk/debug/app-debug.apk')
-      puts "result: #{result}"
       UI.crash!('APK did not install successfully.') unless(result)
 
       if run_type == 'react_native'
@@ -98,11 +96,8 @@ lane :android do |options|
       UI.header 'Run Tests'
       begin
         result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest")
-        working_dir = `pwd`
-        system("adb pull /sdcard/login.png #{working_dir}/app/build/reports/androidTests/connected/")
       ensure
         system("adb uninstall #{package_name}")
-        puts "result: #{result}"
         UI.crash!('Tests failed.') unless(result)
       end
     end
