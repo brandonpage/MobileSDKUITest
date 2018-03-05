@@ -1,8 +1,8 @@
-#before_all do
-#  setup_circle_ci
-#end
+before_all do
+  setup_circle_ci
+end
 
-lane :iOS do |options|
+lane :ios do |options|
   run_type = options[:type]
   iphone = 'iPhone-7'
   os = '11-2'
