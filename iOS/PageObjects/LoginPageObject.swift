@@ -9,7 +9,9 @@ import Foundation
 import XCTest
 
 class LoginPageObject: XCUIScreen {
-    var app:XCUIApplication
+    let app:XCUIApplication
+    let timeout:double_t = 5
+    let tapDuration = 0.5
     
     init(testApp: XCUIApplication) {
         app = testApp
@@ -17,15 +19,15 @@ class LoginPageObject: XCUIScreen {
     
     func setUsername(name: String) -> Void {
         let nameField = app.descendants(matching: .textField).element
-        _ = nameField.waitForExistence(timeout: 30)
-        nameField.press(forDuration: 0.5)
+        _ = nameField.waitForExistence(timeout: timeout)
+        nameField.press(forDuration: tapDuration)
         nameField.typeText(name)
     }
     
     func setPassword(password: String) -> Void {
         let passwordField = app.descendants(matching: .secureTextField).element
-        _ = passwordField.waitForExistence(timeout: 5)
-        passwordField.press(forDuration: 0.5)
+        _ = passwordField.waitForExistence(timeout: timeout)
+        passwordField.press(forDuration: tapDuration)
         sleep(1)
         passwordField.typeText(password)
     }
@@ -33,9 +35,12 @@ class LoginPageObject: XCUIScreen {
     func tapLogin() -> Void {
         let webViewPredicate = NSPredicate(format: "label BEGINSWITH[cd] 'Login'")
         let webElements = app.otherElements.webViews.otherElements.matching(webViewPredicate).element
-        webElements.otherElements.children(matching: .button).element(boundBy: 0).press(forDuration: 0.5)
+        webElements.otherElements.children(matching: .button).element(boundBy: 0).press(forDuration: tapDuration)
     }
     
-    // back button
-    // XCUIApplication().navigationBars["Log In"].children(matching: .button).element(boundBy: 0).tap()
+    func tapBack() -> Void {
+        let backButton = app.navigationBars["Log In"].children(matching: .button).element(boundBy: 0)
+        _ = backButton.waitForExistence(timeout: timeout)
+        backButton.tap()
+    }
 }

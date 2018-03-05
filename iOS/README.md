@@ -1,6 +1,6 @@
 #  Mobile SDK UI Tests for iOS
 
-These tests are designed to validate the functionality of apps created using the MobileSDK CLI tool [forceios](https://www.npmjs.com/package/forceios).  Unless otherwise specified these test should work with any generic app whether the app was created with native Objective-C/Swift, Cordova, or React Native code.
+These tests are designed to validate the functionality of apps created using the MobileSDK CLI tool [forceios](https://www.npmjs.com/package/forceios).  Unless otherwise specified each test should run against apps generated using native Objective-C/Swift, Cordova, or React Native code.
 
 Basic usage:
 1.  Build the app(s) to be tested on a specific device.
