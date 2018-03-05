@@ -109,9 +109,11 @@ jobs:
           name:  Restart Emulator
           command: source .circleci/avd_helper.sh && restartAVD
           background: true
+          when: always
       - run:
           name: Wait for Emulator
           command: source .circleci/avd_helper.sh && waitForAVD
+          when: always
 
       - run:
           name: Test Hybrid Remote App
