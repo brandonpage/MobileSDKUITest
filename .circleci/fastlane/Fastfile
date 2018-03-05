@@ -9,7 +9,7 @@ lane :ios do |options|
   sim_id = `xcrun simctl create #{sim_name} com.apple.CoreSimulator.SimDeviceType.#{iphone} com.apple.CoreSimulator.SimRuntime.iOS-#{os}`.delete("\n")
 
   Dir.chdir('../../') do
-    generateApp('ios', run_type)
+    #generateApp('ios', run_type)
     app_name = "#{run_type}_iosApp"
     path = Dir.glob("tmp*").first.concat("/#{app_name}/")
 

@@ -36,5 +36,9 @@ class TestApplication: XCUIApplication {
     
     override func launch() {
         super.launch()
+        
+        if(appType == .reactNative) {
+            sleep(30)
+        }
     }
 }
