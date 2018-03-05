@@ -3,7 +3,11 @@
 .circleci/fastlane/report.xml
 Android/.gradle/
 Android/build/android-profile/
+Android/.idea/
+Android/Android.iml
+Android/local.properties
 forcehybrid-*.tgz
+forcedroid-*.tgz
 forceios-*.tgz
 forcereact-*.tgz
 iOS/MobileSDKUITest.xcodeproj/project.xcworkspace/xcuserdata/

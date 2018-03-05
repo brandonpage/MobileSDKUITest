@@ -12,5 +12,5 @@ cordova telemetry off
 gem install --no-document fastlane
 
 cd SalesforceMobileSDK-Package
-git checkout packagename
+git checkout dev
 node ./install.js
