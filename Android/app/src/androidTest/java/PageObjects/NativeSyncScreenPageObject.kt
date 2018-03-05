@@ -34,7 +34,6 @@ class NativeSyncScreenPageObject : BasePageObject() {
     }
 
     fun assertAppTitle() {
-        Thread.sleep(timeout * 10)
         var titleBar = if (isOldDevice) {
             device.findObject(UiSelector().className("android.widget.TextView").index(0))
         }
@@ -42,14 +41,6 @@ class NativeSyncScreenPageObject : BasePageObject() {
             device.findObject(UiSelector().resourceId("android:id/action_bar_title"))
         }
         titleBar.waitForExists(timeout)
-        Log.i("uia", "app name: " + app.name)
-        Log.i("uia", "app title: " + titleBar.text)
-
-        Assert.assertEquals("App did not successfully basicLogin.", app.name, titleBar.text)
+        Assert.assertEquals("App did not successfully testLogin.", app.name, titleBar.text)
     }
-
-    /*
-    var contact = device.findObject(UiSelector().resourceId(app.packageName + ":id/obj_name").index(0))
-    Assert.assertEquals("Contacts did not load.", "Brandon Page", contact.text)
-    */
 }
