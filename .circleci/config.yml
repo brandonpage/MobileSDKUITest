@@ -106,6 +106,13 @@ jobs:
           path: Android/app/build/outputs/androidTest-results/
 
       - run:
+          name:  Restart Emulator
+          command: source .circleci/avd_helper.sh && restartAVD
+      - run:
+          name: Wait for Emulator
+          command: source .circleci/avd_helper.sh && waitForAVD
+
+      - run:
           name: Test Hybrid Remote App
           command: cd .circleci && fastlane android type:hybrid_remote
           when: always

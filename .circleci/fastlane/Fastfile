@@ -1,14 +1,9 @@
 lane :ios do |options|
   run_type = options[:type]
-  iphone = 'iPhone-7'
+  iphone = 'iPhone-8'
   os = '11-2'
   sim_name = 'testsim'
   xcode_path = '/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app'
-
-  if ENV.has_key?('JENKINS_URL')
-    os = '11-0'
-    xcode_path = '/Applications/Xcode9.app/Contents/Developer/Applications/Simulator.app'
-  end
 
   system("xcrun simctl delete #{sim_name}") or puts "No old device to delete"
   sim_id = `xcrun simctl create #{sim_name} com.apple.CoreSimulator.SimDeviceType.#{iphone} com.apple.CoreSimulator.SimRuntime.iOS-#{os}`.delete("\n")
