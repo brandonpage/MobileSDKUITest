@@ -1,7 +1,6 @@
 package PageObjects
 
 import android.support.test.uiautomator.UiSelector
-import android.util.Log
 import org.junit.Assert
 
 /**
@@ -40,7 +39,7 @@ class NativeSyncScreenPageObject : BasePageObject() {
         else {
             device.findObject(UiSelector().resourceId("android:id/action_bar_title"))
         }
-        titleBar.waitForExists(timeout)
+        titleBar.waitForExists(timeout * 2)
         Assert.assertEquals("App did not successfully testLogin.", app.name, titleBar.text)
     }
 }

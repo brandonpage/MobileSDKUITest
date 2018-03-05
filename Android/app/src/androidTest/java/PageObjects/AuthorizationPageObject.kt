@@ -36,8 +36,4 @@ class AuthorizationPageObject : BasePageObject() {
             Thread.sleep(timeout)
         }
     }
-
-    fun tapDeny() {
-
-    }
 }
