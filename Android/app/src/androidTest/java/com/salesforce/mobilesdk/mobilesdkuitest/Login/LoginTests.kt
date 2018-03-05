@@ -33,7 +33,7 @@ class LoginTests {
 
     @Test
     fun testLogin() {
-        var loginPage = LoginPageObject()
+        var loginPage = LoginPageObject(app)
         loginPage.setUsername(username)
         loginPage.setPassword(password)
         loginPage.tapLogin()
@@ -41,7 +41,7 @@ class LoginTests {
 
         when (app.type) {
             AppType.NATIVE_JAVA, AppType.NATIVE_KOTLIN ->
-                NativeSyncScreenPageObject().assertAppTitle()
+                NativeSyncScreenPageObject(app).assertAppTitle()
             AppType.HYBRID_LOCAL -> {
                 var title = device.findObject(UiSelector().className("android.view.View").descriptionContains("Users"))
                 title.waitForExists(timeout)
@@ -50,7 +50,7 @@ class LoginTests {
             AppType.HYBRID_REMOTE -> {
                 Thread.sleep(timeout * 3)
                 var title = device.findObject(UiSelector().className("android.view.View").descriptionContains("Salesforce Mobile SDK Test"))
-                title.waitForExists(timeout)
+                title.waitForExists(timeout * 2)
                 Assert.assertEquals(failedLoginMessage, "Salesforce Mobile SDK Test", title.contentDescription)
             }
             AppType.REACT_NATIVE -> {

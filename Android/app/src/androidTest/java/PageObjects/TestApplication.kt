@@ -2,7 +2,6 @@ package PageObjects
 
 import android.support.test.InstrumentationRegistry
 import android.content.Intent
-import android.util.Log
 
 /**
  * Created by bpage on 2/21/18.

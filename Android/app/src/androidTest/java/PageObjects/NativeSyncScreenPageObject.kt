@@ -6,7 +6,8 @@ import org.junit.Assert
 /**
  * Created by bpage on 2/24/18.
  */
-class NativeSyncScreenPageObject : BasePageObject() {
+class NativeSyncScreenPageObject(app: TestApplication) : BasePageObject() {
+    val app = app
 
     fun logout() {
         var logoutButton = device.findObject(UiSelector().resourceId(app.packageName + ":id/logout_button"))

@@ -1,18 +1,13 @@
 package PageObjects
 
-import android.graphics.Rect
 import android.support.test.uiautomator.UiSelector
 import android.util.Log
-import android.view.accessibility.AccessibilityWindowInfo
-import android.support.test.InstrumentationRegistry
-import android.opengl.ETC1.getHeight
-import android.view.inputmethod.InputMethodManager
-
 
 /**
  * Created by bpage on 2/21/18.
  */
-class LoginPageObject : BasePageObject() {
+class LoginPageObject(app: TestApplication) : BasePageObject() {
+    val app = app
 
     init {
         if (isOldDevice) {
