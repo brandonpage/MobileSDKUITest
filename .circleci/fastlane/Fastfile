@@ -9,7 +9,7 @@ lane :ios do |options|
   sim_id = `xcrun simctl create #{sim_name} com.apple.CoreSimulator.SimDeviceType.#{iphone} com.apple.CoreSimulator.SimRuntime.iOS-#{os}`.delete("\n")
 
   Dir.chdir('../../') do
-    #generateApp('ios', run_type)
+    generateApp('ios', run_type)
     app_name = "#{run_type}_iosApp"
     path = Dir.glob("tmp*").first.concat("/#{app_name}/")
 
@@ -93,7 +93,7 @@ lane :android do |options|
         result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest")
       ensure
         system("adb uninstall #{package_name}")
-        UI.crash!('Tests failed.') unless(result)
+        UI.user_error!('Tests failed.') unless(result)
       end
     end
   end

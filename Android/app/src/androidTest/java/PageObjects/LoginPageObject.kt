@@ -53,7 +53,6 @@ class LoginPageObject(app: TestApplication) : BasePageObject() {
             Log.i("uia", "Hitting back button to uncover password field")
             device.pressBack()
             Thread.sleep(timeout)
-            //Thread.sleep(15000)
             passwordField.legacySetText(password)
         }
         else {
@@ -66,12 +65,14 @@ class LoginPageObject(app: TestApplication) : BasePageObject() {
             device.findObject(UiSelector().className("android.widget.Button").index(0))
         }
         else {
-            device.findObject(UiSelector().resourceId("LoginTests"))
+            device.findObject(UiSelector().resourceId("Login"))
         }
 
-        Log.i("uia", "testLogin button: try hitting back")
-        device.pressBack()
-        Thread.sleep(timeout)
+        if (isOldDevice) {
+            Log.i("uia", "Login button: try hitting back")
+            device.pressBack()
+            Thread.sleep(timeout)
+        }
         assert(loginButton.waitForExists(timeout * 2))
         loginButton.click()
     }

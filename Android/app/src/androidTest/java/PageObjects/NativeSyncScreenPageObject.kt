@@ -10,12 +10,8 @@ class NativeSyncScreenPageObject(app: TestApplication) : BasePageObject() {
     val app = app
 
     fun assertAppTitle() {
-        var titleBar = if (isOldDevice) {
-            device.findObject(UiSelector().className("android.widget.TextView").index(0))
-        }
-        else {
-            device.findObject(UiSelector().resourceId("android:id/action_bar_title"))
-        }
+        var titleBar = device.findObject(UiSelector().className("android.widget.TextView").index(0))
+        Thread.sleep(timeout)
         titleBar.waitForExists(timeout * 2)
         Assert.assertEquals("App did not successfully testLogin.", app.name, titleBar.text)
     }

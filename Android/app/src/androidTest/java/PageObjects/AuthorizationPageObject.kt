@@ -25,7 +25,7 @@ class AuthorizationPageObject : BasePageObject() {
         }
 
         Log.i("uia", "Waiting for allow button to be present.")
-        assert(allowButton.waitForExists(timeout * 3))
+        assert(allowButton.waitForExists(timeout * 5))
 
         var webview2 = device.wait(Until.findObject(By.clazz("android.webkit.WebView")), timeout)
         Log.i("uia", "Scrolling webview.")
