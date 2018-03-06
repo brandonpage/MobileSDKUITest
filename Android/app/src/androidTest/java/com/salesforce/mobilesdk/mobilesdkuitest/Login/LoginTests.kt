@@ -21,7 +21,7 @@ class LoginTests {
 
     var app = TestApplication()
     var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-    var timeout:Long = 30000
+    var timeout:Long = 60000
     var failedLoginMessage = "App did not successfully login."
     var username = "circleci@mobilesdk.com"
     var password = "test1234"
@@ -48,9 +48,9 @@ class LoginTests {
                 Assert.assertEquals(failedLoginMessage, "Users", title.contentDescription)
             }
             AppType.HYBRID_REMOTE -> {
-                Thread.sleep(timeout * 3)
+                Thread.sleep(timeout)
                 var title = device.findObject(UiSelector().className("android.view.View").descriptionContains("Salesforce Mobile SDK Test"))
-                title.waitForExists(timeout * 2)
+                title.waitForExists(timeout)
                 Assert.assertEquals(failedLoginMessage, "Salesforce Mobile SDK Test", title.contentDescription)
             }
             AppType.REACT_NATIVE -> {

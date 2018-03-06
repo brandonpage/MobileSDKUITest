@@ -84,6 +84,7 @@ lane :android do |options|
       if run_type == 'react_native'
         system('killall -9 node')
         system('npm start&')
+        system("adb shell pm grant #{package_name} android.permission.SYSTEM_ALERT_WINDOW")
       end
     end
 
