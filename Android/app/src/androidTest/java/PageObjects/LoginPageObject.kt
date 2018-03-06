@@ -17,7 +17,11 @@ class LoginPageObject : BasePageObject() {
 
     fun setUsername(name: String) {
         val usernameField = if (isOldDevice) {
-            device.findObject(UiSelector().className("android.widget.EditText").descriptionContains("Username"))
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                device.findObject(UiSelector().className("android.widget.EditText").index(2))
+            } else {
+                device.findObject(UiSelector().className("android.widget.EditText").descriptionContains("Username"))
+            }
         }
         else {
             device.findObject(UiSelector().resourceId("username"))
