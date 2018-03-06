@@ -5,12 +5,10 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import android.support.test.uiautomator.UiDevice
 import android.support.test.uiautomator.UiSelector
-import android.util.Log
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.File
 
 /**
  * Created by bpage on 2/2/18.
@@ -20,7 +18,7 @@ import java.io.File
 class LoginTests {
 
     var app = TestApplication()
-    var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+    private var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
     var timeout:Long = 60000
     var failedLoginMessage = "App did not successfully login."
     var username = "circleci@mobilesdk.com"
@@ -33,7 +31,7 @@ class LoginTests {
 
     @Test
     fun testLogin() {
-        var loginPage = LoginPageObject(app)
+        val loginPage = LoginPageObject()
         loginPage.setUsername(username)
         loginPage.setPassword(password)
         loginPage.tapLogin()
@@ -41,21 +39,21 @@ class LoginTests {
 
         when (app.type) {
             AppType.NATIVE_JAVA, AppType.NATIVE_KOTLIN ->
-                NativeSyncScreenPageObject(app).assertAppTitle()
+                NativeSyncScreenPageObject(app).assertAppLoads()
             AppType.HYBRID_LOCAL -> {
-                var title = device.findObject(UiSelector().className("android.view.View").descriptionContains("Users"))
+                val title = device.findObject(UiSelector().className("android.view.View").descriptionContains("Users"))
                 title.waitForExists(timeout)
                 Assert.assertEquals(failedLoginMessage, "Users", title.contentDescription)
             }
             AppType.HYBRID_REMOTE -> {
                 Thread.sleep(timeout)
-                var title = device.findObject(UiSelector().className("android.view.View").descriptionContains("Salesforce Mobile SDK Test"))
+                val title = device.findObject(UiSelector().className("android.view.View").descriptionContains("Salesforce Mobile SDK Test"))
                 title.waitForExists(timeout)
                 Assert.assertEquals(failedLoginMessage, "Salesforce Mobile SDK Test", title.contentDescription)
             }
             AppType.REACT_NATIVE -> {
                 Thread.sleep(timeout)
-                var title = device.findObject(UiSelector().className("android.widget.TextView").index(0))
+                val title = device.findObject(UiSelector().className("android.widget.TextView").index(0))
                 title.waitForExists(timeout)
                 Assert.assertEquals(failedLoginMessage, "Mobile SDK Sample App", title.text)
             }

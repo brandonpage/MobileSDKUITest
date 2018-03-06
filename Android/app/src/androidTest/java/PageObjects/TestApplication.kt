@@ -8,7 +8,7 @@ import android.content.Intent
  */
 
 class TestApplication {
-    var packageName = InstrumentationRegistry.getArguments().get("packageName") as String
+    private var packageName = InstrumentationRegistry.getArguments().get("packageName") as String
     var name = packageName.split(".").last().replace("_java", "") + "_androidApp"
     var type:AppType = when (packageName.split(".").last()) {
             "native_java" -> AppType.NATIVE_JAVA
@@ -22,8 +22,8 @@ class TestApplication {
     }
 
     fun launch() {
-        var context = InstrumentationRegistry.getContext()
-        var intent = context.packageManager.getLaunchIntentForPackage(packageName)
+        val context = InstrumentationRegistry.getContext()
+        val intent = context.packageManager.getLaunchIntentForPackage(packageName)
 
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(intent)
