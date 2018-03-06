@@ -54,7 +54,7 @@ class LoginTests {
             AppType.REACT_NATIVE -> {
                 Thread.sleep(timeout)
                 val title = device.findObject(UiSelector().className("android.widget.TextView").index(0))
-                title.waitForExists(timeout)
+                title.waitForExists(timeout * 2)
                 Assert.assertEquals(failedLoginMessage, "Mobile SDK Sample App", title.text)
             }
         }
