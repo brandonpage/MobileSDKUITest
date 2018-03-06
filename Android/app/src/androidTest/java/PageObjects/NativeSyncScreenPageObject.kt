@@ -12,7 +12,7 @@ class NativeSyncScreenPageObject(private val app: TestApplication) : BasePageObj
         val titleBar = device.findObject(UiSelector().className("android.widget.TextView").index(0))
 
         if (isArm) {
-            timeout *= 6
+            timeout *= 3
         }
         Thread.sleep(timeout)
         titleBar.waitForExists(timeout * 2)
