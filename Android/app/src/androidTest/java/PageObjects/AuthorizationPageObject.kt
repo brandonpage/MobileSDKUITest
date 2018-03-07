@@ -10,7 +10,7 @@ import android.util.Log
 class AuthorizationPageObject : BasePageObject() {
 
     init {
-        if (isOldDevice) {
+        if (isArm) {
             Log.i("uia", "Sleeping a while to let auth page load.")
             Thread.sleep(timeout)
         }

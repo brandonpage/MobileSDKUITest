@@ -1,12 +1,12 @@
 lane :ios do |options|
   run_type = options[:type]
-  iphone = 'iPhone-8'
-  os = '11-2'
+  iphone = 'iPhone-7'
+  ios = '11-2'
   sim_name = 'testsim'
   xcode_path = '/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app'
 
   system("xcrun simctl delete #{sim_name}") or puts "No old device to delete"
-  sim_id = `xcrun simctl create #{sim_name} com.apple.CoreSimulator.SimDeviceType.#{iphone} com.apple.CoreSimulator.SimRuntime.iOS-#{os}`.delete("\n")
+  sim_id = `xcrun simctl create #{sim_name} com.apple.CoreSimulator.SimDeviceType.#{iphone} com.apple.CoreSimulator.SimRuntime.iOS-#{ios}`.delete("\n")
 
   Dir.chdir('../../') do
     generateApp('ios', run_type)
@@ -26,36 +26,37 @@ lane :ios do |options|
         bundle_name = 'com.salesforce.'.concat(run_type)
     end
 
-    # Start Simulator
-    system("xcrun simctl boot #{sim_id}")
-    system("open #{xcode_path} --args -CurrentDeviceUDID #{sim_id}")
+    begin
+      # Start Simulator
+      system("xcrun simctl boot #{sim_id}")
+      system("open #{xcode_path} --args -CurrentDeviceUDID #{sim_id}")
 
-    UI.header 'Build for Simulator'
-    Dir.chdir(path) do
-      if run_type == 'react_native'
-        system('killall -9 node')
-        system('npm start&')
+      UI.header 'Build for Simulator'
+      Dir.chdir(path) do
+        if run_type == 'react_native'
+          system('killall -9 node')
+          system('npm start&')
+        end
+        system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -sdk iphonesimulator -derivedDataPath ./DerivedData | xcpretty --color --simple") or exit
+
+        UI.important 'Installing App on Simulator'
+        system("xcrun simctl install booted ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app")
       end
-      system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -sdk iphonesimulator -derivedDataPath ./DerivedData | xcpretty --color --simple") or exit
 
-      UI.important 'Installing App on Simulator'
-      system("xcrun simctl install booted ./DerivedData/Build/Products/Debug-iphonesimulator/#{app_name}.app")
-    end
-
-    Dir.chdir('iOS/') do
-      begin
+        Dir.chdir('iOS/') do
+        device = "#{sim_name} (" + `instruments -s devices | grep #{sim_name} | awk -F"[()]" '{print $2}'`.delete("\n") + ")"
         scan(
             project: 'iOS/MobileSDKUITest.xcodeproj',
             scheme: 'MobileSDKUITest',
-            device: "#{sim_name} (#{os.gsub('-', '.')})",
+            device: device,
             output_directory: 'test_output',
             xcargs: "TEST_APP_BUNDLE=#{bundle_name}"
         )
+        end
       ensure
         system("xcrun simctl shutdown #{sim_name}")
         sleep 3
         system("xcrun simctl delete #{sim_name}")
-      end
     end
   end
 end
@@ -84,8 +85,8 @@ lane :android do |options|
       if run_type == 'react_native'
         system('killall -9 node')
         system('npm start&')
-        system("adb shell pm grant #{package_name} android.permission.SYSTEM_ALERT_WINDOW")
         sleep 10
+        system("adb shell pm grant #{package_name} android.permission.SYSTEM_ALERT_WINDOW")
       end
     end
 

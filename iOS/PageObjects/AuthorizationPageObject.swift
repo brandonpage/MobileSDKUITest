@@ -11,7 +11,6 @@ import XCTest
 class AuthorizationPageObject: XCUIScreen {
     let app:XCUIApplication
     let timeout:double_t = 5
-    let tapDuration = 0.5
     
     init(testApp: XCUIApplication) {
         app = testApp
@@ -29,6 +28,6 @@ class AuthorizationPageObject: XCUIScreen {
         let button = app.buttons.element(matching: NSPredicate(format: "label CONTAINS '" + lable + "'"))
         _ = assert(button.waitForExistence(timeout: timeout * 5))
         sleep(2)
-        button.press(forDuration: tapDuration)
+        button.tap()
     }
 }
