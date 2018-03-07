@@ -39,7 +39,7 @@ class LoginTests {
 
         when (app.type) {
             AppType.NATIVE_JAVA, AppType.NATIVE_KOTLIN ->
-                NativeSyncScreenPageObject(app).assertAppLoads()
+                NativeAppPageObject(app).assertAppLoads()
             AppType.HYBRID_LOCAL -> {
                 val title = device.findObject(UiSelector().className("android.view.View").descriptionContains("Users"))
                 title.waitForExists(timeout)
@@ -52,10 +52,7 @@ class LoginTests {
                 Assert.assertEquals(failedLoginMessage, "Salesforce Mobile SDK Test", title.contentDescription)
             }
             AppType.REACT_NATIVE -> {
-                Thread.sleep(timeout * 2)
-                val title = device.findObject(UiSelector().className("android.widget.TextView").index(0))
-                title.waitForExists(timeout * 2)
-                Assert.assertEquals(failedLoginMessage, "Mobile SDK Sample App", title.text)
+                ReactNativeAppPageObject().assertAppLoads()
             }
         }
     }
