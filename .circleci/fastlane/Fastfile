@@ -1,3 +1,5 @@
+require 'Differ'
+
 lane :ios do |options|
   run_type = options[:type]
   UI.user_error!('Please specify run type.') unless(run_type)
@@ -103,9 +105,9 @@ lane :android do |options|
       UI.user_error!("APK did not install successfully. \n\nError: #{result}") unless(result.eql? 'Success')
 
       if run_type == 'react_native'
-        system('npm start&')
-        system("adb shell pm grant #{package_name} android.permission.SYSTEM_ALERT_WINDOW")
-        sleep 30
+        `npm start&`
+        `adb shell pm grant #{package_name} android.permission.SYSTEM_ALERT_WINDOW`
+        sleep 10
       end
     end
 
@@ -114,7 +116,6 @@ lane :android do |options|
       begin
         result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest --no-daemon --max-workers 2")
       ensure
-        puts "result: #{result}"
         unless skipRemoveApp
           system("adb uninstall #{package_name}")
         end
