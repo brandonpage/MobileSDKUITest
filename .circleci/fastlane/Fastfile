@@ -89,7 +89,7 @@ lane :android do |options|
   package_name = "com.salesforce.#{app_name}"
 
   Dir.chdir('../../') do
-    generateApp('android', run_type, sfdx)
+    #generateApp('android', run_type, sfdx)
     path = Dir.glob("tmp*").first.concat("/#{run_type}_androidApp/")
 
     case run_type
@@ -101,9 +101,8 @@ lane :android do |options|
 
     Dir.chdir(path) do
       UI.important 'Installing App on Emulator'
-      result = system('adb install -r app/build/outputs/apk/debug/app-debug.apk')
-      puts result
-      UI.user_error!('APK did not install successfully.') unless(result == 'true')
+      result = `adb install -r app/build/outputs/apk/debug/app-debug.apk`.split("\n").last.delete("\r")
+      UI.user_error!('APK did not install successfully.') unless(result.eql? 'Success')
 
       if run_type == 'react_native'
         system('npm start&')
