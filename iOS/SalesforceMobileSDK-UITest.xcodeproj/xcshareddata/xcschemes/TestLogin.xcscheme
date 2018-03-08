@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A34A749E20239B4E00846B32"
-               BuildableName = "MobileSDKUITest.xctest"
-               BlueprintName = "MobileSDKUITest"
-               ReferencedContainer = "container:MobileSDKUITest.xcodeproj">
+               BuildableName = "SalesforceMobileSDK-UITest.xctest"
+               BlueprintName = "SalesforceMobileSDK-UITest"
+               ReferencedContainer = "container:SalesforceMobileSDK-UITest.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,9 +35,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A34A749E20239B4E00846B32"
-               BuildableName = "MobileSDKUITest.xctest"
-               BlueprintName = "MobileSDKUITest"
-               ReferencedContainer = "container:MobileSDKUITest.xcodeproj">
+               BuildableName = "SalesforceMobileSDK-UITest.xctest"
+               BlueprintName = "SalesforceMobileSDK-UITest"
+               ReferencedContainer = "container:SalesforceMobileSDK-UITest.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A34A749E20239B4E00846B32"
-            BuildableName = "MobileSDKUITest.xctest"
-            BlueprintName = "MobileSDKUITest"
-            ReferencedContainer = "container:MobileSDKUITest.xcodeproj">
+            BuildableName = "SalesforceMobileSDK-UITest.xctest"
+            BlueprintName = "SalesforceMobileSDK-UITest"
+            ReferencedContainer = "container:SalesforceMobileSDK-UITest.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <EnvironmentVariables>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A34A749E20239B4E00846B32"
-            BuildableName = "MobileSDKUITest.xctest"
-            BlueprintName = "MobileSDKUITest"
-            ReferencedContainer = "container:MobileSDKUITest.xcodeproj">
+            BuildableName = "SalesforceMobileSDK-UITest.xctest"
+            BlueprintName = "SalesforceMobileSDK-UITest"
+            ReferencedContainer = "container:SalesforceMobileSDK-UITest.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -93,9 +93,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A34A749E20239B4E00846B32"
-            BuildableName = "MobileSDKUITest.xctest"
-            BlueprintName = "MobileSDKUITest"
-            ReferencedContainer = "container:MobileSDKUITest.xcodeproj">
+            BuildableName = "SalesforceMobileSDK-UITest.xctest"
+            BlueprintName = "SalesforceMobileSDK-UITest"
+            ReferencedContainer = "container:SalesforceMobileSDK-UITest.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

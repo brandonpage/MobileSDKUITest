@@ -19,7 +19,7 @@ class LoginTests {
 
     var app = TestApplication()
     private var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-    var timeout:Long = 60000
+    var timeout:Long = 90000
     var failedLoginMessage = "App did not successfully login."
     var username = "circleci@mobilesdk.com"
     var password = "test1234"

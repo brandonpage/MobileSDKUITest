@@ -18,7 +18,7 @@
 		A3045A27203E241B0028F46F /* TestApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestApplication.swift; sourceTree = "<group>"; };
 		A3045A29203E26AD0028F46F /* LoginPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageObject.swift; sourceTree = "<group>"; };
 		A3045A2B203E2F420028F46F /* AuthorizationPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationPageObject.swift; sourceTree = "<group>"; };
-		A34A749F20239B4E00846B32 /* MobileSDKUITest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MobileSDKUITest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A34A749F20239B4E00846B32 /* SalesforceMobileSDK-UITest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SalesforceMobileSDK-UITest.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A38B56D82049CE00008D53A2 /* AppType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppType.swift; sourceTree = "<group>"; };
 		A39442FA2024D440006022F8 /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		A39F9D4B2024CD5100251414 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -59,7 +59,7 @@
 		A34A74A020239B4E00846B32 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A34A749F20239B4E00846B32 /* MobileSDKUITest.xctest */,
+				A34A749F20239B4E00846B32 /* SalesforceMobileSDK-UITest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -75,9 +75,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A34A749E20239B4E00846B32 /* MobileSDKUITest */ = {
+		A34A749E20239B4E00846B32 /* SalesforceMobileSDK-UITest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A34A74A520239B4E00846B32 /* Build configuration list for PBXNativeTarget "MobileSDKUITest" */;
+			buildConfigurationList = A34A74A520239B4E00846B32 /* Build configuration list for PBXNativeTarget "SalesforceMobileSDK-UITest" */;
 			buildPhases = (
 				A34A749B20239B4E00846B32 /* Sources */,
 				A34A749C20239B4E00846B32 /* Frameworks */,
@@ -87,9 +87,9 @@
 			);
 			dependencies = (
 			);
-			name = MobileSDKUITest;
+			name = "SalesforceMobileSDK-UITest";
 			productName = MobileSDKUITest;
-			productReference = A34A749F20239B4E00846B32 /* MobileSDKUITest.xctest */;
+			productReference = A34A749F20239B4E00846B32 /* SalesforceMobileSDK-UITest.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -107,7 +107,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A34A746E202281AC00846B32 /* Build configuration list for PBXProject "MobileSDKUITest" */;
+			buildConfigurationList = A34A746E202281AC00846B32 /* Build configuration list for PBXProject "SalesforceMobileSDK-UITest" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -119,7 +119,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A34A749E20239B4E00846B32 /* MobileSDKUITest */,
+				A34A749E20239B4E00846B32 /* SalesforceMobileSDK-UITest */,
 			);
 		};
 /* End PBXProject section */
@@ -295,7 +295,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A34A746E202281AC00846B32 /* Build configuration list for PBXProject "MobileSDKUITest" */ = {
+		A34A746E202281AC00846B32 /* Build configuration list for PBXProject "SalesforceMobileSDK-UITest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A34A746F202281AC00846B32 /* Debug */,
@@ -304,7 +304,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A34A74A520239B4E00846B32 /* Build configuration list for PBXNativeTarget "MobileSDKUITest" */ = {
+		A34A74A520239B4E00846B32 /* Build configuration list for PBXNativeTarget "SalesforceMobileSDK-UITest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A34A74A620239B4E00846B32 /* Debug */,
