@@ -114,11 +114,11 @@ lane :android do |options|
       begin
         result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest --no-daemon --max-workers 2")
       ensure
-        system('killall -9 java')
+        puts "result: #{result}"
         unless skipRemoveApp
           system("adb uninstall #{package_name}")
-          UI.user_error!("Tests failed.") unless(result)
         end
+        UI.user_error!("Tests failed.") unless(result)
       end
     end
   end
