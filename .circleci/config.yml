@@ -35,7 +35,8 @@ linux: &linux
   docker:
     - image: circleci/android:api-27-node8-alpha
   environment:
-    #- TERM: "dumb"
+    #- TERM: "dumb"xterm
+    - TERM: "xterm"
     - ADB_INSTALL_TIMEOUT: 15
     - _JAVA_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
     - GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-XX:+HeapDumpOnOutOfMemoryError"'
