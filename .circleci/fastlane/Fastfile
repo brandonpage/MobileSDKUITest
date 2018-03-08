@@ -112,7 +112,7 @@ lane :android do |options|
     Dir.chdir('Android/') do
       UI.header 'Run Tests'
       begin
-        result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest")
+        result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest --no-daemon --max-workers 2")
       ensure
         system('killall -9 java')
         unless skipRemoveApp
