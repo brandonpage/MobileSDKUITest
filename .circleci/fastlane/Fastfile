@@ -1,3 +1,5 @@
+opt_out_crash_reporting
+
 lane :ios do |options|
   run_type = options[:type]
   UI.user_error!('Please specify run type.') unless(run_type)
@@ -100,7 +102,8 @@ lane :android do |options|
     Dir.chdir(path) do
       UI.important 'Installing App on Emulator'
       result = system('adb install -r app/build/outputs/apk/debug/app-debug.apk')
-      UI.user_error!('APK did not install successfully.') unless(result)
+      puts result
+      UI.user_error!('APK did not install successfully.') unless(result == 'true')
 
       if run_type == 'react_native'
         system('npm start&')

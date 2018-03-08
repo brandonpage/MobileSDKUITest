@@ -71,10 +71,13 @@ jobs:
           no_output_timeout: 900
       - store_artifacts:
           path: tmp*/hybrid_remoteandroidApp/platforms/android/app/build/outputs/apk/
-          destination: Hybrid_Remote
+          destination: React_Native
       - store_artifacts:
           path: Android/app/build/reports/androidTests/connected/
-          destination: Hybrid_Remote
+          destination: React_Native
+      - store_artifacts:
+          path: /home/circleci/.fastlane/latest_crash.json
+          destination: React_Native
       - store_test_results:
           path: Android/app/build/outputs/androidTest-results/
 
@@ -88,6 +91,9 @@ jobs:
           destination: Java
       - store_artifacts:
           path: Android/app/build/reports/androidTests/connected/
+          destination: Java
+      - store_artifacts:
+          path: /home/circleci/.fastlane/latest_crash.json
           destination: Java
       - store_test_results:
           path: Android/app/build/outputs/androidTest-results/
@@ -103,6 +109,9 @@ jobs:
       - store_artifacts:
           path: Android/app/build/reports/androidTests/connected/
           destination: Kotlin
+      - store_artifacts:
+          path: /home/circleci/.fastlane/latest_crash.json
+          destination: Kotlin
       - store_test_results:
           path: Android/app/build/outputs/androidTest-results/
 
@@ -115,7 +124,7 @@ jobs:
           name: Wait for Emulator
           command: source .circleci/avd_helper.sh && waitForAVD
           when: always
-          
+
       - run:
           name: Test Hybrid Local App
           command: cd .circleci && fastlane android type:hybrid_local
@@ -127,6 +136,9 @@ jobs:
       - store_artifacts:
           path: Android/app/build/reports/androidTests/connected/
           destination: Hybrid_Local
+      - store_artifacts:
+            path: /home/circleci/.fastlane/latest_crash.json
+            destination: Hybrid_Local
       - store_test_results:
           path: Android/app/build/outputs/androidTest-results/
 
@@ -140,6 +152,9 @@ jobs:
           destination: Hybrid_Remote
       - store_artifacts:
           path: Android/app/build/reports/androidTests/connected/
+          destination: Hybrid_Remote
+      - store_artifacts:
+          path: /home/circleci/.fastlane/latest_crash.json
           destination: Hybrid_Remote
       - store_test_results:
           path: Android/app/build/outputs/androidTest-results/
