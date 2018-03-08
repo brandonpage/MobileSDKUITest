@@ -25,7 +25,7 @@ class ReactNativeAppPageObject : BasePageObject() {
         }
 
         val title = device.findObject(UiSelector().className("android.widget.TextView").index(0))
-        title.waitForExists(timeout * 3)
+        title.waitForExists(timeout * 5)
         Assert.assertEquals("App did not successfully login.", "Mobile SDK Sample App", title.text)
     }
 }
