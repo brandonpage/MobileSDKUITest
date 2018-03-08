@@ -106,8 +106,8 @@ lane :android do |options|
 
       if run_type == 'react_native'
         system('npm start&')
-        sleep 10
         system("adb shell pm grant #{package_name} android.permission.SYSTEM_ALERT_WINDOW")
+        sleep 30
       end
     end
 
