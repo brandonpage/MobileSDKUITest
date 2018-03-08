@@ -89,7 +89,7 @@ lane :android do |options|
   package_name = "com.salesforce.#{app_name}"
 
   Dir.chdir('../../') do
-    #generateApp('android', run_type, sfdx)
+    generateApp('android', run_type, sfdx)
     path = Dir.glob("tmp*").first.concat("/#{run_type}_androidApp/")
 
     case run_type
