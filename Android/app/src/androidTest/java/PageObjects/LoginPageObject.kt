@@ -28,7 +28,7 @@ class LoginPageObject : BasePageObject() {
         }
 
         Log.i("uia", "Waiting for username filed to be present.")
-        assert(usernameField.waitForExists(timeout * 2))
+        assert(usernameField.waitForExists(timeout * 3))
         if (isOldDevice) {
             usernameField.legacySetText(name)
             Thread.sleep(timeout)

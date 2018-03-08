@@ -50,7 +50,6 @@ lane :ios do |options|
       UI.header 'Build for Simulator'
       Dir.chdir(path) do
         if run_type == 'react_native'
-          system('killall -9 node')
           system('npm start&')
         end
         system("xcodebuild build -scheme #{app_name} -workspace #{app_name}.xcworkspace -sdk iphonesimulator -derivedDataPath ./DerivedData | xcpretty --color --simple") or exit
@@ -104,7 +103,6 @@ lane :android do |options|
       UI.user_error!('APK did not install successfully.') unless(result)
 
       if run_type == 'react_native'
-        system('killall -9 node')
         system('npm start&')
         sleep 10
         system("adb shell pm grant #{package_name} android.permission.SYSTEM_ALERT_WINDOW")
@@ -116,6 +114,7 @@ lane :android do |options|
       begin
         result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest")
       ensure
+        system('killall -9 java')
         unless skipRemoveApp
           system("adb uninstall #{package_name}")
           UI.crash!('Tests failed.') unless(result)
@@ -130,6 +129,7 @@ end
 def generateApp(os, type, sfdx)
   system('rm -rf tmp*/')
   system('rm -rf Android/app/build/')
+  system('killall -9 node')
   generate_command = "./SalesforceMobileSDK-Package/test/test_force.js --os=#{os} --apptype=#{type}"
   if sfdx
     generate_command.concat(' --use-sfdx')
