@@ -113,12 +113,12 @@ lane :android do |options|
       begin
         result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest --no-daemon --max-workers 2")
       ensure
-        mkdir run_type
-        mkdir "#{run_type}/screenshots"
+        `mkdir screenshots`
+        `mkdir screenshots/#{run_type}`
         # Linux
-        system("adb shell screencap -p | sed 's/\r$//' > screenshots/login.png")
-        # OSX
-        #system("adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > login.png")
+        system("adb shell screencap -p | sed 's/\r$//' > screenshots/#{run_type}/login.png")
+        #OSX
+        #system("adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > screenshots/#{run_type}/login.png")
 
         unless skipRemoveApp
           system("adb uninstall #{package_name}")

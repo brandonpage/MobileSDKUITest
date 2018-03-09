@@ -9,6 +9,7 @@ import org.junit.Assert
 class NativeAppPageObject(private val app: TestApplication) : BasePageObject() {
 
     fun assertAppLoads() {
+        Thread.sleep(timeout)
         val titleBar = device.findObject(UiSelector().className("android.widget.TextView").index(0))
         titleBar.waitForExists(timeout * 10)
         Assert.assertEquals("App did not successfully testLogin.", app.name, titleBar.text)
