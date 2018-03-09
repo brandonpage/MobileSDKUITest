@@ -117,6 +117,7 @@ lane :android do |options|
         unless skipRemoveApp
           system("adb uninstall #{package_name}")
         end
+        puts "Test Results: #{result}"
         UI.user_error!("Tests failed.") unless(result)
       end
     end
