@@ -112,15 +112,13 @@ lane :android do |options|
     Dir.chdir('Android/') do
       UI.header 'Run Tests'
       begin
-        system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest --no-daemon --max-workers 2")
-        puts "\n\nTest\n\n"
-        `./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest --no-daemon --max-workers 2`
+        result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest --no-daemon --max-workers 2")
       ensure
         unless skipRemoveApp
           system("adb uninstall #{package_name}")
         end
-        #puts "Test Results: #{result}"
-        #UI.user_error!("Tests failed.") unless(result)
+        puts "Test Results: #{result}"
+        UI.user_error!("Tests failed.") unless(result)
       end
     end
   end
