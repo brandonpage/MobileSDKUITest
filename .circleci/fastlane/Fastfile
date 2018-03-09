@@ -103,8 +103,8 @@ lane :android do |options|
       UI.user_error!("APK did not install successfully. \n\nError: #{result}") unless(result.eql? 'Success')
 
       if run_type == 'react_native'
-        `npm start&`
-        `adb shell pm grant #{package_name} android.permission.SYSTEM_ALERT_WINDOW`
+        system("npm start&")
+        system("adb shell pm grant #{package_name} android.permission.SYSTEM_ALERT_WINDOW")
         sleep 10
       end
     end
