@@ -36,6 +36,7 @@ class LoginTests {
         loginPage.setPassword(password)
         loginPage.tapLogin()
         AuthorizationPageObject().tapAllow()
+        Thread.sleep(timeout * 2)
 
         when (app.type) {
             AppType.NATIVE_JAVA, AppType.NATIVE_KOTLIN ->
@@ -46,7 +47,6 @@ class LoginTests {
                 Assert.assertEquals(failedLoginMessage, "Users", title.contentDescription)
             }
             AppType.HYBRID_REMOTE -> {
-                Thread.sleep(timeout * 2)
                 val title = device.findObject(UiSelector().className("android.view.View").descriptionContains("Salesforce Mobile SDK Test"))
                 title.waitForExists(timeout * 2)
                 Assert.assertEquals(failedLoginMessage, "Salesforce Mobile SDK Test", title.contentDescription)

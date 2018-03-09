@@ -115,15 +115,12 @@ lane :android do |options|
       ensure
         `mkdir screenshots`
         `mkdir screenshots/#{run_type}`
-        # Linux
-        system("adb shell screencap -p | sed 's/\r$//' > screenshots/#{run_type}/login.png")
-        #OSX
-        #system("adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > screenshots/#{run_type}/login.png")
+        search = (ENV.has_key? 'CIRCLECI') ? "sed 's/\r$//'" : "perl -pe 's/\x0D\x0A/\x0A/g'"
+        system("adb shell screencap -p | #{search} > screenshots/#{run_type}/login.png")
 
         unless skipRemoveApp
           system("adb uninstall #{package_name}")
         end
-        puts "Test Results: #{result}"
         UI.user_error!("Tests failed.") unless(result)
       end
     end
