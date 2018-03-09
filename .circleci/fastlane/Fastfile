@@ -113,13 +113,14 @@ lane :android do |options|
       begin
         result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest --no-daemon --max-workers 2")
       ensure
+        # Linux
+        system("adb shell screencap -p | sed 's/\r$//' > screenshots/login.png")
+        # OSX
+        #system("adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > login.png")
+
         unless skipRemoveApp
           system("adb uninstall #{package_name}")
         end
-        # Linux
-        system("adb shell screencap -p | sed 's/\r$//' > login.png")
-        # OSX
-        #system("adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > login.png")
         puts "Test Results: #{result}"
         UI.user_error!("Tests failed.") unless(result)
       end
