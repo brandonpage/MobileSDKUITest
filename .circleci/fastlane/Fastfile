@@ -111,11 +111,7 @@ lane :android do |options|
     Dir.chdir('Android/') do
       UI.header 'Run Tests'
       begin
-        if run_type.eql? 'react_native'
-          `./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest --no-daemon --max-workers 2`
-        else
-          result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest --no-daemon --max-workers 2")
-        end
+        result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest --no-daemon --max-workers 2")
       ensure
         unless skipRemoveApp
           system("adb uninstall #{package_name}")
@@ -125,7 +121,7 @@ lane :android do |options|
         # OSX
         #system("adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > login.png")
         puts "Test Results: #{result}"
-        UI.user_error!("Tests failed.") unless(result or run_type.eal? 'react_native')
+        UI.user_error!("Tests failed.") unless(result)
       end
     end
   end
