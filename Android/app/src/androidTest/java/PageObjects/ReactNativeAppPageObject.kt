@@ -15,19 +15,7 @@ class ReactNativeAppPageObject : BasePageObject() {
     }
 
     fun assertAppLoads() {
-        //if (isArm) {
-        //    Thread.sleep(timeout * 15)
-        //}
-        //else {
-            Thread.sleep(timeout * 5)
-        //}
-
-        // pacakge com.android.settings
-
-        // re com.android.settings:id/title text Apps (app data & media content)
-        
-
-
+        Thread.sleep(timeout * 5)
         var alertWindow = device.findObject(UiSelector().resourceId("android:id/alertTitle"))
         if (alertWindow.exists()) {
             Log.i("uia", "React Native requesting overlay permission.")

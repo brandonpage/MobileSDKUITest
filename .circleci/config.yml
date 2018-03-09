@@ -79,7 +79,7 @@ jobs:
           path: /home/circleci/.fastlane/latest_crash.json
           destination: Java
       - store_artifacts:
-          path: Android/screenshots/login.png
+          path: Android/native_java/screenshots/login.png
           destination: Java
       - store_test_results:
           path: Android/app/build/outputs/androidTest-results/
@@ -99,7 +99,7 @@ jobs:
           path: /home/circleci/.fastlane/latest_crash.json
           destination: Kotlin
       - store_artifacts:
-          path: Android/screenshots/login.png
+          path: Android/native_kotlin/screenshots/login.png
           destination: Kotlin
       - store_test_results:
           path: Android/app/build/outputs/androidTest-results/
@@ -129,7 +129,7 @@ jobs:
             path: /home/circleci/.fastlane/latest_crash.json
             destination: Hybrid_Local
       - store_artifacts:
-            path: Android/screenshots/login.png
+            path: Android/hybrid_local/screenshots/login.png
             destination: Hybrid_Local
       - store_test_results:
           path: Android/app/build/outputs/androidTest-results/
@@ -149,7 +149,7 @@ jobs:
           path: /home/circleci/.fastlane/latest_crash.json
           destination: Hybrid_Remote
       - store_artifacts:
-          path: Android/screenshots/login.png
+          path: Android/hybid_remote/screenshots/login.png
           destination: Hybrid_Remote
       - store_test_results:
           path: Android/app/build/outputs/androidTest-results/

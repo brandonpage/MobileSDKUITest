@@ -113,6 +113,8 @@ lane :android do |options|
       begin
         result = system("./gradlew -Pandroid.testInstrumentationRunnerArguments.packageName=#{package_name} connectedAndroidTest --no-daemon --max-workers 2")
       ensure
+        mkdir run_type
+        mkdir "#{run_type}/screenshots"
         # Linux
         system("adb shell screencap -p | sed 's/\r$//' > screenshots/login.png")
         # OSX
