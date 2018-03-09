@@ -149,7 +149,7 @@ jobs:
           path: /home/circleci/.fastlane/latest_crash.json
           destination: Hybrid_Remote
       - store_artifacts:
-          path: Android/screenshots/hybid_remote/login.png
+          path: Android/screenshots/hybrid_remote/login.png
           destination: Hybrid_Remote
       - store_test_results:
           path: Android/app/build/outputs/androidTest-results/
