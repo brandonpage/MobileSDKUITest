@@ -104,7 +104,7 @@ lane :android do |options|
 
       if run_type == 'react_native'
         system("npm start&")
-        system("sudo adb shell pm grant #{package_name} android.permission.SYSTEM_ALERT_WINDOW")
+        system("adb shell pm grant #{package_name} android.permission.SYSTEM_ALERT_WINDOW")
       end
     end
 
@@ -116,6 +116,10 @@ lane :android do |options|
         unless skipRemoveApp
           system("adb uninstall #{package_name}")
         end
+        # Linux
+        system("adb shell screencap -p | sed 's/\r$//' > login.png")
+        # OSX
+        #system("adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > login.png")
         puts "Test Results: #{result}"
         UI.user_error!("Tests failed.") unless(result)
       end

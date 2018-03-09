@@ -76,6 +76,9 @@ jobs:
           path: Android/app/build/reports/androidTests/connected/
           destination: React_Native
       - store_artifacts:
+          path: Android/login.png
+          destination: React_Native
+      - store_artifacts:
           path: /home/circleci/.fastlane/latest_crash.json
           destination: React_Native
       - store_test_results:
