@@ -1,0 +1,13 @@
+{
+  "name": "SalesforceMobileSDK-UITest",
+  "version": "1.0.0",
+  "private": true,
+  "testAppDependencies": {
+    "salesforcemobilesdk-package": "https://github.com/forcedotcom/SalesforceMobileSDK-Package.git#dev"
+  },
+  "dependencies": {
+    "shelljs": "0.7.0",
+    "cordova": "7.0.0",
+    "sfdx-cli": "latest"
+  }
+}
