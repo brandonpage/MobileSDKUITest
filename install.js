@@ -15,5 +15,7 @@ if(process.platform === 'linux') {
     execSync('sudo apt-get install libqt5widgets5');
 }
 var sudoPrefix = (process.env.CIRCLECI) ? 'sudo' : ''
-execSync(`${sudoPrefix} npm install -g`, {stdio:[0,1,2]});
+execSync(`npm install -g`, {stdio:[0,1,2]});
+execSync(`${sudoPrefix} npm install -g cordova@7.0.0`)
+execSync('cordova telemetry off')
 execSync('gem install --no-document fastlane');
