@@ -16,5 +16,4 @@ if(process.platform === 'linux') {
 }
 var sudoPrefix = (process.env.CIRCLECI) ? 'sudo' : ''
 execSync(`${sudoPrefix} npm install -g`, {stdio:[0,1,2]});
-execSync('cordova telemetry off');
 execSync('gem install --no-document fastlane');

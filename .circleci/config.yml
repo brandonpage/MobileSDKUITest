@@ -23,7 +23,7 @@ aliases:
 
   - &setup
     name: Setup
-    command: ./install.sh
+    command: ./install.js
     when: always
 
   - &install-ant
