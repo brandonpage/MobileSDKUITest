@@ -12,6 +12,6 @@ var parts = repoUrlWithBranch.split('#'), repoUrl = parts[0], branch = parts.len
 execSync('git clone --branch ' + branch + ' --single-branch --depth 1 ' + repoUrl, {stdio:[0,1,2]});
 
 console.log('Installing npm dependencies');
-execSync('npm install', {stdio:[0,1,2]});
+execSync('npm install -g', {stdio:[0,1,2]});
 execSync('cordova telemetry off')
 execSync('gem install --no-document fastlane')
