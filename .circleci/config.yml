@@ -23,10 +23,7 @@ aliases:
 
   - &setup
     name: Setup
-    command: |
-      sudo apt-get update
-      sudo apt-get install libqt5widgets5
-      ./install.js
+    command: ./install.js
     when: always
 
   - &install-ant

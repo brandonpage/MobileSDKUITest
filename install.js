@@ -2,8 +2,6 @@
 
 var packageJson = require('./package.json')
 var execSync = require('child_process').execSync;
-var path = require('path');
-var fs = require('fs');
 
 console.log('Installing Packager');
 var packagerDependency = 'salesforcemobilesdk-package';
@@ -12,6 +10,13 @@ var parts = repoUrlWithBranch.split('#'), repoUrl = parts[0], branch = parts.len
 execSync('git clone --branch ' + branch + ' --single-branch --depth 1 ' + repoUrl, {stdio:[0,1,2]});
 
 console.log('Installing npm dependencies');
-execSync('npm install -g', {stdio:[0,1,2]});
-execSync('cordova telemetry off')
-execSync('gem install --no-document fastlane')
+if(process.env.CIRCLECI) {
+    execSync('sudo apt-get update');
+    execSync('sudo apt-get install libqt5widgets5');
+    execSync('sudo npm install -g', {stdio:[0,1,2]});
+}
+else {
+    execSync('npm install -g', {stdio:[0,1,2]});
+}
+execSync('cordova telemetry off');
+execSync('gem install --no-document fastlane');
