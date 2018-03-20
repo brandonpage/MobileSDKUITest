@@ -16,6 +16,7 @@ if(process.platform === 'linux') {
 }
 var sudoPrefix = (process.env.CIRCLECI) ? 'sudo' : ''
 execSync(`npm install -g`, {stdio:[0,1,2]});
-execSync(`${sudoPrefix} npm install -g cordova@7.0.0`)
+console.log('Force install Cordova...')
+execSync(`${sudoPrefix} npm install -g cordova@7.0.0`, {stdio:[0,1,2]})
 execSync('cordova telemetry off')
 execSync('gem install --no-document fastlane');
