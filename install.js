@@ -14,9 +14,23 @@ if(process.platform === 'linux') {
     execSync('sudo apt-get update');
     execSync('sudo apt-get install libqt5widgets5');
 }
-var sudoPrefix = (process.env.CIRCLECI) ? 'sudo' : '';
-execSync(`npm install -g`, {stdio:[0,1,2]});
-console.log('Force install Cordova...');
-execSync(`${sudoPrefix} npm install -g cordova@7.0.0`, {stdio:[0,1,2]});
+//var sudoPrefix = (process.env.CIRCLECI) ? 'sudo' : '';
+//execSync(`npm install -g`, {stdio:[0,1,2]});
+//console.log('Force install Cordova...');
+//execSync(`${sudoPrefix} npm install -g cordova@7.0.0`, {stdio:[0,1,2]});
+
+if (process.env.CIRCLECI) {
+    console.log('Running on CircleCI, use sudo.')
+    execSync(`sudo npm install -g shelljs@0.7.0`, {stdio:[0,1,2]});
+    execSync(`sudo npm install -g cordova@7.0.0`, {stdio:[0,1,2]});
+    execSync(`sudo npm install -g sfdx-cli`, {stdio:[0,1,2]});
+}
+else {
+    console.log('Not running on CI, no sudo.')
+    execSync(`npm install -g shelljs@0.7.0`, {stdio:[0,1,2]});
+    execSync(`npm install -g cordova@7.0.0`, {stdio:[0,1,2]});
+    execSync(`npm install -g sfdx-cli`, {stdio:[0,1,2]});
+}
+
 execSync('cordova telemetry off');
 execSync('gem install --no-document fastlane');
