@@ -5,11 +5,12 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     sudo apt-get install libqt5widgets5
 fi
 
-gem install --no-document fastlane
+git clone --branch dev --single-branch --depth 1 https://github.com/forcedotcom/SalesforceMobileSDK-Package.git
 if [[ -v "CIRCLECI" ]]; then
-    sudo su
+    sudo npm install -g
+else
+    npm install -g
 fi
 
-git clone --branch dev --single-branch --depth 1 https://github.com/forcedotcom/SalesforceMobileSDK-Package.git
-npm install -g
 cordova telemetry off
+gem install --no-document fastlane
