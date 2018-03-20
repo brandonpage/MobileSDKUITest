@@ -14,9 +14,9 @@ if(process.platform === 'linux') {
     execSync('sudo apt-get update');
     execSync('sudo apt-get install libqt5widgets5');
 }
-var sudoPrefix = (process.env.CIRCLECI) ? 'sudo' : ''
+var sudoPrefix = (process.env.CIRCLECI) ? 'sudo' : '';
 execSync(`npm install -g`, {stdio:[0,1,2]});
-console.log('Force install Cordova...')
-execSync(`${sudoPrefix} npm install -g cordova@7.0.0`, {stdio:[0,1,2]})
-execSync('cordova telemetry off')
+console.log('Force install Cordova...');
+execSync(`${sudoPrefix} npm install -g cordova@7.0.0`, {stdio:[0,1,2]});
+execSync('cordova telemetry off');
 execSync('gem install --no-document fastlane');
