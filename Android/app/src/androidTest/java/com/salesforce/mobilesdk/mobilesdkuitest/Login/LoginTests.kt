@@ -50,6 +50,7 @@ class LoginTests {
                 Thread.sleep(timeout)
                 val title = device.findObject(UiSelector().className("android.view.View").descriptionContains("Salesforce Mobile SDK Test"))
                 title.waitForExists(timeout)
+                Thread.sleep(timeout / 2)
                 Assert.assertEquals(failedLoginMessage, "Salesforce Mobile SDK Test", title.contentDescription)
             }
             AppType.REACT_NATIVE -> {
